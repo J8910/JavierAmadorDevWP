@@ -246,7 +246,7 @@ strong { font-weight: 600; }
     position: fixed;
     /* Hug the post's right margin: sit just outside the centered column on wide
        screens, fall back to the viewport gutter when there's no room. */
-    right: max(clamp(1rem, 3vw, 2rem), calc((100vw - var(--measure)) / 2 - 3.6rem));
+    right: max(clamp(1rem, 3vw, 2rem), calc((100vw - var(--measure)) / 2 - 4.6rem));
     bottom: 1.5rem;                 /* JS raises this to clear the footer */
     display: grid;
     place-items: center;
