@@ -61,10 +61,19 @@ description: Notes on environment art, technical art, and the tools in between.
                 .map(function (b) { return b.getAttribute('data-category'); });
             var showAll = active.length === 0;
             press(allBtn, showAll);
+            // Re-run the entry animation for the cards that remain, staggered in *visible*
+            // order — otherwise the CSS nth-child delays fire in DOM order and look shuffled.
+            var visibleIndex = 0;
             cards.forEach(function (c) {
-                if (showAll) { c.hidden = false; return; }
                 var cardCats = c.getAttribute('data-category').split(' ');
-                c.hidden = !active.some(function (cat) { return cardCats.indexOf(cat) !== -1; });
+                var show = showAll || active.some(function (cat) { return cardCats.indexOf(cat) !== -1; });
+                c.hidden = !show;
+                if (!show) return;
+                c.style.animation = 'none';
+                void c.offsetWidth;            // force reflow so the animation restarts
+                c.style.animation = '';
+                c.style.animationDelay = (visibleIndex * 0.045) + 's';
+                visibleIndex++;
             });
         }
 
