@@ -14,6 +14,11 @@
 
 <link rel="stylesheet" href="/css/global.css">
 
+{# Warm up the giscus connection early so comments load quicker. #}
+{% if site.giscus.repoId and site.giscus.categoryId %}
+<link rel="preconnect" href="https://giscus.app">
+{% endif %}
+
 {# Privacy-friendly analytics — only in production builds, never local dev. #}
 {% if env == "build" and site.goatcounter %}
 <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count"
