@@ -1,5 +1,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{# Set the theme before the page paints so there's no flash on load. Honours the
+   visitor's saved choice; otherwise defaults to light. Toggle lives in base.html. #}
+<script>
+    (function () {
+        try {
+            var t = localStorage.getItem('theme');
+            document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+        } catch (e) {}
+    })();
+</script>
 <title>{% if title %}{{ title }} · {{ site.name }}{% else %}{{ site.name }} — {{ site.role }}{% endif %}</title>
 <meta name="description" content="{{ description or site.description }}">
 <meta name="author" content="{{ site.author }}">
