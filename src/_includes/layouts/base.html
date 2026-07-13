@@ -30,7 +30,7 @@
 
 {# Back-to-top — revealed by JS once scrolled down; harmless/hidden without JS. #}
 <button type="button" class="to-top" aria-label="Back to top">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 19V5M5 12l7-7 7 7"/>
     </svg>
@@ -39,16 +39,24 @@
     (function () {
         var btn = document.querySelector('.to-top');
         if (!btn) return;
+        var footer = document.querySelector('.site-footer');
         var threshold = 400;
         var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
         var ticking = false;
         function update() {
             btn.classList.toggle('is-visible', window.scrollY > threshold);
+            // Lift the button so it never overlaps the footer once it scrolls in.
+            if (footer) {
+                var overlap = window.innerHeight - footer.getBoundingClientRect().top;
+                btn.style.bottom = Math.max(24, overlap + 16) + 'px';
+            }
             ticking = false;
         }
-        window.addEventListener('scroll', function () {
+        function onScroll() {
             if (!ticking) { requestAnimationFrame(update); ticking = true; }
-        }, { passive: true });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
         btn.addEventListener('click', function () {
             window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
         });

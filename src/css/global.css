@@ -244,12 +244,14 @@ strong { font-weight: 600; }
  * ------------------------------------------------------------------ */
 .to-top {
     position: fixed;
-    right: clamp(1rem, 3vw, 2rem);
-    bottom: clamp(1rem, 3vw, 2rem);
+    /* Hug the post's right margin: sit just outside the centered column on wide
+       screens, fall back to the viewport gutter when there's no room. */
+    right: max(clamp(1rem, 3vw, 2rem), calc((100vw - var(--measure)) / 2 - 3.6rem));
+    bottom: 1.5rem;                 /* JS raises this to clear the footer */
     display: grid;
     place-items: center;
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 3.1rem;
+    height: 3.1rem;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--box);
