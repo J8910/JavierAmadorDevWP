@@ -310,6 +310,29 @@ strong { font-weight: 600; }
 .prose pre code { background: none; padding: 0; color: inherit; }
 .prose hr { border: 0; border-top: 1px solid var(--border); margin-block: 2.5em; }
 
+/* ------------------------------------------------------------------ *
+ *  Syntax highlighting (Prism) — one warm palette on the always-dark
+ *  code block. Covers fenced ```glsl / ```hlsl and the {% shader %}
+ *  code view. Kept theme-independent since the code ground never flips.
+ * ------------------------------------------------------------------ */
+code[class*="language-"] .token.comment,
+code[class*="language-"] .token.prolog { color: #7f8a6d; font-style: italic; }
+code[class*="language-"] .token.keyword,
+code[class*="language-"] .token.boolean { color: #e6b673; }               /* if, return, uniform… */
+code[class*="language-"] .token.builtin,
+code[class*="language-"] .token.class-name { color: #8fcf8a; }            /* vec3, float, sampler2D… */
+code[class*="language-"] .token.function { color: #9cd0e0; }              /* sin(), texture()… */
+code[class*="language-"] .token.number { color: #e39a70; }
+code[class*="language-"] .token.string,
+code[class*="language-"] .token.char { color: #cbe0a0; }
+code[class*="language-"] .token.operator,
+code[class*="language-"] .token.punctuation { color: #b7b1a0; }
+code[class*="language-"] .token.property,
+code[class*="language-"] .token.constant,
+code[class*="language-"] .token.symbol { color: #d7c7f0; }                /* .xyz swizzles, #defines */
+code[class*="language-"] .token.directive,
+code[class*="language-"] .token.macro { color: #c99bd6; }
+
 /* Long KaTeX block equations scroll inside their own box instead of pushing
    the page wider than the screen (fixes horizontal overflow on mobile). */
 .prose { overflow-wrap: break-word; }

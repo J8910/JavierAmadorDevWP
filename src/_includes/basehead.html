@@ -27,6 +27,12 @@
 
 <link rel="stylesheet" href="/css/global.css">
 
+{# Live WebGL shader embeds — only on posts that set `shaders: true`. #}
+{% if shaders %}
+<link rel="stylesheet" href="/css/shaders.css">
+<script defer src="/js/shaders.js"></script>
+{% endif %}
+
 {# Warm up the giscus connection early so comments load quicker. #}
 {% if site.giscus.repoId and site.giscus.categoryId %}
 <link rel="preconnect" href="https://giscus.app">
