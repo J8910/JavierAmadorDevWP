@@ -154,7 +154,7 @@ strong { font-weight: 600; }
    rather than spanning the full page width. RSS sits at the left edge (the
    post's left margin); the credits stay centered under the column. */
 .site-footer .wrap {
-    border-top: 1px solid var(--border);
+    border-top: 1px dashed var(--border);
     padding-block: 1.5rem;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
