@@ -239,6 +239,38 @@ strong { font-weight: 600; }
 .prose hr { border: 0; border-top: 1px solid var(--border); margin-block: 2.5em; }
 
 /* ------------------------------------------------------------------ *
+ *  Back-to-top button — bordered box, hidden until scrolled (JS adds
+ *  .is-visible). Same hard offset-shadow hover as the cards.
+ * ------------------------------------------------------------------ */
+.to-top {
+    position: fixed;
+    right: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(1rem, 3vw, 2rem);
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--box);
+    color: var(--ink);
+    cursor: pointer;
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;          /* also drops it from tab order when hidden */
+    transform: translateY(6px);
+    transition: opacity .18s ease, transform .18s ease, box-shadow .12s ease;
+}
+.to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
+.to-top:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 var(--border); }
+.to-top:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .to-top { transition: opacity .18s ease; }
+    .to-top:hover { transform: none; }
+}
+
+/* ------------------------------------------------------------------ *
  *  Motion — one gentle load-in + a friendly wave. Respect reduced motion.
  * ------------------------------------------------------------------ */
 .wave { display: inline-block; transform-origin: 70% 70%; }
