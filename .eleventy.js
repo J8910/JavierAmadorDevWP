@@ -38,13 +38,15 @@ module.exports = function(eleventyConfig) {
     // it, compiles it, and animates it in a <canvas>. The SAME source is shown as
     // highlighted GLSL beneath the canvas — write the shader once, get both.
     //
-    //   {% shader caption="Domain-warped flow", height=280 %}
+    //   {% shader caption="Domain-warped flow", height=280, editable=true %}
     //   void mainImage(out vec4 O, in vec2 I){ /* ... */ }
     //   {% endshader %}
     //
-    // Everything is emitted on ONE physical line with newlines encoded as &#10;
-    // so markdown-it passes the HTML block through untouched (a blank line inside
-    // the shader would otherwise split the block and mangle it).
+    // With `editable=true` the code view becomes a live editor: typing recompiles
+    // the shader and updates the canvas (the runtime keeps the last working shader
+    // running if an in-progress edit doesn't compile). Everything is emitted on ONE
+    // physical line with newlines encoded as &#10; so markdown-it passes the HTML
+    // block through untouched (a blank line inside would otherwise split it).
     eleventyConfig.addPairedShortcode('shader', (source, opts = {}) => {
         const src = String(source).trim();
         const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -54,7 +56,23 @@ module.exports = function(eleventyConfig) {
         const cap = opts.caption
             ? `<figcaption class="shader__caption">${esc(String(opts.caption))}</figcaption>` : '';
         const h = Number(opts.height) || 280;
-        return `<figure class="shader" data-shader="${data}" style="--shader-h:${h}px">`
+        const editable = opts.editable === true || opts.editable === 'true';
+
+        // The code view: read-only <pre> by default, or a transparent <textarea>
+        // over the highlighted <pre> when editable (runtime keeps them in sync).
+        const codeView = editable
+            ? `<div class="shader__code shader__code--edit">`
+                + `<div class="shader__codehead"><span class="shader__file">fragment.glsl · live</span>`
+                + `<button type="button" class="shader__revert" data-act="revert">revert</button></div>`
+                + `<div class="shader__editor">`
+                + `<pre class="language-glsl" aria-hidden="true"><code class="language-glsl">${code}</code></pre>`
+                + `<textarea class="shader__input" spellcheck="false" autocapitalize="off"`
+                + ` autocomplete="off" autocorrect="off" aria-label="Editable GLSL source">${enc(esc(src))}</textarea>`
+                + `</div></div>`
+            : `<div class="shader__code"><span class="shader__file">fragment.glsl</span>`
+                + `<pre class="language-glsl"><code class="language-glsl">${code}</code></pre></div>`;
+
+        return `<figure class="shader${editable ? ' is-editable' : ''}" data-shader="${data}" style="--shader-h:${h}px">`
             + `<div class="shader__stage"><canvas class="shader__canvas"></canvas>`
             + `<div class="shader__bar">`
             + `<button type="button" class="shader__btn" data-act="toggle" aria-label="Play or pause">❚❚</button>`
@@ -62,8 +80,7 @@ module.exports = function(eleventyConfig) {
             + `<span class="shader__clock" aria-hidden="true">0.0s</span></div>`
             + `<p class="shader__err" role="alert" hidden></p></div>`
             + cap
-            + `<div class="shader__code"><span class="shader__file">fragment.glsl</span>`
-            + `<pre class="language-glsl"><code class="language-glsl">${code}</code></pre></div>`
+            + codeView
             + `</figure>`;
     });
 

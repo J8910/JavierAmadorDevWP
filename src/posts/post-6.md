@@ -14,12 +14,14 @@ Half of technical-art writing is "here's the code, here's what it *does*." A sta
 screenshot loses the motion; a wall of code loses the intuition. So on this site a shader
 can **run right in the page**, with its source shown directly beneath it.
 
-## A live one
+## A live one — edit it yourself
 
-Everything below the canvas is the actual fragment shader driving it. Scrub with the
-controls; the demo pauses itself when it scrolls off-screen.
+The code below the canvas *is* the shader driving it, and it's **editable**: change a number,
+tweak the colours, and the canvas recompiles as you type. Try bumping the `0.4` in the ramp
+or swapping the `green`/`amber` values. Broke it? The last working version keeps running and
+the compile error shows over the canvas; hit **revert** to restore the original.
 
-{% shader caption="Domain-warped flow — five cheap sine folds over a green→amber ramp.", height=300 %}
+{% shader caption="Domain-warped flow — five cheap sine folds over a green→amber ramp. Editable: type to recompile.", height=300, editable=true %}
 void mainImage(out vec4 O, in vec2 I)
 {
     // Centre the coords and keep them square regardless of canvas size.

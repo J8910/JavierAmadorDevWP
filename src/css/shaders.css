@@ -26,9 +26,6 @@
     height: 100%;
     cursor: crosshair;      /* hints that the demo reads the pointer (iMouse) */
 }
-.shader.is-error .shader__canvas,
-.shader.is-error .shader__bar { display: none; }
-
 /* Control bar, floated over the bottom of the canvas */
 .shader__bar {
     position: absolute;
@@ -69,15 +66,23 @@
     letter-spacing: .02em;
 }
 
-/* Compile / link errors — the GPU's own log, mono and legible */
+/* Compile / link errors — the GPU's own log, mono and legible. Overlays the top
+   of the canvas so a live edit that breaks still shows the last working shader
+   running behind the message. */
 .shader__err {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
     margin: 0;
-    padding: 1rem 1.25rem;
-    background: var(--code-bg);
+    max-height: 100%;
+    overflow: auto;
+    padding: .8rem 1.1rem;
+    background: color-mix(in srgb, var(--code-bg) 92%, transparent);
     color: #ff9d8a;
     font-family: var(--font-mono);
-    font-size: .8rem;
-    line-height: 1.6;
+    font-size: .78rem;
+    line-height: 1.5;
     white-space: pre-wrap;
 }
 
@@ -104,3 +109,83 @@
     border: 0 !important;
     border-radius: 0 !important;
 }
+
+/* --- Live editor (editable embeds) ------------------------------- *
+ *  A transparent <textarea> sits exactly on top of the highlighted <pre>:
+ *  the reader edits real text (with a caret) while the colours show through
+ *  from behind. Both MUST share identical type metrics or they'd drift apart.
+ * ---------------------------------------------------------------- */
+.shader__codehead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-inline-end: .6rem;
+    background: var(--code-bg);
+}
+.shader__code--edit .shader__file { padding-block-end: .5rem; }
+.shader__revert {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: .66rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .2em .6em;
+    cursor: pointer;
+    transition: color .12s ease, border-color .12s ease;
+}
+.shader__revert:hover { color: var(--accent-ink); border-color: var(--accent); }
+.shader__revert:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.shader__editor { position: relative; background: var(--code-bg); }
+.shader__editor pre,
+.shader__editor .shader__input {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 1.1em 1.25em;
+    font-family: var(--font-mono);
+    font-size: .85rem;
+    line-height: 1.6;
+    letter-spacing: normal;
+    tab-size: 2;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+.shader__editor pre {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    background: none;
+}
+/* The <code> inside .prose inherits `font-size: .88em` globally — that would make
+   the highlighted text smaller than the textarea and drift the two apart line by
+   line (caret lands above the line you clicked). Force it to match the textarea. */
+.shader__editor pre code {
+    font: inherit;
+    letter-spacing: inherit;
+    white-space: inherit;
+    word-break: inherit;
+    overflow-wrap: inherit;
+}
+.shader__editor .shader__input {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    min-height: 6rem;
+    border: 0;
+    background: transparent;
+    color: transparent;              /* text comes from the highlighted <pre> behind */
+    caret-color: var(--code-fg);
+    resize: none;
+    outline: none;
+    overflow: hidden;                /* JS auto-grows height, so no inner scroll */
+}
+.shader__editor .shader__input::selection { background: color-mix(in srgb, var(--accent) 45%, transparent); }
+.shader__editor:focus-within { box-shadow: inset 0 0 0 2px var(--accent); }
