@@ -1,0 +1,32 @@
+---
+# Atom feed, built to /feed.xml on each site build. Lists every blog post,
+# newest first. Discoverable via the <link rel="alternate"> in basehead.html
+# and linked from the site footer.
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ site.name }}</title>
+    <subtitle>{{ site.description }}</subtitle>
+    <link href="{{ '/feed.xml' | absoluteUrl(site.url) }}" rel="self"/>
+    <link href="{{ site.url }}/"/>
+    <updated>{{ collections.post | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
+    <id>{{ site.url }}/</id>
+    <author>
+        <name>{{ site.author }}</name>
+    </author>
+    {%- for post in collections.post | reverse %}
+    {%- set absolutePostUrl = post.url | absoluteUrl(site.url) %}
+    <entry>
+        <title>{{ post.data.title }}</title>
+        <link href="{{ absolutePostUrl }}"/>
+        <updated>{{ post.date | dateToRfc3339 }}</updated>
+        <id>{{ absolutePostUrl }}</id>
+        {%- if post.data.description %}
+        <summary>{{ post.data.description }}</summary>
+        {%- endif %}
+        <content type="html">{{ post.content | htmlToAbsoluteUrls(absolutePostUrl) | escape }}</content>
+    </entry>
+    {%- endfor %}
+</feed>

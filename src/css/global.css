@@ -98,9 +98,28 @@ strong { font-weight: 600; }
 /* ------------------------------------------------------------------ *
  *  Footer
  * ------------------------------------------------------------------ */
-.site-footer { border-top: 1px solid var(--border); margin-top: var(--step); }
-.site-footer .wrap { padding-block: 1.5rem; }
-.site-footer p { font-size: .75rem; color: var(--ink-soft); }
+.site-footer { margin-top: var(--step); }
+/* Rule lives on the centered column so it lines up with the blog's margins,
+   rather than spanning the full page width. RSS sits at the left edge (the
+   post's left margin); the credits stay centered under the column. */
+.site-footer .wrap {
+    border-top: 1px solid var(--border);
+    padding-block: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+.site-footer p { font-size: .75rem; color: var(--ink-soft); text-align: center; }
+.site-footer__rss {
+    justify-self: start;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    color: var(--ink-soft);
+    text-decoration: none;
+}
+.site-footer__rss:hover { color: var(--accent-ink); }
 
 /* ------------------------------------------------------------------ *
  *  Headings & shared bits

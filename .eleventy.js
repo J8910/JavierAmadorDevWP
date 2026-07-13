@@ -1,7 +1,12 @@
 const markdownItKatex = require('@traptitech/markdown-it-katex');
+const rssPlugin = require('@11ty/eleventy-plugin-rss').default;
 
 module.exports = function(eleventyConfig) {
     const Card = require('./src/_includes/components/Card');
+
+    // RSS/Atom feed — adds dateToRfc3339, absoluteUrl, htmlToAbsoluteUrls filters
+    // used by src/feed.njk to build /feed.xml at build time.
+    eleventyConfig.addPlugin(rssPlugin);
 
     eleventyConfig.addPassthroughCopy('src/assets');
     eleventyConfig.addPassthroughCopy('src/css');
