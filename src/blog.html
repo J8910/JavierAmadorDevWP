@@ -10,9 +10,12 @@ description: Notes on environment art, technical art, and the tools in between.
 
     {% set cats = [] %}
     {% for post in collections.post %}
-        {% if post.data.category and post.data.category not in cats %}
-            {% set cats = (cats.push(post.data.category), cats) %}
-        {% endif %}
+        {% set postCats = post.data.categories or ([post.data.category] if post.data.category else []) %}
+        {% for c in postCats %}
+            {% if c not in cats %}
+                {% set cats = (cats.push(c), cats) %}
+            {% endif %}
+        {% endfor %}
     {% endfor %}
 
     <div class="segmented" data-filter role="group" aria-label="Filter posts by topic">
@@ -25,7 +28,8 @@ description: Notes on environment art, technical art, and the tools in between.
 
 <div class="cards">
     {% for post in collections.post | reverse %}
-    <a class="card{% if post.data.image %} card--media{% endif %}" href="{{ post.url }}" data-category="{{ post.data.category or 'misc' }}">
+    {% set postCats = post.data.categories or ([post.data.category] if post.data.category else ['misc']) %}
+    <a class="card{% if post.data.image %} card--media{% endif %}" href="{{ post.url }}" data-category="{{ postCats | join(' ') }}">
         <div class="card__body">
             <h2 class="card__title">{% if post.data.emoji %}<span class="card__emoji">{{ post.data.emoji }}</span> {% endif %}{{ post.data.title }}</h2>
             {% if post.data.description %}<p class="card__desc">{{ post.data.description }}</p>{% endif %}
@@ -38,20 +42,41 @@ description: Notes on environment art, technical art, and the tools in between.
 
 <script>
     // Progressive enhancement: filter cards by category. Without JS, all show.
+    // Multi-select: any number of topics can be active at once and a card shows if it
+    // matches ANY of them. "all" is the reset — it clears the others; selecting a topic
+    // clears "all"; deselecting the last topic falls back to "all".
     (function () {
         var seg = document.querySelector('[data-filter]');
         if (!seg) return;
         var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-category]'));
+        var buttons = Array.prototype.slice.call(seg.querySelectorAll('button'));
+        var allBtn = seg.querySelector('[data-category="all"]');
+
+        function press(btn, on) { btn.setAttribute('aria-pressed', String(on)); }
+        function isOn(btn) { return btn.getAttribute('aria-pressed') === 'true'; }
+
+        function apply() {
+            var active = buttons
+                .filter(function (b) { return b !== allBtn && isOn(b); })
+                .map(function (b) { return b.getAttribute('data-category'); });
+            var showAll = active.length === 0;
+            press(allBtn, showAll);
+            cards.forEach(function (c) {
+                if (showAll) { c.hidden = false; return; }
+                var cardCats = c.getAttribute('data-category').split(' ');
+                c.hidden = !active.some(function (cat) { return cardCats.indexOf(cat) !== -1; });
+            });
+        }
+
         seg.addEventListener('click', function (e) {
             var btn = e.target.closest('button');
             if (!btn) return;
-            var cat = btn.getAttribute('data-category');
-            seg.querySelectorAll('button').forEach(function (b) {
-                b.setAttribute('aria-pressed', String(b === btn));
-            });
-            cards.forEach(function (c) {
-                c.hidden = !(cat === 'all' || c.getAttribute('data-category') === cat);
-            });
+            if (btn === allBtn) {
+                buttons.forEach(function (b) { press(b, b === allBtn); });
+            } else {
+                press(btn, !isOn(btn));
+            }
+            apply();
         });
     })();
 </script>

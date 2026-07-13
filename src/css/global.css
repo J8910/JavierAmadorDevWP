@@ -158,6 +158,7 @@ strong { font-weight: 600; }
  *  Cards (post list) — bordered box, image bleeds to the right edge
  * ------------------------------------------------------------------ */
 .cards { display: grid; gap: 1rem; margin-block-start: 1.5rem; }
+.card[hidden] { display: none; }  /* filter hides cards; override .card's display: grid */
 
 .card {
     display: grid;
@@ -210,6 +211,7 @@ strong { font-weight: 600; }
     padding-block-start: 1.75rem;
     border-top: 1px dashed var(--border);
 }
+.tags { display: flex; flex-wrap: wrap; gap: .5rem; }
 .tag {
     font-size: .78rem;
     color: var(--ink);
