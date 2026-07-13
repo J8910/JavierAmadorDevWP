@@ -1,0 +1,57 @@
+---
+layout: layouts/base.html
+title: Blog
+description: Notes on environment art, technical art, and the tools in between.
+---
+
+<div class="page-head">
+    <p class="eyebrow">Writing</p>
+    <h1>My adventures in</h1>
+
+    {% set cats = [] %}
+    {% for post in collections.post %}
+        {% if post.data.category and post.data.category not in cats %}
+            {% set cats = (cats.push(post.data.category), cats) %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="segmented" data-filter role="group" aria-label="Filter posts by topic">
+        <button type="button" data-category="all" aria-pressed="true">all</button>
+        {% for cat in cats %}
+        <button type="button" data-category="{{ cat }}" aria-pressed="false">{{ cat }}</button>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="cards">
+    {% for post in collections.post | reverse %}
+    <a class="card{% if post.data.image %} card--media{% endif %}" href="{{ post.url }}" data-category="{{ post.data.category or 'misc' }}">
+        <div class="card__body">
+            <h2 class="card__title">{% if post.data.emoji %}<span class="card__emoji">{{ post.data.emoji }}</span> {% endif %}{{ post.data.title }}</h2>
+            {% if post.data.description %}<p class="card__desc">{{ post.data.description }}</p>{% endif %}
+            <p class="card__date">{{ post.date | readableDate }}</p>
+        </div>
+        {% if post.data.image %}<div class="card__media"><img src="{{ post.data.image }}" alt=""></div>{% endif %}
+    </a>
+    {% endfor %}
+</div>
+
+<script>
+    // Progressive enhancement: filter cards by category. Without JS, all show.
+    (function () {
+        var seg = document.querySelector('[data-filter]');
+        if (!seg) return;
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-category]'));
+        seg.addEventListener('click', function (e) {
+            var btn = e.target.closest('button');
+            if (!btn) return;
+            var cat = btn.getAttribute('data-category');
+            seg.querySelectorAll('button').forEach(function (b) {
+                b.setAttribute('aria-pressed', String(b === btn));
+            });
+            cards.forEach(function (c) {
+                c.hidden = !(cat === 'all' || c.getAttribute('data-category') === cat);
+            });
+        });
+    })();
+</script>

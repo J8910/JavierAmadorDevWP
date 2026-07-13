@@ -1,0 +1,30 @@
+{
+  "name": "javieramadordev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J8910/JavierAmadorDevWP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/J8910/JavierAmadorDevWP/issues"
+  },
+  "homepage": "https://github.com/J8910/JavierAmadorDevWP#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "@traptitech/markdown-it-katex": "^3.6.0",
+    "common-tags": "^1.8.2",
+    "katex": "^0.17.0"
+  }
+}

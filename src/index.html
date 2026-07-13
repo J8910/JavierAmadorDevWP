@@ -1,0 +1,31 @@
+---
+layout: layouts/home.html
+---
+
+<section class="intro">
+    <div class="box intro__hello">
+        <p><span class="wave">👋</span> Hello! I'm <strong>{{ site.name }}</strong>, a technical
+            &amp; environment artist.</p>
+        <p class="intro__links"><a href="/blog/">blog</a> / <a href="/contact/">contact</a></p>
+    </div>
+    <p class="box intro__note">Here I write about environment art, shaders, and the tools
+        behind real-time worlds.</p>
+</section>
+
+<section class="latest">
+    <h2 class="section-label">Latest writing</h2>
+    <div class="cards">
+        {% for post in collections.post | reverse %}
+            {% if loop.index <= 3 %}
+            <a class="card{% if post.data.image %} card--media{% endif %}" href="{{ post.url }}">
+                <div class="card__body">
+                    <h3 class="card__title">{% if post.data.emoji %}<span class="card__emoji">{{ post.data.emoji }}</span> {% endif %}{{ post.data.title }}</h3>
+                    {% if post.data.description %}<p class="card__desc">{{ post.data.description }}</p>{% endif %}
+                    <p class="card__date">{{ post.date | readableDate }}</p>
+                </div>
+                {% if post.data.image %}<div class="card__media"><img src="{{ post.data.image }}" alt=""></div>{% endif %}
+            </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>

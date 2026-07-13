@@ -1,0 +1,18 @@
+﻿# Dependencies
+node_modules/
+
+# Build output
+_site/
+
+# IDE
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Design reference screenshots (kept local, not tracked)
+references/
+
+# Claude Code project instructions (kept local, not published)
+CLAUDE.md

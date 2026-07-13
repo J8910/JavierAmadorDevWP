@@ -1,0 +1,16 @@
+{
+  "name": "Javier Amador",
+  "author": "Javier Amador",
+  "role": "Technical & Environment Artist",
+  "url": "https://javieramador.dev",
+  "description": "Blog and portfolio of Javier Amador — technical and environment artist. Notes on environment art, shaders, and real-time worlds.",
+
+  "goatcounter": "javieramador",
+
+  "giscus": {
+    "repo": "J8910/JavierAmadorDevWP",
+    "repoId": "",
+    "category": "Announcements",
+    "categoryId": ""
+  }
+}

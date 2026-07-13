@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<article class="article">
+    <header class="article__head">
+        <p class="eyebrow">{{ page.date | readableDate }} · {{ content | readingTime }}</p>
+        <h1 class="article__title">{% if emoji %}<span class="card__emoji">{{ emoji }}</span> {% endif %}{{ title }}</h1>
+        {% if description %}<p class="article__lead">{{ description }}</p>{% endif %}
+    </header>
+
+    <div class="prose">
+        {{ content | safe }}
+    </div>
+
+    <footer class="article__foot">
+        {% if category %}<a class="tag" href="/blog/">#{{ category }}</a>{% endif %}
+        <a class="text-link" href="/blog/">&larr; back to all writing</a>
+    </footer>
+
+    {% include "comments.html" %}
+</article>
+{% endblock %}

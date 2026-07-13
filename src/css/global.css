@@ -1,0 +1,258 @@
+@import url('./reset.css');
+
+/* ================================================================== *
+ *  Design tokens — the whole "terminal zine" look lives here.
+ *  Aesthetic: monospace body, bordered cream boxes, chunky grotesque
+ *  headings, muted forest-green accent. Colour comes from artwork.
+ * ================================================================== */
+:root {
+    /* Palette */
+    --bg:          #fbfaf5;   /* warm off-white page   */
+    --box:         #f7f1e3;   /* cream box fill        */
+    --border:      #2b2925;   /* crisp near-black rule  */
+    --ink:         #201f1b;
+    --ink-soft:    #6f6c63;   /* meta / descriptions   */
+    --accent:      #4c7a52;   /* muted forest green    */
+    --accent-ink:  #2f5636;   /* green text on tint    */
+    --accent-soft: #e2ebdd;   /* light green pill tint */
+    --code-bg:     #24231e;   /* dark code block       */
+    --code-fg:     #f2efe6;
+
+    /* Type */
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    --font-head: 'Bricolage Grotesque', 'IBM Plex Mono', sans-serif;
+
+    /* Shape & rhythm */
+    --radius:  10px;
+    --measure: 66ch;
+    --gutter:  clamp(1.1rem, 4vw, 2rem);
+    --step:    clamp(2.75rem, 7vw, 4.5rem);
+}
+
+html { color-scheme: light; }
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: clamp(0.9rem, 0.86rem + 0.2vw, 0.98rem);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrap {
+    width: min(100% - (var(--gutter) * 2), var(--measure));
+    margin-inline: auto;
+}
+main.wrap { flex: 1; padding-block: var(--step); }
+
+strong { font-weight: 600; }
+
+/* Skip link — hidden until focused */
+.skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink); color: var(--bg); padding: .6rem 1rem; z-index: 10; }
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* ------------------------------------------------------------------ *
+ *  Reusable "box" — the signature bordered card
+ * ------------------------------------------------------------------ */
+.box {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--box);
+    padding: 1.1rem 1.25rem;
+}
+
+/* ------------------------------------------------------------------ *
+ *  Header / nav (pill tabs, ameye-style)
+ * ------------------------------------------------------------------ */
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    flex-wrap: wrap;
+}
+.brand {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+}
+.nav { display: flex; gap: .35rem; flex-wrap: wrap; }
+.nav a {
+    font-size: .8rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: .3em .75em;
+    border-radius: 999px;
+    transition: background .12s ease, color .12s ease;
+}
+.nav a:hover { color: var(--ink); background: var(--box); }
+.nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent-ink); font-weight: 500; }
+
+/* ------------------------------------------------------------------ *
+ *  Footer
+ * ------------------------------------------------------------------ */
+.site-footer { border-top: 1px solid var(--border); margin-top: var(--step); }
+.site-footer .wrap { padding-block: 1.5rem; }
+.site-footer p { font-size: .75rem; color: var(--ink-soft); }
+
+/* ------------------------------------------------------------------ *
+ *  Headings & shared bits
+ * ------------------------------------------------------------------ */
+.section-label {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-block-end: .9rem;
+}
+.eyebrow { font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); }
+.text-link { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--accent); }
+.text-link:hover { color: var(--accent); }
+
+.page-head { margin-block-end: 1.75rem; }
+.page-head h1 {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 1.3rem + 1.5vw, 2.2rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-block-start: .3em;
+}
+.page-head__lead { color: var(--ink-soft); margin-block-start: .7rem; max-width: 55ch; }
+
+/* ------------------------------------------------------------------ *
+ *  Segmented toggle (category filter) — active segment filled dark
+ * ------------------------------------------------------------------ */
+.segmented {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--box);
+    flex-wrap: wrap;
+}
+.segmented button {
+    font-family: var(--font-mono);
+    font-size: .78rem;
+    padding: .5em 1.1em;
+    background: none;
+    border: 0;
+    border-right: 1px solid var(--border);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background .12s ease, color .12s ease;
+}
+.segmented button:last-child { border-right: 0; }
+.segmented button:hover { color: var(--ink); }
+.segmented button[aria-pressed="true"] { background: var(--ink); color: var(--bg); font-weight: 500; }
+
+/* ------------------------------------------------------------------ *
+ *  Cards (post list) — bordered box, image bleeds to the right edge
+ * ------------------------------------------------------------------ */
+.cards { display: grid; gap: 1rem; margin-block-start: 1.5rem; }
+
+.card {
+    display: grid;
+    grid-template-columns: 1fr;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--box);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 var(--border); }
+.card--media { grid-template-columns: 1fr minmax(110px, 32%); }
+
+.card__body { padding: 1.05rem 1.2rem; }
+.card__title { font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; line-height: 1.2; letter-spacing: -0.01em; }
+.card__emoji { font-family: var(--font-mono); }
+.card__desc { color: var(--ink-soft); font-size: .88rem; margin-block-start: .35rem; }
+.card__date { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); margin-block-start: .7rem; }
+
+.card__media { position: relative; background: var(--accent-soft); border-inline-start: 1px solid var(--border); }
+.card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+@media (max-width: 34rem) {
+    .card--media { grid-template-columns: 1fr; }
+    .card__media { height: 150px; border-inline-start: 0; border-block-start: 1px solid var(--border); order: -1; }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Article — reading view
+ * ------------------------------------------------------------------ */
+.article__head { margin-block-end: 2.25rem; }
+.article__title {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(1.9rem, 1.4rem + 2.4vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-block-start: .35em;
+}
+.article__lead { color: var(--ink-soft); margin-block-start: .8rem; max-width: 60ch; }
+.article__foot {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-block-start: 3.5rem;
+    padding-block-start: 1.75rem;
+    border-top: 1px dashed var(--border);
+}
+.tag {
+    font-size: .78rem;
+    color: var(--ink);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .25em .7em;
+    background: var(--box);
+}
+.tag:hover { background: var(--accent-soft); color: var(--accent-ink); }
+
+.comments { margin-block-start: var(--step); }
+
+.prose { max-width: var(--measure); }
+.prose > * + * { margin-block-start: 1.3em; }
+.prose h2 { font-family: var(--font-head); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.01em; margin-block-start: 2em; }
+.prose h3 { font-family: var(--font-head); font-weight: 700; font-size: 1.2rem; margin-block-start: 1.6em; }
+.prose a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.prose a:hover { color: var(--accent); }
+.prose ul, .prose ol { padding-inline-start: 1.3em; }
+.prose li + li { margin-block-start: .35em; }
+.prose blockquote { border-inline-start: 3px solid var(--accent); padding-inline-start: 1.1em; color: var(--ink-soft); }
+.prose img { border: 1px solid var(--border); border-radius: var(--radius); margin-block: 2em; }
+.prose code { font-size: .88em; background: var(--accent-soft); padding: .12em .4em; border-radius: 5px; }
+.prose pre { background: var(--code-bg); color: var(--code-fg); padding: 1.1em 1.25em; border-radius: var(--radius); overflow-x: auto; font-size: .85rem; line-height: 1.6; border: 1px solid var(--border); }
+.prose pre code { background: none; padding: 0; color: inherit; }
+.prose hr { border: 0; border-top: 1px solid var(--border); margin-block: 2.5em; }
+
+/* ------------------------------------------------------------------ *
+ *  Motion — one gentle load-in + a friendly wave. Respect reduced motion.
+ * ------------------------------------------------------------------ */
+.wave { display: inline-block; transform-origin: 70% 70%; }
+@media (prefers-reduced-motion: no-preference) {
+    .intro, .page-head, .article, .card { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
+    .card:nth-child(2) { animation-delay: .05s; }
+    .card:nth-child(3) { animation-delay: .1s; }
+    .card:nth-child(4) { animation-delay: .15s; }
+    .wave { animation: wave 2.4s ease-in-out 1s 2; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes wave {
+    0%, 60%, 100% { transform: rotate(0); }
+    10%, 30% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    40% { transform: rotate(10deg); }
+}

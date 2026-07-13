@@ -1,0 +1,15 @@
+.intro { display: grid; gap: .9rem; }
+
+.intro__hello p + p { margin-block-start: .85rem; }
+
+.intro__links a {
+    color: var(--accent-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--accent);
+}
+.intro__links a:hover { color: var(--accent); }
+
+.intro__note { color: var(--ink-soft); }
+
+.latest { margin-block-start: var(--step); }
