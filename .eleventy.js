@@ -45,12 +45,18 @@ module.exports = function(eleventyConfig) {
     // block through untouched (a blank line inside would otherwise split it).
     //
     // With `mode="postfx"` the runtime switches to a two-pass G-buffer pipeline
-    // (WebGL2): a fixed scene pass raymarches an SDF and writes albedo/normal/depth
-    // buffers, and the body you write is the POST-PROCESS pass that reads them via
-    // sampleAlbedo/sampleNormal/sampleDepth(uv) → final image. The author contract is
-    // `void mainImage(out vec4 O, in vec2 uv)` with `uv` normalised [0,1] and `iTexel`
-    // = 1/resolution for neighbour taps. A "buffers" switch lets readers inspect each
-    // G-buffer channel. Pairs naturally with editable=true (see /resources/).
+    // (WebGL2): a scene pass writes albedo/normal/depth buffers, and the body you
+    // write is the POST-PROCESS pass that reads them via sampleAlbedo/sampleNormal/
+    // sampleDepth(uv) → final image. The author contract is `void mainImage(out vec4 O,
+    // in vec2 uv)` with `uv` normalised [0,1] and `iTexel` = 1/resolution for neighbour
+    // taps. A "buffers" switch lets readers inspect each G-buffer channel. Pairs
+    // naturally with editable=true (see /resources/).
+    //
+    // `scene="…"` picks how that G-buffer is filled — the post-process is identical
+    // either way, so you can showcase the same effect on either technique:
+    //   • "sdf" (default) / "sdf-spheres" — a raymarched signed-distance field.
+    //   • "mesh-sphere" / "mesh-cube" / "mesh-torus" — a rasterized manifold mesh
+    //     (real triangle geometry through the vertex/rasterizer pipeline).
     eleventyConfig.addPairedShortcode('shader', (source, opts = {}) => {
         const src = String(source).trim();
         const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -63,6 +69,11 @@ module.exports = function(eleventyConfig) {
         const editable = opts.editable === true || opts.editable === 'true';
         const postfx = opts.mode === 'postfx';
         const file = postfx ? 'postfx.glsl' : 'fragment.glsl';
+        // Which scene fills the G-buffer (postfx only): an SDF preset ("sdf",
+        // "sdf-spheres") or a rasterized manifold mesh ("mesh-sphere" / "mesh-cube"
+        // / "mesh-torus"). Sanitised to the charset the runtime keys on.
+        const scene = postfx && opts.scene
+            ? String(opts.scene).toLowerCase().replace(/[^a-z0-9-]/g, '') : '';
 
         // The code view: read-only <pre> by default, or a transparent <textarea>
         // over the highlighted <pre> when editable (runtime keeps them in sync).
@@ -92,7 +103,7 @@ module.exports = function(eleventyConfig) {
             : '';
 
         return `<figure class="shader${editable ? ' is-editable' : ''}${postfx ? ' is-postfx' : ''}"`
-            + ` data-shader="${data}"${postfx ? ' data-mode="postfx"' : ''} style="--shader-h:${h}px">`
+            + ` data-shader="${data}"${postfx ? ' data-mode="postfx"' : ''}${scene ? ` data-scene="${scene}"` : ''} style="--shader-h:${h}px">`
             + `<div class="shader__stage"><canvas class="shader__canvas"></canvas>`
             + `<div class="shader__bar">`
             + `<button type="button" class="shader__btn" data-act="toggle" aria-label="Play or pause">❚❚</button>`

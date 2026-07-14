@@ -10,11 +10,13 @@
  *     iTime / iMouse. `I` is pixel coordinates (gl_FragCoord.xy).
  *
  *   - POSTFX (`{% shader mode="postfx" %}`): WebGL2, a two-pass G-buffer pipeline.
- *     A FIXED scene pass raymarches an SDF and writes albedo / normal / depth to
- *     three buffers (via MRT); the author's `mainImage(out vec4 O, in vec2 uv)` is
- *     the POST-PROCESS pass that reads them with sampleAlbedo/sampleNormal/
- *     sampleDepth(uv). `uv` is normalised [0,1]; `iTexel` = 1/resolution for
- *     neighbour taps. A per-figure "buffers" switch shows each raw channel.
+ *     A scene pass writes albedo / normal / depth to three buffers (via MRT); the
+ *     author's `mainImage(out vec4 O, in vec2 uv)` is the POST-PROCESS pass that
+ *     reads them with sampleAlbedo/sampleNormal/sampleDepth(uv). `uv` is normalised
+ *     [0,1]; `iTexel` = 1/resolution for neighbour taps. A per-figure "buffers"
+ *     switch shows each raw channel. The scene pass is pluggable (`scene="…"`):
+ *     an SDF raymarch (default) or a rasterized manifold mesh — both fill the SAME
+ *     G-buffer, so the post-process is identical for either. See makeScene().
  *
  *  Design notes for future edits:
  *   - Each renderer (classic / postfx) exposes the same little interface —
@@ -181,28 +183,69 @@
      * ================================================================ */
     var P_VERT = '#version 300 es\nin vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }';
 
-    var P_SCENE = [
+    /* --- SDF scene (raymarched) -------------------------------------- *
+     *  Split into three parts so presets — and, later, a live editor — vary only
+     *  the map()/material() MIDDLE: HEAD supplies the primitives + uniforms/outputs,
+     *  TAIL the shared normal / lighting / orbit-camera. Full source assembled as
+     *  HEAD + <map> + '\n' + TAIL, so a GPU error line in <map> maps back by
+     *  subtracting SCENE_OFFSET (= HEAD's line count). Every SDF preset writes the
+     *  same G-buffer the mesh scene does, so the post-process is identical for both.
+     * ---------------------------------------------------------------- */
+    var SCENE_HEAD = [
         '#version 300 es',
         'precision highp float;',
         'uniform vec3 iResolution;',
         'uniform float iTime;',
         'uniform vec4 iMouse;',
-        'uniform vec3 iCam;',                                // yaw, pitch, distance (orbit)',
+        'uniform vec3 iCam;',
         'layout(location = 0) out vec4 oAlbedo;',
         'layout(location = 1) out vec4 oNormal;',
         'layout(location = 2) out vec4 oDepth;',
         '',
+        'float sdSphere(vec3 p, float r){ return length(p) - r; }',
         'float sdRoundBox(vec3 p, vec3 b, float r){ vec3 q = abs(p) - b; return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0) - r; }',
         'float sdTorus(vec3 p, vec2 t){ vec2 q = vec2(length(p.xz) - t.x, p.y); return length(q) - t.y; }',
         'vec2 closer(vec2 a, vec2 b){ return a.x < b.x ? a : b; }',
-        '',
-        '// returns vec2(distance, materialId)',
-        'vec2 map(vec3 p){',
-        '    vec2 res = vec2(p.y + 1.0, 1.0);              // ground plane, id 1',
-        '    res = closer(res, vec2(sdRoundBox(p - vec3(0.0, -0.1, 0.0), vec3(0.55), 0.06), 2.0));',
-        '    res = closer(res, vec2(sdTorus(p - vec3(0.0, 0.75, 0.0), vec2(0.5, 0.14)), 3.0));',
-        '    return res;',
-        '}',
+        ''
+    ].join('\n');
+
+    // map()/material() presets, keyed by the `scene` front-matter value.
+    var SDF_MAPS = {
+        'sdf': [
+            '// map returns vec2(distance, materialId). Primitives sdSphere / sdRoundBox',
+            '// / sdTorus and the closer() combiner come from the header above.',
+            'vec2 map(vec3 p){',
+            '    vec2 res = vec2(p.y + 1.0, 1.0);              // ground plane, id 1',
+            '    res = closer(res, vec2(sdRoundBox(p - vec3(0.0, -0.1, 0.0), vec3(0.55), 0.06), 2.0));',
+            '    res = closer(res, vec2(sdTorus(p - vec3(0.0, 0.75, 0.0), vec2(0.5, 0.14)), 3.0));',
+            '    return res;',
+            '}',
+            '',
+            'vec3 material(float id){',
+            '    if (id < 1.5) return vec3(0.42, 0.46, 0.40);   // ground',
+            '    if (id < 2.5) return vec3(0.83, 0.45, 0.32);   // box (terracotta)',
+            '    return vec3(0.33, 0.52, 0.63);                 // torus (slate)',
+            '}'
+        ].join('\n'),
+        'sdf-spheres': [
+            '// three spheres receding in depth — a clean testbed for depth effects.',
+            'vec2 map(vec3 p){',
+            '    vec2 res = vec2(p.y + 1.0, 1.0);              // ground plane, id 1',
+            '    res = closer(res, vec2(sdSphere(p - vec3(-0.95, -0.4, 0.9), 0.6), 2.0));',
+            '    res = closer(res, vec2(sdSphere(p - vec3(0.35, -0.3, -0.1), 0.7), 3.0));',
+            '    res = closer(res, vec2(sdSphere(p - vec3(1.5, -0.5, -1.4), 0.5), 2.0));',
+            '    return res;',
+            '}',
+            '',
+            'vec3 material(float id){',
+            '    if (id < 1.5) return vec3(0.42, 0.46, 0.40);   // ground',
+            '    if (id < 2.5) return vec3(0.83, 0.45, 0.32);   // terracotta',
+            '    return vec3(0.33, 0.52, 0.63);                 // slate',
+            '}'
+        ].join('\n')
+    };
+
+    var SCENE_TAIL = [
         '',
         'vec3 calcNormal(vec3 p){',
         '    vec2 e = vec2(0.0012, 0.0);',
@@ -212,26 +255,20 @@
         '        map(p + e.yyx).x - map(p - e.yyx).x));',
         '}',
         '',
-        'vec3 material(float id){',
-        '    if (id < 1.5) return vec3(0.42, 0.46, 0.40);   // ground',
-        '    if (id < 2.5) return vec3(0.83, 0.45, 0.32);   // box (terracotta)',
-        '    return vec3(0.33, 0.52, 0.63);                 // torus (slate)',
-        '}',
-        '',
         'vec3 sky(vec3 rd){',
         '    float h = clamp(rd.y * 0.5 + 0.5, 0.0, 1.0);',
-        '    vec3 col = mix(vec3(0.80, 0.86, 0.92), vec3(0.32, 0.52, 0.82), h);  // horizon -> zenith',
+        '    vec3 col = mix(vec3(0.80, 0.86, 0.92), vec3(0.32, 0.52, 0.82), h);',
         '    vec3 L = normalize(vec3(0.7, 0.85, 0.5));',
-        '    col += vec3(1.0, 0.92, 0.72) * pow(clamp(dot(rd, L), 0.0, 1.0), 200.0) * 0.6;  // soft sun glow',
+        '    col += vec3(1.0, 0.92, 0.72) * pow(clamp(dot(rd, L), 0.0, 1.0), 200.0) * 0.6;',
         '    return col;',
         '}',
         '',
         'void main(){',
         '    vec2 uv = (gl_FragCoord.xy - 0.5 * iResolution.xy) / iResolution.y;',
-        '    vec3 ta = vec3(0.0, 0.15, 0.0);                // orbit target',
+        '    vec3 ta = vec3(0.0, 0.15, 0.0);',
         '    float cp = cos(iCam.y);',
         '    vec3 dir = vec3(cp * sin(iCam.x), sin(iCam.y), cp * cos(iCam.x));',
-        '    vec3 ro = ta + dir * iCam.z;                   // yaw / pitch / distance',
+        '    vec3 ro = ta + dir * iCam.z;',
         '    vec3 fw = normalize(ta - ro);',
         '    vec3 rt = normalize(cross(fw, vec3(0.0, 1.0, 0.0)));',
         '    vec3 up = cross(rt, fw);',
@@ -264,6 +301,147 @@
         '    oDepth  = vec4(vec3(depth), hit ? 1.0 : 0.0);',
         '}'
     ].join('\n');
+    var SCENE_OFFSET = lineCount(SCENE_HEAD);
+
+    /* --- Mesh scene (rasterized manifold primitives) ----------------- *
+     *  The other way to fill the SAME G-buffer: real triangle geometry through the
+     *  rasterizer with a depth buffer, so posts can contrast SDF raymarching with a
+     *  classic vertex/rasterize pipeline. The vertex shader is fixed for now (making
+     *  it reader-editable — vertex displacement etc. — is the natural next step). The
+     *  fragment writes the identical albedo / normal / [0,1]-depth / mask layout, so
+     *  every post-process effect runs unchanged on a mesh scene.
+     * ---------------------------------------------------------------- */
+    var MESH_VERT = [
+        '#version 300 es',
+        'in vec3 aPos;',
+        'in vec3 aNormal;',
+        'in vec3 aColor;',
+        'uniform mat4 uViewProj;',
+        'uniform float iTime;',
+        'out vec3 vColor;',
+        'out vec3 vNormal;',
+        'out vec3 vWorld;',
+        'void main(){',
+        '    vec3 pos = aPos;              // (editable vertex work would displace here)',
+        '    vWorld = pos;',
+        '    vNormal = aNormal;',
+        '    vColor = aColor;',
+        '    gl_Position = uViewProj * vec4(pos, 1.0);',
+        '}'
+    ].join('\n');
+    var MESH_FRAG = [
+        '#version 300 es',
+        'precision highp float;',
+        'in vec3 vColor;',
+        'in vec3 vNormal;',
+        'in vec3 vWorld;',
+        'uniform vec3 uCam;',
+        'layout(location = 0) out vec4 oAlbedo;',
+        'layout(location = 1) out vec4 oNormal;',
+        'layout(location = 2) out vec4 oDepth;',
+        'void main(){',
+        '    vec3 N = normalize(vNormal);',
+        '    vec3 L = normalize(vec3(0.7, 0.85, 0.5));',
+        '    float dif = clamp(dot(N, L), 0.0, 1.0);',
+        '    vec3 V = normalize(uCam - vWorld);',
+        '    vec3 H = normalize(L + V);',
+        '    float spe = pow(clamp(dot(N, H), 0.0, 1.0), 40.0) * 0.35;',
+        '    vec3 albedo = vColor * (0.28 + dif) + spe;',
+        '    float depth = clamp(length(vWorld - uCam) / 12.0, 0.0, 1.0);   // matches SDF t/12',
+        '    oAlbedo = vec4(albedo, 1.0);',
+        '    oNormal = vec4(N * 0.5 + 0.5, 1.0);',
+        '    oDepth  = vec4(vec3(depth), 1.0);',
+        '}'
+    ].join('\n');
+
+    // Tiny column-major mat4 helpers (no gl-matrix dependency — same "vendor
+    // nothing to the client" stance as the in-browser highlighter above).
+    function perspective(fovy, aspect, near, far) {
+        var f = 1 / Math.tan(fovy / 2), nf = 1 / (near - far), m = new Float32Array(16);
+        m[0] = f / aspect; m[5] = f; m[10] = (far + near) * nf; m[11] = -1; m[14] = 2 * far * near * nf;
+        return m;
+    }
+    function lookAt(eye, center, up) {
+        var zx = eye[0] - center[0], zy = eye[1] - center[1], zz = eye[2] - center[2];
+        var zl = Math.hypot(zx, zy, zz) || 1; zx /= zl; zy /= zl; zz /= zl;
+        var xx = up[1] * zz - up[2] * zy, xy = up[2] * zx - up[0] * zz, xz = up[0] * zy - up[1] * zx;
+        var xl = Math.hypot(xx, xy, xz) || 1; xx /= xl; xy /= xl; xz /= xl;
+        var yx = zy * xz - zz * xy, yy = zz * xx - zx * xz, yz = zx * xy - zy * xx;
+        var m = new Float32Array(16);
+        m[0] = xx; m[1] = yx; m[2] = zx; m[3] = 0;
+        m[4] = xy; m[5] = yy; m[6] = zy; m[7] = 0;
+        m[8] = xz; m[9] = yz; m[10] = zz; m[11] = 0;
+        m[12] = -(xx * eye[0] + xy * eye[1] + xz * eye[2]);
+        m[13] = -(yx * eye[0] + yy * eye[1] + yz * eye[2]);
+        m[14] = -(zx * eye[0] + zy * eye[1] + zz * eye[2]);
+        m[15] = 1;
+        return m;
+    }
+    function mat4mul(a, b) {                      // a * b, both column-major
+        var o = new Float32Array(16);
+        for (var c = 0; c < 4; c++) {
+            for (var r = 0; r < 4; r++) {
+                o[c * 4 + r] = a[r] * b[c * 4] + a[4 + r] * b[c * 4 + 1] + a[8 + r] * b[c * 4 + 2] + a[12 + r] * b[c * 4 + 3];
+            }
+        }
+        return o;
+    }
+
+    // Interleaved [pos(3), normal(3), colour(3)] verts + Uint16 indices for a
+    // ground plane plus one manifold primitive (sphere / cube / torus).
+    function meshData(primitive) {
+        var V = [], I = [];
+        var GROUND = [0.42, 0.46, 0.40], TERRA = [0.83, 0.45, 0.32], SLATE = [0.33, 0.52, 0.63];
+        function vert(px, py, pz, nx, ny, nz, c) { V.push(px, py, pz, nx, ny, nz, c[0], c[1], c[2]); }
+        function quad(cx, cy, cz, ux, uy, uz, vx, vy, vz, nx, ny, nz, c) {
+            var o = V.length / 9;
+            vert(cx - ux - vx, cy - uy - vy, cz - uz - vz, nx, ny, nz, c);
+            vert(cx + ux - vx, cy + uy - vy, cz + uz - vz, nx, ny, nz, c);
+            vert(cx + ux + vx, cy + uy + vy, cz + uz + vz, nx, ny, nz, c);
+            vert(cx - ux + vx, cy - uy + vy, cz - uz + vz, nx, ny, nz, c);
+            I.push(o, o + 1, o + 2, o, o + 2, o + 3);
+        }
+
+        // Ground plane at y = -1 (matches the SDF `p.y + 1.0` floor).
+        quad(0, -1, 0, 6, 0, 0, 0, 0, 6, 0, 1, 0, GROUND);
+
+        if (primitive === 'cube') {
+            var h = 0.55, y = -1 + h;
+            quad( h, y, 0, 0, h, 0, 0, 0, h,  1, 0, 0, TERRA);
+            quad(-h, y, 0, 0, h, 0, 0, 0, h, -1, 0, 0, TERRA);
+            quad(0, y + h, 0, h, 0, 0, 0, 0, h, 0,  1, 0, TERRA);
+            quad(0, y - h, 0, h, 0, 0, 0, 0, h, 0, -1, 0, TERRA);
+            quad(0, y,  h, h, 0, 0, 0, h, 0, 0, 0,  1, TERRA);
+            quad(0, y, -h, h, 0, 0, 0, h, 0, 0, 0, -1, TERRA);
+        } else if (primitive === 'torus') {
+            var Rr = 0.55, rr = 0.20, cyy = -0.25, seg = 48, side = 24, o = V.length / 9;
+            for (var i = 0; i <= seg; i++) {
+                var u = 2 * Math.PI * i / seg, cu = Math.cos(u), su = Math.sin(u);
+                for (var k = 0; k <= side; k++) {
+                    var vv = 2 * Math.PI * k / side, cv = Math.cos(vv), sv = Math.sin(vv);
+                    vert((Rr + rr * cv) * cu, cyy + rr * sv, (Rr + rr * cv) * su, cv * cu, sv, cv * su, SLATE);
+                }
+            }
+            var ts = side + 1;
+            for (i = 0; i < seg; i++) for (k = 0; k < side; k++) {
+                var a = o + i * ts + k; I.push(a, a + ts, a + 1, a + 1, a + ts, a + ts + 1);
+            }
+        } else {                                 // sphere (default)
+            var R = 0.62, cy = -1 + R, segS = 48, rings = 32, os = V.length / 9;
+            for (var j = 0; j <= rings; j++) {
+                var phi = Math.PI * j / rings, sp = Math.sin(phi), cpp = Math.cos(phi);
+                for (var m = 0; m <= segS; m++) {
+                    var th = 2 * Math.PI * m / segS, nx = sp * Math.cos(th), nz = sp * Math.sin(th);
+                    vert(R * nx, cy + R * cpp, R * nz, nx, cpp, nz, TERRA);
+                }
+            }
+            var ss = segS + 1;
+            for (j = 0; j < rings; j++) for (m = 0; m < segS; m++) {
+                var b = os + j * ss + m; I.push(b, b + ss, b + 1, b + 1, b + ss, b + ss + 1);
+            }
+        }
+        return { data: new Float32Array(V), index: new Uint16Array(I), count: I.length };
+    }
 
     var P_HEAD = [
         '#version 300 es',
@@ -300,7 +478,123 @@
         '    o = (uMode == 1) ? vec4(c.rrr, 1.0) : vec4(c.rgb, 1.0); }'
     ].join('\n');
 
-    function makePostfxRenderer(gl, canvas) {
+    // Link a standalone vertex+fragment program (each scene owns its own vertex
+    // stage: fullscreen triangle for SDF, real 3D transform for mesh).
+    function linkProgram(gl, vsSrc, fsSrc, offset) {
+        var vs, fs;
+        try { vs = compile(gl, gl.VERTEX_SHADER, vsSrc); }
+        catch (e) { return { error: fmtError(e.message, offset || 0) }; }
+        try { fs = compile(gl, gl.FRAGMENT_SHADER, fsSrc); }
+        catch (e) { gl.deleteShader(vs); return { error: fmtError(e.message, offset || 0) }; }
+        var p = gl.createProgram();
+        gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p);
+        gl.deleteShader(vs); gl.deleteShader(fs);
+        if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+            var log = gl.getProgramInfoLog(p); gl.deleteProgram(p);
+            return { error: fmtError(log || 'link failed', offset || 0) };
+        }
+        return { program: p };
+    }
+
+    /* Scene modules — both expose ready() / error() / draw(t, mouse, cam, w, h) and
+       fill the currently-bound G-buffer FBO (drawBuffers + viewport already set by
+       the caller). makeSdfScene also exposes compile(map) for a future live editor. */
+    function makeSdfScene(gl, tri, mapSrc) {
+        var prog = null, U = null, err = null;
+        function build(map) {
+            var r = linkProgram(gl, P_VERT, SCENE_HEAD + map + '\n' + SCENE_TAIL, SCENE_OFFSET);
+            if (r.error) { return { ok: false, error: r.error }; }
+            if (prog) { gl.deleteProgram(prog); }
+            prog = r.program; err = null;
+            U = {
+                res: gl.getUniformLocation(prog, 'iResolution'),
+                time: gl.getUniformLocation(prog, 'iTime'),
+                mouse: gl.getUniformLocation(prog, 'iMouse'),
+                cam: gl.getUniformLocation(prog, 'iCam')
+            };
+            return { ok: true };
+        }
+        var init = build(mapSrc); if (!init.ok) { err = init.error; }
+        return {
+            ready: function () { return !!prog; },
+            error: function () { return err; },
+            compile: build,
+            draw: function (elapsed, mouse, cam, w, h) {
+                if (!prog) { return; }
+                gl.disable(gl.DEPTH_TEST);
+                gl.useProgram(prog);
+                gl.bindBuffer(gl.ARRAY_BUFFER, tri);
+                var pl = gl.getAttribLocation(prog, 'p');
+                gl.enableVertexAttribArray(pl);
+                gl.vertexAttribPointer(pl, 2, gl.FLOAT, false, 0, 0);
+                gl.uniform3f(U.res, w, h, 1);
+                gl.uniform1f(U.time, elapsed);
+                gl.uniform4f(U.mouse, mouse[0], mouse[1], mouse[2], mouse[3]);
+                gl.uniform3f(U.cam, cam[0], cam[1], cam[2]);
+                gl.drawArrays(gl.TRIANGLES, 0, 3);
+            }
+        };
+    }
+
+    function makeMeshScene(gl, primitive) {
+        var r = linkProgram(gl, MESH_VERT, MESH_FRAG);
+        var prog = r.program || null, err = r.error || null;
+        var U = prog ? {
+            vp: gl.getUniformLocation(prog, 'uViewProj'),
+            time: gl.getUniformLocation(prog, 'iTime'),
+            cam: gl.getUniformLocation(prog, 'uCam')
+        } : null;
+        var aPos = prog ? gl.getAttribLocation(prog, 'aPos') : -1;
+        var aNor = prog ? gl.getAttribLocation(prog, 'aNormal') : -1;
+        var aCol = prog ? gl.getAttribLocation(prog, 'aColor') : -1;
+        var mesh = meshData(primitive);
+        var vbo = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+        gl.bufferData(gl.ARRAY_BUFFER, mesh.data, gl.STATIC_DRAW);
+        var ibo = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, mesh.index, gl.STATIC_DRAW);
+        var STRIDE = 9 * 4;
+        return {
+            ready: function () { return !!prog; },
+            error: function () { return err; },
+            draw: function (elapsed, mouse, cam, w, h) {
+                if (!prog) { return; }
+                var ta = [0.0, 0.05, 0.0], cp = Math.cos(cam[1]);
+                var dir = [cp * Math.sin(cam[0]), Math.sin(cam[1]), cp * Math.cos(cam[0])];
+                var eye = [ta[0] + dir[0] * cam[2], ta[1] + dir[1] * cam[2], ta[2] + dir[2] * cam[2]];
+                var vp = mat4mul(perspective(2 * Math.atan(0.5 / 1.5), w / h, 0.05, 40.0),
+                    lookAt(eye, ta, [0, 1, 0]));
+                // Clear the G-buffer to background: sky-ish albedo, +Z normal, far depth,
+                // mask 0 — the same "miss" values the SDF scene writes for the sky.
+                gl.clearBufferfv(gl.COLOR, 0, [0.62, 0.72, 0.86, 1]);
+                gl.clearBufferfv(gl.COLOR, 1, [0.5, 0.5, 1.0, 1]);
+                gl.clearBufferfv(gl.COLOR, 2, [1, 1, 1, 0]);
+                gl.clearDepth(1.0); gl.clear(gl.DEPTH_BUFFER_BIT);
+                gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL);
+                gl.useProgram(prog);
+                gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+                gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, STRIDE, 0);
+                gl.enableVertexAttribArray(aNor); gl.vertexAttribPointer(aNor, 3, gl.FLOAT, false, STRIDE, 12);
+                gl.enableVertexAttribArray(aCol); gl.vertexAttribPointer(aCol, 3, gl.FLOAT, false, STRIDE, 24);
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+                gl.uniformMatrix4fv(U.vp, false, vp);
+                gl.uniform1f(U.time, elapsed);
+                gl.uniform3f(U.cam, eye[0], eye[1], eye[2]);
+                gl.drawElements(gl.TRIANGLES, mesh.count, gl.UNSIGNED_SHORT, 0);
+                gl.disable(gl.DEPTH_TEST);
+            }
+        };
+    }
+
+    // `scene` front-matter value -> a scene module. "mesh-<prim>" rasterizes;
+    // anything else is an SDF preset key (default "sdf").
+    function makeScene(gl, tri, name) {
+        if (name.indexOf('mesh') === 0) { return makeMeshScene(gl, name.slice(5) || 'sphere'); }
+        return makeSdfScene(gl, tri, SDF_MAPS[name] || SDF_MAPS['sdf']);
+    }
+
+    function makePostfxRenderer(gl, canvas, sceneName) {
         // Half-float G-buffers when the GPU can render them (kills banding in
         // derivative post-effects); RGBA8 fallback keeps the [0,1] layout intact.
         var floatRT = !!gl.getExtension('EXT_color_buffer_float');
@@ -310,7 +604,8 @@
         gl.bindBuffer(gl.ARRAY_BUFFER, buf);
         gl.bufferData(gl.ARRAY_BUFFER, TRI, gl.STATIC_DRAW);
 
-        // Link a fragment source against the shared vertex shader.
+        // Link a fragment source against the shared full-screen vertex shader
+        // (post-process + channel blit; both cover every pixel).
         function link(fsSrc, offset) {
             var fs;
             try { fs = compile(gl, gl.FRAGMENT_SHADER, fsSrc); }
@@ -334,17 +629,8 @@
             gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
         }
 
-        // Fixed programs (scene + channel blit). A failure here is a runtime bug,
-        // not an author mistake — surface it via compile() so it's seen in dev.
-        var sceneR = link(P_SCENE);
-        var sceneProg = sceneR.program || null;
-        var sceneErr = sceneR.error || null;
-        var sceneU = sceneProg ? {
-            res: gl.getUniformLocation(sceneProg, 'iResolution'),
-            time: gl.getUniformLocation(sceneProg, 'iTime'),
-            mouse: gl.getUniformLocation(sceneProg, 'iMouse'),
-            cam: gl.getUniformLocation(sceneProg, 'iCam')
-        } : null;
+        // The scene pass (SDF raymarch or rasterized mesh) that fills the G-buffer.
+        var scene = makeScene(gl, buf, sceneName || 'sdf');
 
         var blitR = link(P_BLIT);
         var blitProg = blitR.program || null;
@@ -356,8 +642,11 @@
 
         var userProg = null, userU = null;
 
-        // G-buffer: one FBO with three colour attachments, resized with the canvas.
+        // G-buffer: one FBO with three colour attachments + a depth renderbuffer
+        // (needed for the mesh scene's rasterizer; harmless to the SDF scene, which
+        // leaves depth testing off). All resized with the canvas.
         var fbo = gl.createFramebuffer();
+        var depthRB = gl.createRenderbuffer();
         var texA = null, texN = null, texD = null, fbW = 0, fbH = 0;
         var DRAWBUFS = [gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1, gl.COLOR_ATTACHMENT2];
         var view = 'final';
@@ -385,13 +674,16 @@
                 gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texA, 0);
                 gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT1, gl.TEXTURE_2D, texN, 0);
                 gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT2, gl.TEXTURE_2D, texD, 0);
+                gl.bindRenderbuffer(gl.RENDERBUFFER, depthRB);
+                gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT24, w, h);
+                gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthRB);
                 gl.bindFramebuffer(gl.FRAMEBUFFER, null);
             }
             gl.viewport(0, 0, w, h);
         }
 
         function compileUser(userSrc) {
-            if (sceneErr) { return { ok: false, error: 'scene pass failed to compile:\n' + sceneErr }; }
+            if (scene.error()) { return { ok: false, error: 'scene pass failed to compile:\n' + scene.error() }; }
             var res = link(P_HEAD + userSrc + P_FOOT, P_OFFSET);
             if (res.error) { return { ok: false, error: res.error }; }
             if (userProg) { gl.deleteProgram(userProg); }
@@ -412,22 +704,12 @@
             return { ok: true };
         }
 
-        function drawScene(elapsed, mouse, cam) {
-            gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+        function draw(elapsed, mouse, cam) {
+            if (!userProg || !scene.ready()) { return; }
+            gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);    // fill the G-buffer
             gl.drawBuffers(DRAWBUFS);
             gl.viewport(0, 0, fbW, fbH);
-            gl.useProgram(sceneProg);
-            bindGeom(sceneProg);
-            gl.uniform3f(sceneU.res, fbW, fbH, 1);
-            gl.uniform1f(sceneU.time, elapsed);
-            gl.uniform4f(sceneU.mouse, mouse[0], mouse[1], mouse[2], mouse[3]);
-            gl.uniform3f(sceneU.cam, cam[0], cam[1], cam[2]);
-            gl.drawArrays(gl.TRIANGLES, 0, 3);
-        }
-
-        function draw(elapsed, mouse, cam) {
-            if (!userProg || !sceneProg) { return; }
-            drawScene(elapsed, mouse, cam);            // fill the G-buffer
+            scene.draw(elapsed, mouse, cam, fbW, fbH);
 
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);  // -> screen
             gl.viewport(0, 0, fbW, fbH);
@@ -459,7 +741,7 @@
         }
 
         return {
-            ready: function () { return !!(userProg && sceneProg); },
+            ready: function () { return !!userProg && scene.ready(); },
             resize: resize,
             compile: compileUser,
             draw: draw,
@@ -500,7 +782,7 @@
                     showError('This live demo needs WebGL2, which this browser has not enabled. The code below still shows the technique.');
                     return;
                 }
-                renderer = makePostfxRenderer(gl, canvas);
+                renderer = makePostfxRenderer(gl, canvas, fig.getAttribute('data-scene') || 'sdf');
             } else {
                 gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
                 if (!gl) { showError('WebGL is not available in this browser.'); return; }
