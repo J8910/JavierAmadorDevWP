@@ -1,0 +1,11 @@
+---
+# robots.txt, built to /robots.txt on each build. Welcomes all well-behaved
+# crawlers to the whole site and points them at the sitemap. NOT a security or
+# privacy tool — it only guides cooperative bots.
+permalink: /robots.txt
+eleventyExcludeFromCollections: true
+---
+User-agent: *
+Allow: /
+
+Sitemap: {{ site.url }}/sitemap.xml

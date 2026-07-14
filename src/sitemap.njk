@@ -1,0 +1,16 @@
+---
+# XML sitemap, built to /sitemap.xml on each build. Lists every page on the site
+# (standalone pages + blog posts) so search engines can discover and crawl them.
+# Pointed to by robots.txt and submittable in Google Search Console.
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {%- for item in collections.all %}
+    <url>
+        <loc>{{ item.url | absoluteUrl(site.url) }}</loc>
+        <lastmod>{{ item.date | dateToRfc3339 }}</lastmod>
+    </url>
+    {%- endfor %}
+</urlset>
