@@ -168,10 +168,15 @@
     /* ================================================================ *
      *  Postfx renderer — WebGL2, two-pass G-buffer pipeline.
      *
-     *  Pass 1 (fixed SCENE): raymarch an SDF, write three RGBA8 buffers via MRT
-     *      0: albedo (lit "beauty")   1: normal (n*0.5+0.5)   2: depth (linear,
-     *      replicated to rgb; alpha = hit mask). RGBA8 needs no float extension,
-     *      so it runs anywhere WebGL2 does.
+     *  Pass 1 (fixed SCENE): raymarch an SDF, write three buffers via MRT
+     *      0: albedo (lit "beauty")   1: normal (n*0.5+0.5)   2: depth (linear
+     *      [0,1], replicated to rgb; alpha = hit mask). Buffers are RGBA16F when
+     *      EXT_color_buffer_float is available (half-float precision — needed so
+     *      derivative post-effects like Laplacian/Sobel edges or DoF don't band
+     *      on the ~1/255 quantization steps of 8-bit), falling back to RGBA8 on
+     *      the rare WebGL2 device without it. Half-float is core-linearly-
+     *      filterable in WebGL2, so LINEAR sampling works either way, and the
+     *      author-facing [0,1] channel layout is identical in both formats.
      *  Pass 2 (author POSTFX or a channel BLIT): reads those buffers -> screen.
      * ================================================================ */
     var P_VERT = '#version 300 es\nin vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }';
@@ -296,6 +301,10 @@
     ].join('\n');
 
     function makePostfxRenderer(gl, canvas) {
+        // Half-float G-buffers when the GPU can render them (kills banding in
+        // derivative post-effects); RGBA8 fallback keeps the [0,1] layout intact.
+        var floatRT = !!gl.getExtension('EXT_color_buffer_float');
+
         var vsh = compile(gl, gl.VERTEX_SHADER, P_VERT);
         var buf = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, buf);
@@ -356,7 +365,11 @@
         function makeTex(w, h) {
             var t = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, t);
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+            if (floatRT) {
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, w, h, 0, gl.RGBA, gl.HALF_FLOAT, null);
+            } else {
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+            }
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
