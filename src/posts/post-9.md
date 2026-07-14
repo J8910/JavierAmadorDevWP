@@ -88,6 +88,9 @@ void mainImage(out vec4 O, in vec2 uv) {
 
 - **All four channels populate on every scene** — flip *beauty / normal / depth / mask* under
   each canvas. Background = far depth (white), mask 0; object = mask 1.
+- **The `wire` view (mesh scenes only)** shows a hidden-line wireframe — the sphere/torus grid
+  and the cube's flat faces, with back edges correctly occluded. SDF scenes have no `wire`
+  button (there's no mesh to draw).
 - **Framing matches** between the SDF and mesh embeds (same orbit target, FOV, and zoom).
 - **No banding** in the edge pass — the G-buffer is `RGBA16F` where supported.
 - **Editing still works** on the last embed, with last-good-kept-on-error behaviour.

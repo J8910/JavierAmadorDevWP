@@ -354,6 +354,21 @@
         '}'
     ].join('\n');
 
+    // Flat-colour program for the wireframe view (position only; colour from a uniform).
+    var WIRE_VERT = [
+        '#version 300 es',
+        'in vec3 aPos;',
+        'uniform mat4 uViewProj;',
+        'void main(){ gl_Position = uViewProj * vec4(aPos, 1.0); }'
+    ].join('\n');
+    var WIRE_FRAG = [
+        '#version 300 es',
+        'precision highp float;',
+        'uniform vec3 uColor;',
+        'out vec4 o;',
+        'void main(){ o = vec4(uColor, 1.0); }'
+    ].join('\n');
+
     // Tiny column-major mat4 helpers (no gl-matrix dependency — same "vendor
     // nothing to the client" stance as the in-browser highlighter above).
     function perspective(fovy, aspect, near, far) {
@@ -440,7 +455,20 @@
                 var b = os + j * ss + m; I.push(b, b + ss, b + 1, b + 1, b + ss, b + ss + 1);
             }
         }
-        return { data: new Float32Array(V), index: new Uint16Array(I), count: I.length };
+        // Unique triangle edges for the wireframe view (a gl.LINES index buffer).
+        // Dedup shared edges so each is drawn once (key packs the sorted vertex pair).
+        var seen = {}, E = [];
+        for (var t = 0; t < I.length; t += 3) {
+            for (var e = 0; e < 3; e++) {
+                var x = I[t + e], y = I[t + (e + 1) % 3];
+                var key = x < y ? x * 100000 + y : y * 100000 + x;
+                if (!seen[key]) { seen[key] = 1; E.push(x, y); }
+            }
+        }
+        return {
+            data: new Float32Array(V), index: new Uint16Array(I), count: I.length,
+            edges: new Uint16Array(E), edgeCount: E.length
+        };
     }
 
     var P_HEAD = [
@@ -547,24 +575,48 @@
         var aPos = prog ? gl.getAttribLocation(prog, 'aPos') : -1;
         var aNor = prog ? gl.getAttribLocation(prog, 'aNormal') : -1;
         var aCol = prog ? gl.getAttribLocation(prog, 'aColor') : -1;
+
+        // Flat-shaded program for the wireframe view.
+        var wr = linkProgram(gl, WIRE_VERT, WIRE_FRAG);
+        var wireProg = wr.program || null;
+        var wireU = wireProg ? {
+            vp: gl.getUniformLocation(wireProg, 'uViewProj'),
+            color: gl.getUniformLocation(wireProg, 'uColor')
+        } : null;
+        var aPosW = wireProg ? gl.getAttribLocation(wireProg, 'aPos') : -1;
+
         var mesh = meshData(primitive);
         var vbo = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
         gl.bufferData(gl.ARRAY_BUFFER, mesh.data, gl.STATIC_DRAW);
-        var ibo = gl.createBuffer();
+        var ibo = gl.createBuffer();                 // triangle indices
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, mesh.index, gl.STATIC_DRAW);
+        var ebo = gl.createBuffer();                 // unique edges, for gl.LINES
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ebo);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, mesh.edges, gl.STATIC_DRAW);
         var STRIDE = 9 * 4;
+
+        function camera(cam, w, h) {
+            var ta = [0.0, 0.05, 0.0], cp = Math.cos(cam[1]);
+            var dir = [cp * Math.sin(cam[0]), Math.sin(cam[1]), cp * Math.cos(cam[0])];
+            var eye = [ta[0] + dir[0] * cam[2], ta[1] + dir[1] * cam[2], ta[2] + dir[2] * cam[2]];
+            var vp = mat4mul(perspective(2 * Math.atan(0.5 / 1.5), w / h, 0.05, 40.0),
+                lookAt(eye, ta, [0, 1, 0]));
+            return { eye: eye, vp: vp };
+        }
+        function bindPos(loc) {                       // aPos <- vbo (shared by both programs)
+            gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+            gl.enableVertexAttribArray(loc);
+            gl.vertexAttribPointer(loc, 3, gl.FLOAT, false, STRIDE, 0);
+        }
+
         return {
             ready: function () { return !!prog; },
             error: function () { return err; },
             draw: function (elapsed, mouse, cam, w, h) {
                 if (!prog) { return; }
-                var ta = [0.0, 0.05, 0.0], cp = Math.cos(cam[1]);
-                var dir = [cp * Math.sin(cam[0]), Math.sin(cam[1]), cp * Math.cos(cam[0])];
-                var eye = [ta[0] + dir[0] * cam[2], ta[1] + dir[1] * cam[2], ta[2] + dir[2] * cam[2]];
-                var vp = mat4mul(perspective(2 * Math.atan(0.5 / 1.5), w / h, 0.05, 40.0),
-                    lookAt(eye, ta, [0, 1, 0]));
+                var C = camera(cam, w, h);
                 // Clear the G-buffer to background: sky-ish albedo, +Z normal, far depth,
                 // mask 0 — the same "miss" values the SDF scene writes for the sky.
                 gl.clearBufferfv(gl.COLOR, 0, [0.62, 0.72, 0.86, 1]);
@@ -573,15 +625,38 @@
                 gl.clearDepth(1.0); gl.clear(gl.DEPTH_BUFFER_BIT);
                 gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL);
                 gl.useProgram(prog);
-                gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
-                gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, STRIDE, 0);
+                bindPos(aPos);
                 gl.enableVertexAttribArray(aNor); gl.vertexAttribPointer(aNor, 3, gl.FLOAT, false, STRIDE, 12);
                 gl.enableVertexAttribArray(aCol); gl.vertexAttribPointer(aCol, 3, gl.FLOAT, false, STRIDE, 24);
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
-                gl.uniformMatrix4fv(U.vp, false, vp);
+                gl.uniformMatrix4fv(U.vp, false, C.vp);
                 gl.uniform1f(U.time, elapsed);
-                gl.uniform3f(U.cam, eye[0], eye[1], eye[2]);
+                gl.uniform3f(U.cam, C.eye[0], C.eye[1], C.eye[2]);
                 gl.drawElements(gl.TRIANGLES, mesh.count, gl.UNSIGNED_SHORT, 0);
+                gl.disable(gl.DEPTH_TEST);
+            },
+            // Hidden-line wireframe, drawn straight to the bound (screen) framebuffer:
+            // a dark solid fill nudged back by a polygon offset occludes the far edges,
+            // then bright lines draw the visible ones over it.
+            wire: function (cam, w, h) {
+                if (!wireProg) { return; }
+                var C = camera(cam, w, h);
+                gl.viewport(0, 0, w, h);
+                gl.clearColor(0.12, 0.13, 0.12, 1.0);
+                gl.clearDepth(1.0);
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+                gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL);
+                gl.useProgram(wireProg);
+                bindPos(aPosW);
+                gl.uniformMatrix4fv(wireU.vp, false, C.vp);
+                gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(1.0, 1.0);
+                gl.uniform3f(wireU.color, 0.17, 0.18, 0.17);
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+                gl.drawElements(gl.TRIANGLES, mesh.count, gl.UNSIGNED_SHORT, 0);
+                gl.disable(gl.POLYGON_OFFSET_FILL);
+                gl.uniform3f(wireU.color, 0.86, 0.88, 0.82);
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ebo);
+                gl.drawElements(gl.LINES, mesh.edgeCount, gl.UNSIGNED_SHORT, 0);
                 gl.disable(gl.DEPTH_TEST);
             }
         };
@@ -727,6 +802,9 @@
                 gl.uniform2f(userU.texel, 1 / fbW, 1 / fbH);
                 gl.uniform1f(userU.inspect, view === 'mask' ? 1 : 0);
                 gl.drawArrays(gl.TRIANGLES, 0, 3);
+            } else if (view === 'wire' && scene.wire) {
+                // Topology view (mesh scenes only): re-render the geometry as lines.
+                scene.wire(cam, fbW, fbH);
             } else {
                 // Inspect one raw G-buffer channel (depth shown as grayscale).
                 gl.useProgram(blitProg);

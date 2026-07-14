@@ -99,6 +99,9 @@ module.exports = function(eleventyConfig) {
                 + `<button type="button" data-view="albedo" aria-pressed="false">beauty</button>`
                 + `<button type="button" data-view="normal" aria-pressed="false">normal</button>`
                 + `<button type="button" data-view="depth" aria-pressed="false">depth</button>`
+                // Wireframe is a mesh-topology view — only meaningful for mesh scenes.
+                + (scene.indexOf('mesh') === 0
+                    ? `<button type="button" data-view="wire" aria-pressed="false">wire</button>` : '')
                 + `</div>`
             : '';
 
