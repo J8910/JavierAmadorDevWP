@@ -14,7 +14,7 @@
 
     <footer class="article__foot">
         {% set postCats = categories or ([category] if category else []) %}
-        {% if postCats | length %}<div class="tags">{% for c in postCats %}<a class="tag" href="/blog/">#{{ c }}</a>{% endfor %}</div>{% endif %}
+        {% if postCats | length %}<div class="tags">{% for c in postCats %}<a class="tag" href="/blog/?category={{ c | urlencode }}">#{{ c }}</a>{% endfor %}</div>{% endif %}
         <a class="text-link" href="/blog/">&larr; back to all writing</a>
     </footer>
 

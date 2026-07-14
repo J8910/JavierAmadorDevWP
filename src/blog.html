@@ -90,5 +90,23 @@ description: Notes on environment art, technical art, and the tools in between.
             }
             apply();
         });
+
+        // Honor a ?category= filter passed in via a tag link (e.g. clicking a #tag in a
+        // post footer). Comma-separated values pre-select multiple topics; unknown or
+        // missing values leave the default "all" state untouched.
+        var requested = (new URLSearchParams(location.search).get('category') || '')
+            .split(',')
+            .map(function (s) { return s.trim(); })
+            .filter(Boolean);
+        if (requested.length) {
+            var matched = false;
+            buttons.forEach(function (b) {
+                if (b === allBtn) return;
+                var on = requested.indexOf(b.getAttribute('data-category')) !== -1;
+                press(b, on);
+                if (on) matched = true;
+            });
+            if (matched) apply();
+        }
     })();
 </script>
