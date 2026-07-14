@@ -96,6 +96,9 @@ strong { font-weight: 600; }
     background: var(--box);
     padding: 1.1rem 1.25rem;
 }
+/* Squared variant for static framed panels (matches the home intro), vs. the
+   rounded default used by clickable cards. */
+.box--hard { border-radius: var(--radius-hard); }
 
 /* ------------------------------------------------------------------ *
  *  Header / nav (pill tabs, ameye-style)
@@ -312,6 +315,10 @@ strong { font-weight: 600; }
 .prose h3 { font-family: var(--font-head); font-weight: 700; font-size: 1.2rem; margin-block-start: 1.6em; }
 .prose a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
 .prose a:hover { color: var(--accent); }
+/* Prose links default to ink; .text-link opts a link into the green accent even
+   inside prose (the base .text-link rule alone loses to `.prose a` on specificity). */
+.prose a.text-link { color: var(--accent-ink); }
+.prose a.text-link:hover { color: var(--accent); }
 .prose ul, .prose ol { padding-inline-start: 1.3em; }
 .prose li + li { margin-block-start: .35em; }
 .prose blockquote { border-inline-start: 3px solid var(--accent); padding-inline-start: 1.1em; color: var(--ink-soft); }
