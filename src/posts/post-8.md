@@ -4,6 +4,7 @@ date: 2026-07-14
 category: meta
 emoji: 🛠️
 description: The current stack behind this site — hosting, generator, analytics, comments, and the bits that make it mine.
+permalink: /colophon/
 ---
 
 Here are the tools that I have used to build this website.

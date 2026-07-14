@@ -171,6 +171,15 @@ strong { font-weight: 600; }
     text-decoration: none;
 }
 .site-footer__rss:hover { color: var(--accent-ink); }
+.site-footer__colophon {
+    justify-self: end;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    color: var(--ink-soft);
+    text-decoration: none;
+}
+.site-footer__colophon:hover { color: var(--accent-ink); }
 
 /* ------------------------------------------------------------------ *
  *  Headings & shared bits
