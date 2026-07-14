@@ -1,0 +1,45 @@
+---
+layout: layouts/base.html
+title: Resources
+description: A living library of real-time rendering and tech-art techniques — each one explained and live-editable in the browser.
+---
+
+<div class="page-head">
+    <p class="eyebrow">Library</p>
+    <h1>Tech-art resources</h1>
+    <p class="page-head__lead">A growing reference of real-time rendering &amp; tech-art techniques.
+        Where it helps, the shader runs right on the page — edit it and watch it recompile.</p>
+</div>
+
+{# Group entries by `family` (e.g. "Edge detection"). Families are collected in the
+   order they first appear across the resource collection — same push pattern the
+   blog index uses to gather categories. Add a resource file and it slots itself
+   under its family here with no edits to this page. #}
+{% set families = [] %}
+{% for r in collections.resource %}
+    {% set f = r.data.family or "Misc" %}
+    {% if f not in families %}{% set families = (families.push(f), families) %}{% endif %}
+{% endfor %}
+
+{% if families | length %}
+    {% for family in families %}
+    <section class="res-group" id="{{ family | slug }}">
+        <h2 class="section-label">{{ family }}</h2>
+        <div class="cards">
+            {% for r in collections.resource %}
+                {% if (r.data.family or "Misc") == family %}
+                <a class="card" href="{{ r.url }}">
+                    <div class="card__body">
+                        <h3 class="card__title">{% if r.data.emoji %}<span class="card__emoji" aria-hidden="true">{{ r.data.emoji }}</span> {% endif %}{{ r.data.title }}</h3>
+                        {% if r.data.description %}<p class="card__desc">{{ r.data.description }}</p>{% endif %}
+                        {% if r.data.difficulty %}<p class="card__date">{{ r.data.difficulty }}</p>{% endif %}
+                    </div>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endfor %}
+{% else %}
+    <p class="page-head__lead">Nothing here yet — the first techniques are on their way.</p>
+{% endif %}

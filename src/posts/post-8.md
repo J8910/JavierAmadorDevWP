@@ -14,7 +14,7 @@ Here are the tools that I have used to build this website.
 - 🐐 **[GoatCounter](https://www.goatcounter.com/)** for lightweight, privacy-friendly analytics — no cookies, no tracking, just a rough sense of what people read
 - 💬 **[giscus](https://giscus.app/)** for comments, backed by GitHub Discussions
 - 📐 **[KaTeX](https://katex.org/)** for math rendering
-- 🎨 a small hand-written **WebGL runtime** for the live shader embeds
+- 🎨 a small hand-written **WebGL / WebGL2 runtime** for the live shader embeds — including the G-buffer post-processing playgrounds in the [resources](/resources/)
 - 🫶 **vanilla HTML and CSS** for everything else
 - 🚀 **[GitHub Actions](https://github.com/features/actions)** for CI/CD
 

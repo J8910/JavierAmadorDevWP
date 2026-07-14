@@ -26,6 +26,10 @@
     height: 100%;
     cursor: crosshair;      /* hints that the demo reads the pointer (iMouse) */
 }
+/* Postfx demos orbit on drag: show a grab cursor and swallow touch gestures so a
+   drag rotates the camera instead of scrolling the page. */
+.shader.is-postfx .shader__canvas { cursor: grab; touch-action: none; }
+.shader.is-postfx .shader__canvas:active { cursor: grabbing; }
 /* Control bar, floated over the bottom of the canvas */
 .shader__bar {
     position: absolute;
@@ -85,6 +89,42 @@
     line-height: 1.5;
     white-space: pre-wrap;
 }
+
+/* --- G-buffer channel switch (postfx demos only) ----------------- *
+ *  A little segmented row under the canvas: final image vs. the raw albedo /
+ *  normal / depth buffers the post-process reads from. Same pill language as the
+ *  category filter, sized down to sit quietly inside the shader box.
+ * ---------------------------------------------------------------- */
+.shader__views {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .35rem;
+    padding: .55rem 1rem;
+    border-top: 1px solid var(--border);
+    background: var(--box);
+}
+.shader__viewslabel {
+    margin-inline-end: .3rem;
+    color: var(--ink-soft);
+    font-size: .66rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+.shader__views button {
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    padding: .25em .8em;
+    color: var(--ink-soft);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .12s ease, color .12s ease;
+}
+.shader__views button:hover { color: var(--ink); background: var(--accent-soft); }
+.shader__views button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.shader__views button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* --- Caption + code ---------------------------------------------- */
 .shader__caption {

@@ -43,6 +43,14 @@ module.exports = function(eleventyConfig) {
     // running if an in-progress edit doesn't compile). Everything is emitted on ONE
     // physical line with newlines encoded as &#10; so markdown-it passes the HTML
     // block through untouched (a blank line inside would otherwise split it).
+    //
+    // With `mode="postfx"` the runtime switches to a two-pass G-buffer pipeline
+    // (WebGL2): a fixed scene pass raymarches an SDF and writes albedo/normal/depth
+    // buffers, and the body you write is the POST-PROCESS pass that reads them via
+    // sampleAlbedo/sampleNormal/sampleDepth(uv) → final image. The author contract is
+    // `void mainImage(out vec4 O, in vec2 uv)` with `uv` normalised [0,1] and `iTexel`
+    // = 1/resolution for neighbour taps. A "buffers" switch lets readers inspect each
+    // G-buffer channel. Pairs naturally with editable=true (see /resources/).
     eleventyConfig.addPairedShortcode('shader', (source, opts = {}) => {
         const src = String(source).trim();
         const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -53,28 +61,49 @@ module.exports = function(eleventyConfig) {
             ? `<figcaption class="shader__caption">${esc(String(opts.caption))}</figcaption>` : '';
         const h = Number(opts.height) || 280;
         const editable = opts.editable === true || opts.editable === 'true';
+        const postfx = opts.mode === 'postfx';
+        const file = postfx ? 'postfx.glsl' : 'fragment.glsl';
 
         // The code view: read-only <pre> by default, or a transparent <textarea>
         // over the highlighted <pre> when editable (runtime keeps them in sync).
         const codeView = editable
             ? `<div class="shader__code shader__code--edit">`
-                + `<div class="shader__codehead"><span class="shader__file">fragment.glsl · live</span>`
+                + `<div class="shader__codehead"><span class="shader__file">${file} · live</span>`
                 + `<button type="button" class="shader__revert" data-act="revert">revert</button></div>`
                 + `<div class="shader__editor">`
                 + `<pre class="language-glsl" aria-hidden="true"><code class="language-glsl">${code}</code></pre>`
                 + `<textarea class="shader__input" spellcheck="false" autocapitalize="off"`
                 + ` autocomplete="off" autocorrect="off" aria-label="Editable GLSL source">${enc(esc(src))}</textarea>`
                 + `</div></div>`
-            : `<div class="shader__code"><span class="shader__file">fragment.glsl</span>`
+            : `<div class="shader__code"><span class="shader__file">${file}</span>`
                 + `<pre class="language-glsl"><code class="language-glsl">${code}</code></pre></div>`;
 
-        return `<figure class="shader${editable ? ' is-editable' : ''}" data-shader="${data}" style="--shader-h:${h}px">`
+        // Postfx demos get a channel switch so readers can inspect the raw G-buffer
+        // the post-process reads from (final image / beauty / normals / depth).
+        const views = postfx
+            ? `<div class="shader__views" role="group" aria-label="Show G-buffer channel">`
+                + `<span class="shader__viewslabel" aria-hidden="true">buffers</span>`
+                + `<button type="button" data-view="final" aria-pressed="true">final</button>`
+                + `<button type="button" data-view="mask" aria-pressed="false">mask</button>`
+                + `<button type="button" data-view="albedo" aria-pressed="false">beauty</button>`
+                + `<button type="button" data-view="normal" aria-pressed="false">normal</button>`
+                + `<button type="button" data-view="depth" aria-pressed="false">depth</button>`
+                + `</div>`
+            : '';
+
+        return `<figure class="shader${editable ? ' is-editable' : ''}${postfx ? ' is-postfx' : ''}"`
+            + ` data-shader="${data}"${postfx ? ' data-mode="postfx"' : ''} style="--shader-h:${h}px">`
             + `<div class="shader__stage"><canvas class="shader__canvas"></canvas>`
             + `<div class="shader__bar">`
             + `<button type="button" class="shader__btn" data-act="toggle" aria-label="Play or pause">❚❚</button>`
             + `<button type="button" class="shader__btn" data-act="reset" aria-label="Restart">↺</button>`
+            + (postfx
+                ? `<button type="button" class="shader__btn" data-act="zoom-out" aria-label="Zoom out">−</button>`
+                    + `<button type="button" class="shader__btn" data-act="zoom-in" aria-label="Zoom in">+</button>`
+                : '')
             + `<span class="shader__clock" aria-hidden="true">0.0s</span></div>`
             + `<p class="shader__err" role="alert" hidden></p></div>`
+            + views
             + cap
             + codeView
             + `</figure>`;

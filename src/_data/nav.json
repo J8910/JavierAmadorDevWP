@@ -1,5 +1,6 @@
 [
   { "text": "Home", "url": "/" },
   { "text": "Blog", "url": "/blog/" },
+  { "text": "Resources", "url": "/resources/" },
   { "text": "Contact", "url": "/contact/" }
 ]

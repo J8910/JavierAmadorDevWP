@@ -270,6 +270,13 @@ strong { font-weight: 600; }
     .card__media { height: 150px; border-inline-start: 0; border-block-start: 2px solid var(--border); order: -1; }
 }
 
+/* Resource library — families of techniques stacked down the page. Each group's
+   heading is an anchor target (#edge-detection), so leave room above it when
+   jumped to from a #family tag link. */
+.res-group + .res-group { margin-block-start: var(--step); }
+.res-group { scroll-margin-top: 1.5rem; }
+.res-group .cards { margin-block-start: 1rem; }
+
 /* ------------------------------------------------------------------ *
  *  Article — reading view
  * ------------------------------------------------------------------ */

@@ -1,0 +1,28 @@
+{% extends "layouts/base.html" %}
+
+{# Resource reading view. Like a post, but evergreen: the eyebrow shows the
+   technique's family + difficulty rather than a publish date + reading time, so
+   entries read as reference material, not dated writing. #}
+{% block content %}
+<article class="article">
+    <header class="article__head">
+        {% set meta = [] %}
+        {% if family %}{% set meta = (meta.push(family), meta) %}{% endif %}
+        {% if difficulty %}{% set meta = (meta.push(difficulty), meta) %}{% endif %}
+        {% if meta | length %}<p class="eyebrow">{{ meta | join(" · ") }}</p>{% endif %}
+        <h1 class="article__title">{% if emoji %}<span class="card__emoji" aria-hidden="true">{{ emoji }}</span> {% endif %}{{ title }}</h1>
+        {% if description %}<p class="article__lead">{{ description }}</p>{% endif %}
+    </header>
+
+    <div class="prose">
+        {{ content | safe }}
+    </div>
+
+    <footer class="article__foot">
+        {% if family %}<div class="tags"><a class="tag" href="/resources/#{{ family | slug }}">#{{ family }}</a></div>{% endif %}
+        <a class="text-link" href="/resources/">&larr; back to all resources</a>
+    </footer>
+
+    {% include "comments.html" %}
+</article>
+{% endblock %}
