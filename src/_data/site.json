@@ -11,6 +11,8 @@
     "repo": "J8910/JavierAmadorDevWP",
     "repoId": "R_kgDOTWBqpg",
     "category": "Announcements",
-    "categoryId": "DIC_kwDOTWBqps4DBHGh"
+    "categoryId": "DIC_kwDOTWBqps4DBHGh",
+    "themeLight": "light",
+    "themeDark": "dark"
   }
 }

@@ -2,20 +2,60 @@
    src/_data/site.json (get them from https://giscus.app) to switch this on. #}
 {% if site.giscus.repoId and site.giscus.categoryId %}
 <section class="comments" aria-label="Comments">
-    <script src="https://giscus.app/client.js"
-            data-repo="{{ site.giscus.repo }}"
-            data-repo-id="{{ site.giscus.repoId }}"
-            data-category="{{ site.giscus.category }}"
-            data-category-id="{{ site.giscus.categoryId }}"
-            data-mapping="pathname"
-            data-strict="1"
-            data-reactions-enabled="1"
-            data-emit-metadata="0"
-            data-input-position="top"
-            data-theme="light"
-            data-lang="en"
-            crossorigin="anonymous"
-            async>
+    {# The giscus embed is built here in JS, on purpose, so its starting theme matches
+       the reader's saved light/dark choice on the very first paint. A static <script>
+       tag would bake data-theme in at build time, so every fresh post navigation would
+       load giscus light and only correct itself a beat later (or not at all). Reading
+       the live <html data-theme> — which basehead.html sets pre-paint from localStorage
+       — fixes that. After load, a MutationObserver mirrors each theme toggle into the
+       iframe via giscus's postMessage API (the only way to re-theme a cross-origin
+       embed, so it re-tints just after the page's View Transition cross-fade). The two
+       theme names come from site.json (themeLight / themeDark) so a future custom giscus
+       theme is honoured. #}
+    <script>
+        (function () {
+            var origin = 'https://giscus.app';
+            var root = document.documentElement;
+            var themes = {
+                light: '{{ site.giscus.themeLight or "light" }}',
+                dark: '{{ site.giscus.themeDark or "dark" }}'
+            };
+            function giscusTheme() {
+                return themes[root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'];
+            }
+
+            // Load giscus already themed to match the current page.
+            var embed = document.createElement('script');
+            embed.src = origin + '/client.js';
+            embed.async = true;
+            embed.crossOrigin = 'anonymous';
+            var config = {
+                'data-repo': '{{ site.giscus.repo }}',
+                'data-repo-id': '{{ site.giscus.repoId }}',
+                'data-category': '{{ site.giscus.category }}',
+                'data-category-id': '{{ site.giscus.categoryId }}',
+                'data-mapping': 'pathname',
+                'data-strict': '1',
+                'data-reactions-enabled': '1',
+                'data-emit-metadata': '0',
+                'data-input-position': 'top',
+                'data-theme': giscusTheme(),
+                'data-lang': 'en'
+            };
+            Object.keys(config).forEach(function (k) { embed.setAttribute(k, config[k]); });
+            document.currentScript.parentNode.insertBefore(embed, document.currentScript);
+
+            // Mirror later theme toggles into the already-loaded iframe.
+            function pushTheme() {
+                var frame = document.querySelector('iframe.giscus-frame');
+                if (frame && frame.contentWindow) {
+                    frame.contentWindow.postMessage(
+                        { giscus: { setConfig: { theme: giscusTheme() } } }, origin);
+                }
+            }
+            new MutationObserver(pushTheme).observe(root,
+                { attributes: true, attributeFilter: ['data-theme'] });
+        })();
     </script>
 </section>
 {% endif %}
