@@ -1,4 +1,6 @@
-@import url('./reset.css');
+/* Note: reset.css is loaded via its own <link> in basehead.html (before this
+   file) so the two stylesheets fetch in parallel — don't re-add an @import here,
+   which would serialize them behind global.css. */
 
 /* ================================================================== *
  *  Design tokens — the whole "terminal zine" look lives here.
