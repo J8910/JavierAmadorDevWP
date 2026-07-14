@@ -84,6 +84,29 @@ module.exports = function(eleventyConfig) {
             + `</figure>`;
     });
 
+    // Captioned image for post bodies:
+    //   {% figure src="/assets/images/x.jpg", alt="Describe it", caption="Shown below",
+    //             width=560 %}
+    // Plain markdown ![alt](/assets/images/x.jpg) also works (styled by .prose img);
+    // reach for this shortcode when you want a caption or to cap the display width.
+    // `alt` is for screen readers/SEO — always write it; `caption` is the visible line
+    // under the image and is optional. Emitted on ONE line (no blank line) so markdown-it
+    // passes the HTML block through untouched.
+    eleventyConfig.addShortcode('figure', (opts = {}) => {
+        const esc = (s) => String(s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        const src = esc(opts.src || '');
+        const alt = esc(opts.alt || '');
+        const style = opts.width ? ` style="max-width:${Number(opts.width)}px"` : '';
+        const cap = opts.caption
+            ? `<figcaption class="figure__caption">${esc(opts.caption)}</figcaption>` : '';
+        return `<figure class="figure"${style}>`
+            + `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`
+            + cap
+            + `</figure>`;
+    });
+
     // Human-friendly date, e.g. {{ page.date | readableDate }} -> "June 2, 2026"
     eleventyConfig.addFilter('readableDate', (value) => {
         const date = value instanceof Date ? value : new Date(value);
