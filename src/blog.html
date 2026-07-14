@@ -31,7 +31,7 @@ description: Notes on environment art, technical art, and the tools in between.
     {% set postCats = post.data.categories or ([post.data.category] if post.data.category else ['misc']) %}
     <a class="card{% if post.data.image %} card--media{% endif %}" href="{{ post.url }}" data-category="{{ postCats | join(' ') }}">
         <div class="card__body">
-            <h2 class="card__title">{% if post.data.emoji %}<span class="card__emoji">{{ post.data.emoji }}</span> {% endif %}{{ post.data.title }}</h2>
+            <h2 class="card__title">{% if post.data.emoji %}<span class="card__emoji" aria-hidden="true">{{ post.data.emoji }}</span> {% endif %}{{ post.data.title }}</h2>
             {% if post.data.description %}<p class="card__desc">{{ post.data.description }}</p>{% endif %}
             <p class="card__date">{{ post.date | readableDate }}</p>
         </div>

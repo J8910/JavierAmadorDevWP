@@ -19,7 +19,7 @@ layout: layouts/home.html
             {% if loop.index <= 3 %}
             <a class="card{% if post.data.image %} card--media{% endif %}" href="{{ post.url }}">
                 <div class="card__body">
-                    <h3 class="card__title">{% if post.data.emoji %}<span class="card__emoji">{{ post.data.emoji }}</span> {% endif %}{{ post.data.title }}</h3>
+                    <h3 class="card__title">{% if post.data.emoji %}<span class="card__emoji" aria-hidden="true">{{ post.data.emoji }}</span> {% endif %}{{ post.data.title }}</h3>
                     {% if post.data.description %}<p class="card__desc">{{ post.data.description }}</p>{% endif %}
                     <p class="card__date">{{ post.date | readableDate }}</p>
                 </div>

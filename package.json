@@ -1,8 +1,7 @@
 {
   "name": "javieramadordev",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Personal blog and portfolio for Javier Amador (technical/environment artist), built with Eleventy.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "eleventy --serve",
@@ -14,7 +13,7 @@
     "url": "git+https://github.com/J8910/JavierAmadorDevWP.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Javier Amador",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
@@ -27,7 +26,6 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@traptitech/markdown-it-katex": "^3.6.0",
     "common-tags": "^1.8.2",
-    "katex": "^0.17.0",
     "prismjs": "^1.30.0"
   }
 }
