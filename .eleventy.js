@@ -10,8 +10,6 @@ require('prismjs/components/prism-glsl');
 require('prismjs/components/prism-hlsl');
 
 module.exports = function(eleventyConfig) {
-    const Card = require('./src/_includes/components/Card');
-
     // RSS/Atom feed — adds dateToRfc3339, absoluteUrl, htmlToAbsoluteUrls filters
     // used by src/feed.njk to build /feed.xml at build time.
     eleventyConfig.addPlugin(rssPlugin);
@@ -27,8 +25,6 @@ module.exports = function(eleventyConfig) {
 
     eleventyConfig.addWatchTarget('src/css');
     eleventyConfig.addWatchTarget('src/js');
-
-    eleventyConfig.addShortcode('Card', Card);
 
     // Current year, e.g. for the footer: {% year %}
     eleventyConfig.addShortcode('year', () => `${new Date().getFullYear()}`);
