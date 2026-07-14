@@ -18,10 +18,10 @@ description: Notes on environment art, technical art, and the tools in between.
         {% endfor %}
     {% endfor %}
 
-    <div class="segmented" data-filter role="group" aria-label="Filter posts by topic">
+    <div class="pills" data-filter role="group" aria-label="Filter posts by topic">
         <button type="button" data-category="all" aria-pressed="true">all</button>
         {% for cat in cats %}
-        <button type="button" data-category="{{ cat }}" aria-pressed="false">{{ cat }}</button>
+        <button type="button" data-category="{{ cat }}" aria-pressed="false">#{{ cat }}</button>
         {% endfor %}
     </div>
 </div>

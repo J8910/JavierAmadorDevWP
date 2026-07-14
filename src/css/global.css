@@ -210,30 +210,27 @@ strong { font-weight: 600; }
 .page-head__lead { color: var(--ink-soft); margin-block-start: .7rem; max-width: 55ch; }
 
 /* ------------------------------------------------------------------ *
- *  Segmented toggle (category filter) — active segment filled dark
+ *  Floating pills (category filter) — independent toggles; active
+ *  pill filled dark. Multi-select, so each reads as its own button.
  * ------------------------------------------------------------------ */
-.segmented {
-    display: inline-flex;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--box);
+.pills {
+    display: flex;
     flex-wrap: wrap;
+    gap: .5rem;
 }
-.segmented button {
+.pills button {
     font-family: var(--font-mono);
     font-size: .78rem;
-    padding: .5em 1.1em;
-    background: none;
-    border: 0;
-    border-right: 1px solid var(--border);
+    padding: .45em 1em;
+    background: var(--box);
+    border: 2px solid var(--border);
+    border-radius: 999px;
     color: var(--ink-soft);
     cursor: pointer;
-    transition: background .12s ease, color .12s ease;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
 }
-.segmented button:last-child { border-right: 0; }
-.segmented button:hover { color: var(--ink); }
-.segmented button[aria-pressed="true"] { background: var(--ink); color: var(--bg); font-weight: 500; }
+.pills button:hover { color: var(--ink); transform: translateY(-2px); box-shadow: 2px 2px 0 var(--border); }
+.pills button[aria-pressed="true"] { background: var(--ink); color: var(--bg); font-weight: 500; }
 
 /* ------------------------------------------------------------------ *
  *  Cards (post list) — bordered box, image bleeds to the right edge
@@ -294,15 +291,17 @@ strong { font-weight: 600; }
 }
 .tags { display: flex; flex-wrap: wrap; gap: .5rem; }
 .tag {
+    font-family: var(--font-mono);
     font-size: .78rem;
-    color: var(--ink);
+    color: var(--ink-soft);
     text-decoration: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: .25em .7em;
+    border: 2px solid var(--border);
+    border-radius: 999px;
+    padding: .45em 1em;
     background: var(--box);
+    transition: transform .12s ease, box-shadow .12s ease, color .12s ease;
 }
-.tag:hover { background: var(--accent-soft); color: var(--accent-ink); }
+.tag:hover { color: var(--ink); transform: translateY(-2px); box-shadow: 2px 2px 0 var(--border); }
 
 .comments { margin-block-start: var(--step); }
 
