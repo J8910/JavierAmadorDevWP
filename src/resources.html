@@ -21,16 +21,20 @@ description: A living library of real-time rendering and tech-art techniques —
     {% if f not in families %}{% set families = (families.push(f), families) %}{% endif %}
 {% endfor %}
 
+{# Section 1 — original, interactive deep-dives (each is its own page). Grouped by
+   family; internal card links to the live write-up. #}
 {% if families | length %}
+<section class="lib-section">
+    <h2 class="lib-heading">Interactive techniques</h2>
     {% for family in families %}
     <section class="res-group" id="{{ family | slug }}">
-        <h2 class="section-label">{{ family }}</h2>
+        <h3 class="section-label">{{ family }}</h3>
         <div class="cards">
             {% for r in collections.resource %}
                 {% if (r.data.family or "Misc") == family %}
                 <a class="card" href="{{ r.url }}">
                     <div class="card__body">
-                        <h3 class="card__title">{% if r.data.emoji %}<span class="card__emoji" aria-hidden="true">{{ r.data.emoji }}</span> {% endif %}{{ r.data.title }}</h3>
+                        <h4 class="card__title">{% if r.data.emoji %}<span class="card__emoji" aria-hidden="true">{{ r.data.emoji }}</span> {% endif %}{{ r.data.title }}</h4>
                         {% if r.data.description %}<p class="card__desc">{{ r.data.description }}</p>{% endif %}
                         {% if r.data.difficulty %}<p class="card__date">{{ r.data.difficulty }}</p>{% endif %}
                     </div>
@@ -40,6 +44,33 @@ description: A living library of real-time rendering and tech-art techniques —
         </div>
     </section>
     {% endfor %}
-{% else %}
+</section>
+{% endif %}
+
+{# Section 2 — curated external links (The Book of Shaders, etc.). Data-driven from
+   `_data/reading.json`: add an entry there, no page is generated. Plain rows with a
+   ↗ so a reader knows the link leaves the site. #}
+{% if reading | length %}
+<section class="lib-section">
+    <h2 class="lib-heading">Further reading</h2>
+    <ul class="reading" role="list">
+        {% for item in reading %}
+        <li>
+            <a class="reading__item" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
+                <span class="reading__head">
+                    <span class="reading__title">{{ item.title }}</span>
+                    <span class="reading__ext" aria-hidden="true">&#8599;</span>
+                    <span class="visually-hidden"> (opens in a new tab)</span>
+                </span>
+                {% if item.description %}<span class="reading__desc">{{ item.description }}</span>{% endif %}
+                {% if item.source %}<span class="reading__src">{{ item.source }}</span>{% endif %}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if not (families | length) and not (reading | length) %}
     <p class="page-head__lead">Nothing here yet — the first techniques are on their way.</p>
 {% endif %}

@@ -277,6 +277,49 @@ strong { font-weight: 600; }
 .res-group { scroll-margin-top: 1.5rem; }
 .res-group .cards { margin-block-start: 1rem; }
 
+/* Two-part library: an umbrella heading over each part — the interactive
+   deep-dives (family-grouped cards) above, curated external links below. */
+.lib-section + .lib-section { margin-block-start: var(--step); }
+.lib-heading {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+    padding-block-end: .55rem;
+    margin-block-end: 1.5rem;
+    border-block-end: 1px dashed var(--border);
+}
+
+/* Further reading — plain annotated link rows, deliberately NOT the bordered card:
+   title · blurb · source, with an ↗ marking an off-site destination. */
+.reading { display: grid; gap: .3rem; }
+.reading__item {
+    display: block;
+    padding: .7rem .85rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    color: var(--ink);
+    text-decoration: none;
+    transition: background .12s ease, border-color .12s ease;
+}
+.reading__item:hover { background: var(--box); border-color: var(--border); }
+.reading__item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.reading__head { display: inline-flex; align-items: baseline; gap: .4rem; }
+.reading__title { font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; }
+.reading__ext { color: var(--ink-soft); font-size: .82em; }
+.reading__item:hover .reading__ext { color: var(--accent-ink); }
+.reading__desc { display: block; color: var(--ink-soft); font-size: .85rem; margin-block-start: .2rem; }
+.reading__src { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); margin-block-start: .35rem; }
+
+/* Visually-hidden but screen-reader-available (e.g. "opens in a new tab"). */
+.visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0);
+    white-space: nowrap; border: 0;
+}
+
 /* ------------------------------------------------------------------ *
  *  Article — reading view
  * ------------------------------------------------------------------ */

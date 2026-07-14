@@ -1,0 +1,14 @@
+[
+  {
+    "title": "The Book of Shaders",
+    "url": "https://thebookofshaders.com/",
+    "source": "thebookofshaders.com",
+    "description": "A gentle, step-by-step introduction to fragment shaders."
+  },
+  {
+    "title": "Inigo Quilez — articles",
+    "url": "https://iquilezles.org/articles/",
+    "source": "iquilezles.org",
+    "description": "Deep dives on SDFs, raymarching, and procedural techniques."
+  }
+]
