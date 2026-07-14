@@ -5,6 +5,9 @@
    visitor's saved choice; otherwise defaults to light. Toggle lives in base.html. #}
 <script>
     (function () {
+        // Mark JS as available so CSS can hide cards up front for the scroll-in reveal
+        // (base.html) — without this class they stay visible for no-JS visitors.
+        document.documentElement.classList.add('js');
         try {
             var t = localStorage.getItem('theme');
             document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');

@@ -13,3 +13,4 @@
 .intro__note { color: var(--ink-soft); }
 
 .latest { margin-block-start: var(--step); }
+.latest__more { margin-block-start: 1.25rem; font-size: .85rem; }

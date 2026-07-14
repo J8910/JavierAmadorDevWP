@@ -69,6 +69,9 @@ description: Notes on environment art, technical art, and the tools in between.
                 var show = showAll || active.some(function (cat) { return cardCats.indexOf(cat) !== -1; });
                 c.hidden = !show;
                 if (!show) return;
+                // Ensure the card is revealed (it may still be below the fold / unobserved),
+                // then restart the rise so the stagger follows *visible* order.
+                c.classList.add('is-in');
                 c.style.animation = 'none';
                 void c.offsetWidth;            // force reflow so the animation restarts
                 c.style.animation = '';

@@ -101,5 +101,31 @@
         update();
     })();
 </script>
+<script>
+    // Reveal cards with a gentle rise as they scroll into view. Firing on load instead
+    // (the old approach) meant cards below the fold finished animating unseen, so only the
+    // first screenful appeared to animate. Without IntersectionObserver or under reduced
+    // motion, just show them all.
+    (function () {
+        var cards = document.querySelectorAll('.card');
+        if (!cards.length) return;
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce || !('IntersectionObserver' in window)) {
+            for (var i = 0; i < cards.length; i++) cards[i].classList.add('is-in');
+            return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+            // Stagger the cards revealed together (e.g. the first screenful on load).
+            var shown = 0;
+            entries.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                e.target.style.animationDelay = (shown++ * 0.06) + 's';
+                e.target.classList.add('is-in');
+                io.unobserve(e.target);
+            });
+        }, { rootMargin: '0px 0px -10% 0px' });
+        for (var j = 0; j < cards.length; j++) io.observe(cards[j]);
+    })();
+</script>
 </body>
 </html>

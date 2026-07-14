@@ -382,12 +382,14 @@ code[class*="language-"] .token.macro { color: #c99bd6; }
  * ------------------------------------------------------------------ */
 .wave { display: inline-block; transform-origin: 70% 70%; }
 @media (prefers-reduced-motion: no-preference) {
-    .intro, .page-head, .article, .card { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
-    /* Load-in stagger. On /blog/ the filter JS overrides these per-card with an inline
-       animation-delay in *visible* order, so the stagger stays consistent after filtering. */
-    .card:nth-child(2) { animation-delay: .05s; }
-    .card:nth-child(3) { animation-delay: .1s; }
-    .card:nth-child(4) { animation-delay: .15s; }
+    .intro, .page-head, .article { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
+    /* Cards fade in as they scroll into view. JS hides them up front (.js class) and adds
+       .is-in once each enters the viewport (base.html), so cards below the fold animate
+       when reached instead of finishing unseen on load. The reveal JS staggers a batch via
+       inline animation-delay; the /blog/ filter JS re-triggers it in visible order. Without
+       JS (no .js class) or under reduced motion, cards just stay visible. */
+    .js .card { opacity: 0; }
+    .js .card.is-in { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
     .wave { animation: wave 2.4s ease-in-out 1s 2; }
 }
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
