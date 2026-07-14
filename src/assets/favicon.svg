@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Javier Amador">
+  <!-- Placeholder monogram favicon in the site palette (forest-green tile, cream JA).
+       Editable source of truth; favicon-32.png / apple-touch-icon.png are rasterized
+       from this. Swap for a real mark anytime. -->
+  <rect x="2" y="2" width="60" height="60" rx="13" fill="#4c7a52" stroke="#2b2925" stroke-width="3"/>
+  <text x="32" y="33" text-anchor="middle" dominant-baseline="central"
+        font-family="'Arial Black', Arial, sans-serif" font-weight="800" font-size="30"
+        letter-spacing="-1" fill="#f7f1e3">JA</text>
+</svg>

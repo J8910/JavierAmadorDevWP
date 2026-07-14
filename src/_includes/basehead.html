@@ -14,9 +14,34 @@
         } catch (e) {}
     })();
 </script>
-<title>{% if title %}{{ title }} · {{ site.name }}{% else %}{{ site.name }} — {{ site.role }}{% endif %}</title>
-<meta name="description" content="{{ description or site.description }}">
+{# Page title + description defined once, then reused for the social meta below so
+   the tab title and the shared-link preview never drift apart. #}
+{%- set pageTitle = title + " · " + site.name if title else site.name + " — " + site.role %}
+{%- set pageDesc = description or site.description %}
+{%- set ogImage = image or "/assets/images/og-default.png" %}
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ pageDesc }}">
 <meta name="author" content="{{ site.author }}">
+
+{# Favicons: SVG for modern browsers, a 32px PNG fallback, apple-touch for iOS
+   home screens. Rasterized from src/assets/favicon.svg (see scripts/gen-brand-assets.js). #}
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+{# Open Graph / Twitter Card — the rich preview shown when a page is shared to
+   Discord, Twitter/X, LinkedIn, Slack, etc. og:image MUST be an absolute URL; a
+   page's own `image:` front matter overrides the default branded card. #}
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ pageTitle }}">
+<meta property="og:description" content="{{ pageDesc }}">
+<meta property="og:type" content="{{ "article" if tags and "post" in tags else "website" }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:image" content="{{ site.url }}{{ ogImage }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ pageTitle }}">
+<meta name="twitter:description" content="{{ pageDesc }}">
+<meta name="twitter:image" content="{{ site.url }}{{ ogImage }}">
 
 <link rel="alternate" type="application/atom+xml" title="{{ site.name }}" href="/feed.xml">
 

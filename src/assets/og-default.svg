@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img"
+     aria-label="Javier Amador — Technical &amp; Environment Artist">
+  <!-- Placeholder default social-share card (1200x630), matching the terminal-zine
+       look: warm page, cream box with a hard offset shadow, forest-green accent.
+       Editable source of truth; og-default.png is rasterized from this. Used as the
+       OpenGraph/Twitter image for any page that doesn't set its own `image:`. -->
+  <rect width="1200" height="630" fill="#fbfaf5"/>
+
+  <!-- signature hard offset shadow behind the box -->
+  <rect x="72" y="72" width="1080" height="510" rx="3" fill="#2b2925"/>
+  <rect x="60" y="60" width="1080" height="510" rx="3" fill="#f7f1e3" stroke="#2b2925" stroke-width="3"/>
+
+  <!-- monogram tile -->
+  <rect x="112" y="120" width="96" height="96" rx="16" fill="#4c7a52" stroke="#2b2925" stroke-width="3"/>
+  <text x="160" y="169" text-anchor="middle" dominant-baseline="central"
+        font-family="'Arial Black', Arial, sans-serif" font-weight="800" font-size="46"
+        letter-spacing="-1" fill="#f7f1e3">JA</text>
+
+  <text x="112" y="360" font-family="'Arial Black', Arial, sans-serif" font-weight="800"
+        font-size="104" letter-spacing="-3" fill="#201f1b">Javier Amador</text>
+
+  <text x="115" y="432" font-family="Arial, sans-serif" font-weight="700"
+        font-size="42" letter-spacing="0" fill="#4c7a52">Technical &amp; Environment Artist</text>
+
+  <text x="115" y="528" font-family="Arial, sans-serif" font-weight="500"
+        font-size="34" fill="#6f6c63">javieramador.dev</text>
+</svg>
