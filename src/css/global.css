@@ -30,6 +30,11 @@
     --measure: 82ch;
     --gutter:  clamp(1.1rem, 4vw, 2.5rem);
     --step:    clamp(2.75rem, 7vw, 4.5rem);
+
+    /* Card image divider: horizontal offset of the diagonal cut between the card
+       body and its right-edge image. Bigger = steeper tilt (~30° at a typical card
+       height); set to 0 for a plain vertical divider. */
+    --card-slant: 2.75rem;
 }
 
 /* Dark theme — the same warm terminal-zine feel after dark: warm charcoal page,
@@ -262,12 +267,21 @@ strong { font-weight: 600; }
 .card__desc { color: var(--ink-soft); font-size: .88rem; margin-block-start: .35rem; }
 .card__date { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); margin-block-start: .7rem; }
 
-.card__media { position: relative; background: var(--accent-soft); border-inline-start: 2px solid var(--border); }
+/* The divider between body and image is a subtle ~30° diagonal, not a straight
+   vertical rule. A clip-path slices the top-left corner off the image column,
+   revealing the card's cream ground as a triangle. Tune the tilt via --card-slant. */
+.card__media {
+    position: relative;
+    background: var(--accent-soft);
+    clip-path: polygon(var(--card-slant) 0, 100% 0, 100% 100%, 0 100%);
+}
 .card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 @media (max-width: 34rem) {
     .card--media { grid-template-columns: 1fr; }
-    .card__media { height: 150px; border-inline-start: 0; border-block-start: 2px solid var(--border); order: -1; }
+    /* Stacked layout: image becomes a top banner — straighten the divider back to
+       a horizontal rule. */
+    .card__media { height: 150px; clip-path: none; border-block-start: 2px solid var(--border); order: -1; }
 }
 
 /* Resource library — families of techniques stacked down the page. Each group's
