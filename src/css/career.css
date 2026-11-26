@@ -1,0 +1,56 @@
+/* Career: a survey traverse. One ink line runs down the page; each role is a station
+   (a small square mark) with its dates in the mono margin and a paper card beside it.
+   The current role's mark is filled in the index colour. Data: _data/career.json. */
+
+.career + .career { margin-block-start: var(--step); }
+.career__label {
+    display: inline-block; margin-block-end: 1.5rem; padding: .55rem .9rem;
+    font: 700 clamp(1.4rem, 1.2rem + .8vw, 1.8rem)/1.1 var(--font-head); font-stretch: 112%;
+}
+
+.traverse {
+    --date-col: 9.5rem;                         /* the mono margin holding the dates */
+    --line-x: calc(var(--date-col) + 1.25rem);  /* where the traverse line runs */
+    position: relative; list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 1.5rem;
+}
+.traverse::before {                             /* the traverse line itself */
+    content: ""; position: absolute; top: .4rem; bottom: .4rem; left: var(--line-x);
+    border-left: 1px solid var(--ink);
+}
+
+.station {
+    position: relative; display: grid; align-items: start;
+    grid-template-columns: var(--date-col) minmax(0, 1fr);
+    column-gap: 2.5rem;
+}
+.station::before {                              /* station mark: an open square on the line */
+    content: ""; position: absolute; top: 1.15rem; left: calc(var(--line-x) - 5px);
+    width: 11px; height: 11px; box-sizing: border-box;
+    border: 1px solid var(--ink); background: var(--bg);
+}
+.station--now::before { background: var(--accent); border-color: var(--accent); }
+
+.station__when {
+    justify-self: end; margin-block-start: .95rem; padding: .15rem .45rem;
+    font: 400 .78rem/1.4 var(--font-mono); color: var(--ink-soft); text-align: right;
+    background: var(--bg); white-space: nowrap;
+}
+.station--now .station__when { color: var(--accent-ink); }
+
+.station__card { display: grid; gap: .45rem; max-width: 46rem; }
+.station__card h3 { font: 700 clamp(1.15rem, 1.05rem + .5vw, 1.4rem)/1.2 var(--font-head); font-stretch: 108%; }
+.station__org { font-weight: 500; color: var(--accent-ink); }
+.station__place { font: 400 .75rem/1.5 var(--font-mono); color: var(--ink-soft); }
+.station__summary { color: var(--ink-soft); }
+.station__points { margin: .35rem 0 0; padding-inline-start: 1.1rem; display: grid; gap: .4rem; color: var(--ink-soft); max-width: 68ch; }
+.station__points li::marker { color: var(--accent); }
+.station__card .text-link { justify-self: start; margin-block-start: .25rem; }
+
+/* Narrow screens: the line moves to the left edge; dates sit above each card. */
+@media (max-width: 44rem) {
+    .traverse { --line-x: .3rem; gap: 1.75rem; }
+    .station { grid-template-columns: 1fr; padding-inline-start: 1.5rem; row-gap: .5rem; }
+    .station::before { top: .45rem; left: calc(var(--line-x) - 5px); }
+    .station__when { justify-self: start; margin: 0; text-align: left; }
+}
