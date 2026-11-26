@@ -1,0 +1,508 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-26T14:56:54.454Z",
+  "title": "Design System: javieramador.dev",
+  "extensions": {
+    "colorMeta": {
+      "field-paper": {
+        "role": "neutral",
+        "displayName": "Field Paper",
+        "purpose": "Page ground (light).",
+        "canonical": "oklch(96.6% 0.011 95.2)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252422",
+          "#41403b",
+          "#5f5e57",
+          "#828079",
+          "#a6a59f",
+          "#cbcac7",
+          "#efeeec"
+        ]
+      },
+      "field-page": {
+        "role": "neutral",
+        "displayName": "Field Page",
+        "purpose": "Box, card and pill fill (light).",
+        "canonical": "oklch(94.2% 0.016 95.2)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252421",
+          "#414039",
+          "#605e54",
+          "#838076",
+          "#a7a59d",
+          "#cccac6",
+          "#efeeeb"
+        ]
+      },
+      "graphite-rule": {
+        "role": "neutral",
+        "displayName": "Graphite Rule",
+        "purpose": "Every border and divider (light).",
+        "canonical": "oklch(27.7% 0.011 91.7)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#252422",
+          "#41403b",
+          "#605d57",
+          "#828079",
+          "#a6a49f",
+          "#cbcac7",
+          "#efeeec"
+        ]
+      },
+      "graphite-ink": {
+        "role": "neutral",
+        "displayName": "Graphite Ink",
+        "purpose": "Body text and headings (light).",
+        "canonical": "oklch(23.4% 0.009 97.8)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242422",
+          "#40403c",
+          "#5f5e58",
+          "#82807a",
+          "#a5a5a0",
+          "#cbcac8",
+          "#efeeed"
+        ]
+      },
+      "pencil-grey": {
+        "role": "neutral",
+        "displayName": "Pencil Grey",
+        "purpose": "Meta text, descriptions, inactive nav (light).",
+        "canonical": "oklch(49.7% 0.013 84.6)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#252421",
+          "#423f3a",
+          "#615d56",
+          "#848077",
+          "#a7a49e",
+          "#cccac7",
+          "#efeeec"
+        ]
+      },
+      "ochre": {
+        "role": "primary",
+        "displayName": "Ochre",
+        "purpose": "Link hover text and focus rings (light).",
+        "canonical": "oklch(57.9% 0.119 84.9)",
+        "tonalRamp": [
+          "#110a00",
+          "#2f2205",
+          "#533b00",
+          "#7b5700",
+          "#a17911",
+          "#bda167",
+          "#d9c9a8",
+          "#f8edd9"
+        ]
+      },
+      "ochre-ink": {
+        "role": "primary",
+        "displayName": "Ochre Ink",
+        "purpose": "Coloured link text; the text-safe member of the yellow family (light).",
+        "canonical": "oklch(40.4% 0.083 86.9)",
+        "tonalRamp": [
+          "#0f0b03",
+          "#2b2310",
+          "#4c3e1a",
+          "#715a23",
+          "#967d43",
+          "#b4a37b",
+          "#d4cab3",
+          "#f4eedf"
+        ]
+      },
+      "highlighter": {
+        "role": "primary",
+        "displayName": "Highlighter",
+        "purpose": "You-are-here fill: active tab, active filter, inspector channel, selection (light).",
+        "canonical": "oklch(88.6% 0.144 96.5)",
+        "tonalRamp": [
+          "#100b00",
+          "#2c2300",
+          "#4f3e00",
+          "#745b00",
+          "#9a7e00",
+          "#b7a557",
+          "#d5cba1",
+          "#f5efd4"
+        ]
+      },
+      "highlighter-stroke": {
+        "role": "primary",
+        "displayName": "Highlighter Stroke",
+        "purpose": "3px link underline and blockquote rule (light).",
+        "canonical": "oklch(82.4% 0.160 93.6)",
+        "tonalRamp": [
+          "#110a00",
+          "#2e2300",
+          "#533c00",
+          "#7a5800",
+          "#a07b00",
+          "#bca34b",
+          "#d8ca9b",
+          "#f7efd1"
+        ]
+      },
+      "night-console": {
+        "role": "neutral",
+        "displayName": "Night Console",
+        "purpose": "Code block ground (light theme).",
+        "canonical": "oklch(25.1% 0.011 99.3)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242422",
+          "#41403b",
+          "#5f5e57",
+          "#828079",
+          "#a6a59f",
+          "#cbcac7",
+          "#efeeec"
+        ]
+      },
+      "console-text": {
+        "role": "neutral",
+        "displayName": "Console Text",
+        "purpose": "Code block text, both themes.",
+        "canonical": "oklch(95.2% 0.012 91.5)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#252421",
+          "#41403b",
+          "#605d56",
+          "#838078",
+          "#a6a49f",
+          "#cbcac7",
+          "#efeeec"
+        ]
+      },
+      "field-paper-dark": {
+        "role": "neutral",
+        "displayName": "Field Paper (dark)",
+        "purpose": "Page ground (dark).",
+        "canonical": "oklch(19.5% 0.012 99.5)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242422",
+          "#41403b",
+          "#5f5e57",
+          "#828079",
+          "#a6a59f",
+          "#cbcac7",
+          "#efeeec"
+        ]
+      },
+      "field-page-dark": {
+        "role": "neutral",
+        "displayName": "Field Page (dark)",
+        "purpose": "Box fill (dark).",
+        "canonical": "oklch(23.4% 0.015 95.6)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252421",
+          "#41403a",
+          "#605e55",
+          "#838076",
+          "#a6a59d",
+          "#cbcac6",
+          "#efeeec"
+        ]
+      },
+      "tan-rule-dark": {
+        "role": "neutral",
+        "displayName": "Tan Rule (dark)",
+        "purpose": "Borders (dark), >=3:1 on the box.",
+        "canonical": "oklch(54.9% 0.034 92.5)",
+        "tonalRamp": [
+          "#0c0b07",
+          "#26241d",
+          "#444032",
+          "#645d49",
+          "#87806a",
+          "#aaa494",
+          "#cdcac1",
+          "#f0eee8"
+        ]
+      },
+      "lamp-ink-dark": {
+        "role": "neutral",
+        "displayName": "Lamp Ink (dark)",
+        "purpose": "Body text (dark).",
+        "canonical": "oklch(93.0% 0.025 94.1)",
+        "tonalRamp": [
+          "#0c0b08",
+          "#25241f",
+          "#424036",
+          "#625e4f",
+          "#858070",
+          "#a8a599",
+          "#cccac3",
+          "#f0eeea"
+        ]
+      },
+      "pencil-grey-dark": {
+        "role": "neutral",
+        "displayName": "Pencil Grey (dark)",
+        "purpose": "Meta text (dark).",
+        "canonical": "oklch(69.6% 0.028 92.5)",
+        "tonalRamp": [
+          "#0c0b08",
+          "#26241e",
+          "#434035",
+          "#635d4d",
+          "#86806e",
+          "#a9a597",
+          "#cdcac3",
+          "#f0eee9"
+        ]
+      },
+      "highlighter-dark": {
+        "role": "primary",
+        "displayName": "Highlighter (dark)",
+        "purpose": "Underline, quote rule, hover, focus (dark).",
+        "canonical": "oklch(80.9% 0.148 92.5)",
+        "tonalRamp": [
+          "#110a00",
+          "#2e2300",
+          "#523d00",
+          "#7a5800",
+          "#9f7b00",
+          "#bba354",
+          "#d8ca9f",
+          "#f7eed3"
+        ]
+      },
+      "highlighter-ink-dark": {
+        "role": "primary",
+        "displayName": "Highlighter Ink (dark)",
+        "purpose": "Coloured link text (dark).",
+        "canonical": "oklch(87.3% 0.129 94.8)",
+        "tonalRamp": [
+          "#0f0b00",
+          "#2c2301",
+          "#4e3e00",
+          "#745b00",
+          "#997e00",
+          "#b6a460",
+          "#d5cba5",
+          "#f5efd7"
+        ]
+      },
+      "highlighter-wash-dark": {
+        "role": "primary",
+        "displayName": "Highlighter Wash (dark)",
+        "purpose": "You-are-here fill (dark).",
+        "canonical": "oklch(31.9% 0.047 92.9)",
+        "tonalRamp": [
+          "#0d0b06",
+          "#27241a",
+          "#45402c",
+          "#665d40",
+          "#8a8060",
+          "#aca58e",
+          "#cfcabd",
+          "#f1eee6"
+        ]
+      },
+      "night-console-dark": {
+        "role": "neutral",
+        "displayName": "Night Console (dark)",
+        "purpose": "Code block ground (dark theme).",
+        "canonical": "oklch(16.8% 0.010 98.0)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242422",
+          "#41403c",
+          "#5f5e58",
+          "#82807a",
+          "#a6a5a0",
+          "#cbcac8",
+          "#efeeec"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Article titles (with the post emoji inline)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles: Blog, Resources, Contact."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles, section labels, prose h3 (h2 steps to 1.5rem)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All running text and UI; the article column is 82ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase dates, reading time, link sources."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift-card",
+        "value": "3px 3px 0 var(--border)",
+        "purpose": "Hover only, with translateY(-2px): cards, back-to-top."
+      },
+      {
+        "name": "lift-pill",
+        "value": "2px 2px 0 var(--border)",
+        "purpose": "Hover only, with translateY(-2px): filter pills, tags."
+      }
+    ],
+    "motion": [
+      {
+        "name": "hover",
+        "value": ".12s ease",
+        "purpose": "Colour, background, lift on nav, pills, cards."
+      },
+      {
+        "name": "rise",
+        "value": ".5s cubic-bezier(.2,.7,.2,1)",
+        "purpose": "One load-in for intro/page head/article; cards rise as they scroll into view."
+      },
+      {
+        "name": "theme-crossfade",
+        "value": ".35s view-transition",
+        "purpose": "Whole-page cross-fade when switching theme."
+      },
+      {
+        "name": "wave",
+        "value": "2.4s ease-in-out, 1s delay, 2 runs",
+        "purpose": "The friendly 👋 wave."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "card-stack",
+        "value": "34rem",
+        "purpose": "Below this, image cards stack the picture as a 150px top banner."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nav Tabs",
+      "kind": "nav",
+      "refersTo": "nav-pill",
+      "description": "Top pill nav; the current page wears the highlighter.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Home</a><a href=\"#\" aria-current=\"page\">Blog</a><a href=\"#\">Resources</a><a href=\"#\">Contact</a></nav>",
+      "css": ".ds-nav { display: flex; gap: .35rem; flex-wrap: wrap; font-family: var(--font-mono, 'IBM Plex Mono', monospace); } .ds-nav a { font-size: .8rem; color: var(--ink-soft, #66625a); text-decoration: none; padding: .3em .75em; border-radius: 999px; transition: background .12s ease, color .12s ease; } .ds-nav a:hover { color: var(--ink, #1f1e19); background: var(--box, #efece0); } .ds-nav a[aria-current=\"page\"] { background: var(--accent-soft, #f5d95e); color: var(--ink, #1f1e19); font-weight: 500; } .ds-nav a:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
+    },
+    {
+      "name": "Filter Pill",
+      "kind": "chip",
+      "refersTo": "filter-pill",
+      "description": "Multi-select category toggle on /blog/; also the tag form in post footers.",
+      "html": "<div class=\"ds-pills\"><button type=\"button\" class=\"ds-pill\" aria-pressed=\"true\">all</button><button type=\"button\" class=\"ds-pill\" aria-pressed=\"false\">#environment</button><button type=\"button\" class=\"ds-pill\" aria-pressed=\"false\">#shaders</button></div>",
+      "css": ".ds-pills { display: flex; gap: .5rem; flex-wrap: wrap; } .ds-pill { font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: .78rem; padding: .45em 1em; background: var(--box, #efece0); border: 2px solid var(--border, #2a2822); border-radius: 999px; color: var(--ink-soft, #66625a); cursor: pointer; transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease; } .ds-pill:hover { color: var(--ink, #1f1e19); transform: translateY(-2px); box-shadow: 2px 2px 0 var(--border, #2a2822); } .ds-pill[aria-pressed=\"true\"] { background: var(--accent-soft, #f5d95e); color: var(--ink, #1f1e19); font-weight: 500; } .ds-pill:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
+    },
+    {
+      "name": "Post Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Clickable post/resource card; the image bleeds off the right edge on a diagonal cut.",
+      "html": "<a class=\"ds-card\" href=\"#\"><div class=\"ds-card__body\"><h3 class=\"ds-card__title\"><span aria-hidden=\"true\">🌲</span> Building a stylised forest floor</h3><p class=\"ds-card__desc\">Layered materials and a scatter workflow for a believable, stylised forest floor.</p><p class=\"ds-card__date\">June 2, 2026</p></div><div class=\"ds-card__media\"></div></a>",
+      "css": ".ds-card { display: grid; grid-template-columns: 1fr minmax(110px, 32%); border: 2px solid var(--border, #2a2822); border-radius: 10px; background: var(--box, #efece0); overflow: hidden; text-decoration: none; color: var(--ink, #1f1e19); transition: transform .12s ease, box-shadow .12s ease; } .ds-card:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 var(--border, #2a2822); } .ds-card:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; } .ds-card__body { padding: 1.05rem 1.2rem; } .ds-card__title { font-family: var(--font-head, 'Bricolage Grotesque', sans-serif); font-weight: 700; font-size: 1.15rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0; } .ds-card__desc { font-family: var(--font-mono, 'IBM Plex Mono', monospace); color: var(--ink-soft, #66625a); font-size: .88rem; margin: .35rem 0 0; } .ds-card__date { font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft, #66625a); margin: .7rem 0 0; } .ds-card__media { min-height: 120px; background: linear-gradient(160deg, #6d7f4e, #2f3a26); clip-path: polygon(2.75rem 0, 100% 0, 100% 100%, 0 100%); }"
+    },
+    {
+      "name": "Framed Panel",
+      "kind": "custom",
+      "refersTo": "panel",
+      "description": "Squared (static) intro panel with highlighter-underlined links.",
+      "html": "<section class=\"ds-panel\"><p>Hey! I'm <strong>Javier Amador</strong>, a software and game developer specialized in technical &amp; environment art.</p><p><a href=\"#\">showcase</a> / <a href=\"#\">blog</a> / <a href=\"#\">contact</a></p></section>",
+      "css": ".ds-panel { font-family: var(--font-mono, 'IBM Plex Mono', monospace); line-height: 1.7; color: var(--ink, #1f1e19); background: var(--box, #efece0); border: 1px solid var(--border, #2a2822); border-radius: 3px; padding: 1.1rem 1.25rem; } .ds-panel p { margin: 0; } .ds-panel p + p { margin-top: .55rem; } .ds-panel strong { font-weight: 600; } .ds-panel a { color: var(--accent-ink, #5c4500); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 3px; text-decoration-color: var(--highlight, #e8c228); } .ds-panel a:hover { color: var(--accent, #9a7300); } .ds-panel a:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
+    },
+    {
+      "name": "Code Block",
+      "kind": "custom",
+      "refersTo": "code-block",
+      "description": "Always-dark console with the fixed warm syntax palette.",
+      "html": "<pre class=\"ds-code\"><code><span class=\"c\">// bend foliage toward the wind</span>\n<span class=\"b\">vec3</span> <span class=\"f\">sway</span>(<span class=\"b\">vec3</span> p, <span class=\"b\">float</span> t) {\n  <span class=\"k\">return</span> p + <span class=\"f\">sin</span>(t * <span class=\"n\">1.7</span> + p.<span class=\"p\">x</span>) * <span class=\"n\">0.05</span>;\n}</code></pre>",
+      "css": ".ds-code { margin: 0; background: var(--code-bg, #23221c); color: var(--code-fg, #f2efe6); border: 1px solid var(--border, #2a2822); border-radius: 10px; padding: 1.1em 1.25em; font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: .85rem; line-height: 1.6; overflow-x: auto; } .ds-code .c { color: #8a9577; font-style: italic; } .ds-code .k { color: #e6b673; } .ds-code .b { color: #8fcf8a; } .ds-code .f { color: #9cd0e0; } .ds-code .n { color: #e39a70; } .ds-code .p { color: #d7c7f0; }"
+    },
+    {
+      "name": "Inline Code & Prose Link",
+      "kind": "custom",
+      "refersTo": "inline-code",
+      "description": "Half-strength highlighter wash for inline code; ink prose links with a 3px yellow stroke.",
+      "html": "<p class=\"ds-prose\">Pack the sway mask into <code>uv.y</code> and the <a href=\"#\">wind shader</a> stays one texture fetch.</p>",
+      "css": ".ds-prose { font-family: var(--font-mono, 'IBM Plex Mono', monospace); line-height: 1.7; color: var(--ink, #1f1e19); margin: 0; } .ds-prose code { font-size: .88em; background: color-mix(in srgb, var(--accent-soft, #f5d95e) 50%, var(--box, #efece0)); padding: .12em .4em; border-radius: 5px; } .ds-prose a { color: var(--ink, #1f1e19); text-decoration: underline; text-decoration-color: var(--highlight, #e8c228); text-decoration-thickness: 3px; text-underline-offset: 3px; } .ds-prose a:hover { color: var(--accent, #9a7300); } .ds-prose a:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
+    },
+    {
+      "name": "Back to Top",
+      "kind": "button",
+      "refersTo": "card",
+      "description": "Square-ish 10px icon button; same touched lift as cards.",
+      "html": "<button type=\"button\" class=\"ds-totop\" aria-label=\"Back to top\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 19V5\"/><path d=\"M5 12l7-7 7 7\"/></svg></button>",
+      "css": ".ds-totop { display: grid; place-items: center; width: 3.1rem; height: 3.1rem; border: 1px solid var(--border, #2a2822); border-radius: 10px; background: var(--box, #efece0); color: var(--ink, #1f1e19); cursor: pointer; transition: transform .12s ease, box-shadow .12s ease; } .ds-totop:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 var(--border, #2a2822); } .ds-totop:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Field Notebook",
+    "overview": "The site is a technical and environment artist's working notebook: notes typed in graphite on survey-book paper, framed panels pinned into the pages, and a single highlighter used to mark where you are. It's monospace for reading and interface, with chunky grotesque headings for titles. The site should feel like a code editor that someone has been taking field notes in, technical but hand-kept.\n\nThe UI deliberately stays close to monochrome. Colour comes from the artwork (renders, photos, live shader canvases), and the interface only frames it. The one accent is **highlighter yellow**, which behaves like a real highlighter: it fills or underlines, and is never ink. Content sits in crisp graphite-ruled boxes on warm paper. Things you can click have rounded corners and lift when touched. Static panels are squared off. There's a full dark theme (\"the same field book after dark\"), and code blocks are always dark.\n\nConfirmed rejections: generic web defaults (\"AI slop\": serif and sans with a terracotta accent, conventional template layouts) and commercial density (monetization callouts, promo blocks). Javier chose the look from his own reference sites, ameye.dev (primary) and charlesboury.fr for the coming portfolio, and it must not drift back toward conventional defaults.",
+    "keyCharacteristics": [
+      "IBM Plex Mono for body and UI; Bricolage Grotesque (700–800) for headings, card titles and the brand.",
+      "One accent, highlighter yellow, used as a fill or underline and never as text.",
+      "Graphite-ruled boxes on warm paper. Squared means static, rounded means clickable, pill means a toggle.",
+      "Flat at rest; a hard, unblurred offset shadow appears only on hover.",
+      "Emoji as inline icons on post cards and titles.",
+      "Code blocks are always dark, in a warm syntax palette.",
+      "A narrow centred column (82ch) with a top pill nav."
+    ],
+    "rules": [
+      {
+        "name": "The Highlighter Rule",
+        "section": "colors",
+        "body": "Yellow is a fill or a stroke, never text. Full strength is reserved for \"you are here\" marks (active tab, active filter, inspector channel, selection). Inline code gets a half-strength wash (50% highlighter mixed into the box fill), and links get a 3px stroke. If yellow ever needs to carry words, use Ochre Ink."
+      },
+      {
+        "name": "The One Ink Rule",
+        "section": "colors",
+        "body": "The interface has exactly one accent family. Every other colour on the page comes from artwork, shader canvases or syntax highlighting. Don't add a second UI hue."
+      },
+      {
+        "name": "The Mono Voice Rule",
+        "section": "typography",
+        "body": "Plex Mono is the voice of the site: body, nav, pills, captions and code. Bricolage is reserved for headings, card titles and the brand, and never sets a paragraph."
+      },
+      {
+        "name": "The Touched-Lift Rule",
+        "section": "elevation",
+        "body": "Surfaces are flat until the pointer reaches them. Then they rise 2px and cast a hard shadow in the rule colour, with no blur. Never use soft, blurred or coloured ambient shadows. Under prefers-reduced-motion the lift is dropped."
+      },
+      {
+        "name": "The Square-Means-Static Rule",
+        "section": "shapes",
+        "body": "If it doesn't do anything when clicked, its corners are 3px. If it does, they're 10px or a pill."
+      }
+    ],
+    "dos": [
+      "Do keep every colour as a token in `src/css/global.css` `:root` and `:root[data-theme=\"dark\"]`. Components read tokens only.",
+      "Do use the Highlighter at full strength only for \"you are here\" marks, with ink text on top.",
+      "Do put any coloured text in Ochre Ink (`#5c4500` light, `#f0d46a` dark), which is AA-safe on paper and box.",
+      "Do use 3px corners for static panels and 10px or pills for anything clickable or embedded.",
+      "Do keep surfaces flat and lift them only on hover, with a 3px 3px 0 graphite shadow (2px for pills) and −2px translate.",
+      "Do set titles in Bricolage Grotesque 700–800 and everything else in IBM Plex Mono.",
+      "Do let artwork carry the colour. Image cards bleed the picture off the right edge on a diagonal cut.",
+      "Do respect `prefers-reduced-motion`: no load-in, no lift, no wave, shaders paused."
+    ],
+    "donts": [
+      "Don't set text in highlighter yellow (`#f5d95e` / `#e8c228`). It fails contrast on paper and stops reading as a highlighter.",
+      "Don't add a second accent hue to the UI, or bring back the old forest green.",
+      "Don't use soft, blurred or coloured drop shadows.",
+      "Don't drift toward generic defaults: no serif and sans with a terracotta accent, no gradient heroes, no grids of same-size icon cards, no promo or monetization blocks.",
+      "Don't put long-form text in Bricolage, or headings in a system sans.",
+      "Don't make code blocks follow the light theme. The console stays dark."
+    ]
+  }
+}

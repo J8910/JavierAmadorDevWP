@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "_site/**/*.html"
+        ],
+        "createdAt": "2026-11-26T14:58:34.734Z",
+        "reason": "user confirmed: chose the Survey Book palette (field-paper #f6f4ec) from a 4-palette study on 2026-11-26"
+      }
+    ]
+  }
+}

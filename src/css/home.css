@@ -8,7 +8,8 @@
     color: var(--accent-ink);
     text-decoration: underline;
     text-underline-offset: 3px;
-    text-decoration-color: var(--accent);
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--highlight);
 }
 .intro__links a:hover { color: var(--accent); }
 

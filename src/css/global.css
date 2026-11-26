@@ -3,22 +3,29 @@
    which would serialize them behind global.css. */
 
 /* ================================================================== *
- *  Design tokens — the whole "terminal zine" look lives here.
- *  Aesthetic: monospace body, bordered cream boxes, chunky grotesque
- *  headings, muted forest-green accent. Colour comes from artwork.
+ *  Design tokens — the whole "Field Notebook" look lives here (see
+ *  DESIGN.md). Palette "Survey Book": graphite ink on field-book paper,
+ *  highlighter yellow as the ONLY accent. Yellow is a fill / underline,
+ *  never text; coloured text uses the dark ochre --accent-ink.
+ *  Colour otherwise comes from the artwork.
  * ================================================================== */
 :root {
     /* Palette */
-    --bg:          #fbfaf5;   /* warm off-white page   */
-    --box:         #f7f1e3;   /* cream box fill        */
-    --border:      #2b2925;   /* crisp near-black rule  */
-    --ink:         #201f1b;
-    --ink-soft:    #6f6c63;   /* meta / descriptions   */
-    --accent:      #4c7a52;   /* muted forest green    */
-    --accent-ink:  #2f5636;   /* green text on tint    */
-    --accent-soft: #e2ebdd;   /* light green pill tint */
-    --code-bg:     #24231e;   /* dark code block       */
+    --bg:          #f6f4ec;   /* field-book paper       */
+    --box:         #efece0;   /* page-in-a-page box     */
+    --border:      #2a2822;   /* graphite rule          */
+    --ink:         #1f1e19;   /* graphite ink           */
+    --ink-soft:    #66625a;   /* meta / descriptions    */
+    --accent:      #9a7300;   /* ochre: hover text, focus ring */
+    --accent-ink:  #5c4500;   /* dark ochre link text   */
+    --accent-soft: #f5d95e;   /* highlighter fill: active tab/pill, inline code */
+    --highlight:   #e8c228;   /* highlighter stroke: link underline, quote rule */
+    --code-bg:     #23221c;   /* dark code block        */
     --code-fg:     #f2efe6;
+    /* On the always-dark console (same in both themes): */
+    --code-soft:   #a39d8a;   /* filename / labels  (5.9:1+) */
+    --code-rule:   #78715b;   /* buttons / dividers on the console */
+    --code-accent: #e2bd3a;   /* highlighter hover on the console */
 
     /* Type */
     --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
@@ -37,20 +44,21 @@
     --card-slant: 2.75rem;
 }
 
-/* Dark theme — the same warm terminal-zine feel after dark: warm charcoal page,
-   raised warm-dark boxes, a crisp tan rule instead of near-black, and a lifted
-   green so the accent still reads on a dark ground. Only the palette changes;
+/* Dark theme — the same field book after dark: warm charcoal page, raised
+   warm-dark boxes, a tan rule (>=3:1 against the box), and the highlighter
+   yellow lifted so it still reads on a dark ground. Only the palette changes;
    every component below already draws from these tokens. */
 :root[data-theme="dark"] {
-    --bg:          #181712;   /* warm charcoal page    */
-    --box:         #22201a;   /* raised warm-dark box  */
-    --border:      #6b6553;   /* crisp warm tan rule   */
-    --ink:         #ece7d8;   /* warm off-white text   */
-    --ink-soft:    #a09a88;   /* meta / descriptions   */
-    --accent:      #7bb083;   /* lifted forest green   */
-    --accent-ink:  #a9d3ae;   /* light green on tint   */
-    --accent-soft: #243528;   /* dark green pill tint  */
-    --code-bg:     #12110c;   /* near-black code block */
+    --bg:          #16150f;   /* warm charcoal page    */
+    --box:         #201e16;   /* raised warm-dark box  */
+    --border:      #78715b;   /* warm tan rule         */
+    --ink:         #ede8d6;   /* warm off-white text   */
+    --ink-soft:    #a39d8a;   /* meta / descriptions   */
+    --accent:      #e2bd3a;   /* lifted highlighter    */
+    --accent-ink:  #f0d46a;   /* pale yellow link text */
+    --accent-soft: #3b3214;   /* dark highlighter tint */
+    --highlight:   #e2bd3a;   /* underline / quote rule */
+    --code-bg:     #100f0a;   /* near-black code block */
     --code-fg:     #f2efe6;
 }
 
@@ -87,6 +95,9 @@ body {
 main.wrap { flex: 1; padding-block: var(--step); }
 
 strong { font-weight: 600; }
+
+/* Selecting text marks it with the highlighter, like the rest of the accent. */
+::selection { background: var(--accent-soft); color: var(--ink); }
 
 /* Skip link — hidden until focused */
 .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink); color: var(--bg); padding: .6rem 1rem; z-index: 10; }
@@ -134,7 +145,7 @@ strong { font-weight: 600; }
     transition: background .12s ease, color .12s ease;
 }
 .nav a:hover { color: var(--ink); background: var(--box); }
-.nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent-ink); font-weight: 500; }
+.nav a[aria-current="page"] { background: var(--accent-soft); color: var(--ink); font-weight: 500; }
 
 /* Theme toggle — sits with the nav pills; shows the icon of the theme you'd
    switch TO (moon while light, sun while dark). Harmless/hidden without JS. */
@@ -204,7 +215,7 @@ strong { font-weight: 600; }
     margin-block-end: .9rem;
 }
 .eyebrow { font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); }
-.text-link { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--accent); }
+.text-link { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 3px; text-decoration-color: var(--highlight); }
 .text-link:hover { color: var(--accent); }
 
 .page-head { margin-block-end: 1.75rem; }
@@ -239,7 +250,7 @@ strong { font-weight: 600; }
     transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
 }
 .pills button:hover { color: var(--ink); transform: translateY(-2px); box-shadow: 2px 2px 0 var(--border); }
-.pills button[aria-pressed="true"] { background: var(--ink); color: var(--bg); font-weight: 500; }
+.pills button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); font-weight: 500; }
 
 /* ------------------------------------------------------------------ *
  *  Cards (post list) — bordered box, image bleeds to the right edge
@@ -377,7 +388,7 @@ strong { font-weight: 600; }
 .prose > * + * { margin-block-start: 1.3em; }
 .prose h2 { font-family: var(--font-head); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.01em; margin-block-start: 2em; }
 .prose h3 { font-family: var(--font-head); font-weight: 700; font-size: 1.2rem; margin-block-start: 1.6em; }
-.prose a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.prose a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--highlight); text-decoration-thickness: 3px; text-underline-offset: 3px; }
 .prose a:hover { color: var(--accent); }
 /* Prose links default to ink; .text-link opts a link into the green accent even
    inside prose (the base .text-link rule alone loses to `.prose a` on specificity). */
@@ -385,14 +396,16 @@ strong { font-weight: 600; }
 .prose a.text-link:hover { color: var(--accent); }
 .prose ul, .prose ol { padding-inline-start: 1.3em; }
 .prose li + li { margin-block-start: .35em; }
-.prose blockquote { border-inline-start: 3px solid var(--accent); padding-inline-start: 1.1em; color: var(--ink-soft); }
+.prose blockquote { border-inline-start: 3px solid var(--highlight); padding-inline-start: 1.1em; color: var(--ink-soft); }
 .prose img { border: 1px solid var(--border); border-radius: var(--radius); margin-block: 2em; }
 /* {% figure %} shortcode: the <figure> owns the vertical rhythm + optional width cap
    (centered when narrower than the column); the caption sits quietly beneath. */
 .prose figure.figure { margin-block: 2em; margin-inline: auto; }
 .prose figure.figure img { margin-block: 0; }
 .figure__caption { font-size: .78rem; color: var(--ink-soft); margin-block-start: .6rem; text-align: center; }
-.prose code { font-size: .88em; background: var(--accent-soft); padding: .12em .4em; border-radius: 5px; }
+/* Inline code gets a half-strength highlighter wash: full-strength yellow is reserved
+   for "you are here" marks (active tab, active filter, selection). */
+.prose code { font-size: .88em; background: color-mix(in srgb, var(--accent-soft) 50%, var(--box)); padding: .12em .4em; border-radius: 5px; }
 .prose pre { background: var(--code-bg); color: var(--code-fg); padding: 1.1em 1.25em; border-radius: var(--radius); overflow-x: auto; font-size: .85rem; line-height: 1.6; border: 1px solid var(--border); }
 .prose pre code { background: none; padding: 0; color: inherit; }
 .prose hr { border: 0; border-top: 1px solid var(--border); margin-block: 2.5em; }
@@ -403,7 +416,7 @@ strong { font-weight: 600; }
  *  code view. Kept theme-independent since the code ground never flips.
  * ------------------------------------------------------------------ */
 code[class*="language-"] .token.comment,
-code[class*="language-"] .token.prolog { color: #7f8a6d; font-style: italic; }
+code[class*="language-"] .token.prolog { color: #8a9577; font-style: italic; }  /* >=4.5:1 on every code ground */
 code[class*="language-"] .token.keyword,
 code[class*="language-"] .token.boolean { color: #e6b673; }               /* if, return, uniform… */
 code[class*="language-"] .token.builtin,

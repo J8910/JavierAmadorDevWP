@@ -123,7 +123,7 @@
     transition: background .12s ease, color .12s ease;
 }
 .shader__views button:hover { color: var(--ink); background: var(--accent-soft); }
-.shader__views button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.shader__views button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); }
 .shader__views button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* --- Caption + code ---------------------------------------------- */
@@ -138,7 +138,7 @@
     display: block;
     padding: .5rem 1.1rem .1rem;
     background: var(--code-bg);
-    color: var(--ink-soft);
+    color: var(--code-soft);
     font-size: .68rem;
     letter-spacing: .08em;
     text-transform: uppercase;
@@ -170,16 +170,16 @@
     font-size: .66rem;
     letter-spacing: .06em;
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: var(--code-soft);
     background: none;
-    border: 1px solid var(--border);
+    border: 1px solid var(--code-rule);
     border-radius: 6px;
     padding: .2em .6em;
     cursor: pointer;
     transition: color .12s ease, border-color .12s ease;
 }
-.shader__revert:hover { color: var(--accent-ink); border-color: var(--accent); }
-.shader__revert:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.shader__revert:hover { color: var(--code-accent); border-color: var(--code-accent); }
+.shader__revert:focus-visible { outline: 2px solid var(--code-accent); outline-offset: 1px; }
 
 .shader__editor { position: relative; background: var(--code-bg); }
 .shader__editor pre,
