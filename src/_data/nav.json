@@ -1,5 +1,6 @@
 [
   { "text": "Work", "url": "/portfolio/", "icon": "work" },
+  { "text": "Career", "url": "/career/", "icon": "career" },
   { "text": "Writing", "url": "/blog/", "match": "/posts/", "icon": "writing" },
   { "text": "Resources", "url": "/resources/", "icon": "resources" },
   { "text": "Contact", "url": "/contact/", "icon": "contact" }

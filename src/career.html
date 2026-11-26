@@ -1,0 +1,41 @@
+---
+layout: layouts/career.html
+title: Career
+description: Javier Amador's career as a technical and environment artist, from studio work to XR and real-time tools.
+permalink: /career/
+---
+{#- The timeline builds itself from src/_data/career.json (newest first). To add a role,
+    add an entry there; no edits here. -#}
+{%- macro stations(list) -%}
+<ol class="traverse">
+    {%- for e in list %}
+    <li class="station{% if e.current %} station--now{% endif %}">
+        <p class="station__when surface"><time>{{ e.start }}</time> – {% if e.end == "Present" %}now{% else %}<time>{{ e.end }}</time>{% endif %}</p>
+        <div class="station__card surface panel">
+            <h3>{{ e.role }}</h3>
+            <p class="station__org">{{ e.org }}{% if e.kind %} · {{ e.kind }}{% endif %}</p>
+            {% if e.place %}<p class="station__place">{{ e.place }}</p>{% endif %}
+            {% if e.summary %}<p class="station__summary">{{ e.summary }}</p>{% endif %}
+            {% if e.points %}<ul class="station__points">{% for pt in e.points %}<li>{{ pt }}</li>{% endfor %}</ul>{% endif %}
+            {% if e.link %}<a class="text-link" href="{{ e.link }}">See the project</a>{% endif %}
+        </div>
+    </li>
+    {%- endfor %}
+</ol>
+{%- endmacro -%}
+
+<div class="page-head surface">
+    <h1>Career</h1>
+    <p class="page-head__lead">Technical and environment art across animation, games, XR and the web:
+        shaders, tools and pipelines alongside the art itself.</p>
+</div>
+
+<section class="career" aria-labelledby="exp-h">
+    <h2 class="career__label surface" id="exp-h">Experience</h2>
+    {{ stations(career.experience) }}
+</section>
+
+<section class="career" aria-labelledby="edu-h">
+    <h2 class="career__label surface" id="edu-h">Education</h2>
+    {{ stations(career.education) }}
+</section>

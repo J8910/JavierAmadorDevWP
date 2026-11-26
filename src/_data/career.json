@@ -1,0 +1,100 @@
+{
+  "_howto": "The /career/ page is built from this file. Newest first. `points` and `link` are optional; `current: true` marks the role you are in now.",
+  "experience": [
+    {
+      "role": "Technical Artist",
+      "org": "Human Computer",
+      "kind": "Full-time",
+      "start": "Aug 2026",
+      "end": "Present",
+      "place": "San Rafael, California · Remote",
+      "current": true,
+      "summary": "3D architectural rendering."
+    },
+    {
+      "role": "XR/Unity Developer & Technical 3D Artist",
+      "org": "Aumenta Solutions",
+      "kind": "Full-time",
+      "start": "Feb 2025",
+      "end": "Feb 2026",
+      "place": "Barcelona, Spain · Hybrid",
+      "points": [
+        "Architected a proprietary voxel terrain engine using Marching Cubes, with chunk-based management and a custom editor tool suite for real-time volumetric editing.",
+        "Developed immersive VR/AR applications, maintaining and upgrading proprietary systems for stability and performance across XR platforms.",
+        "Engineered a MetaHuman-to-Unity pipeline: custom scripts bring high-fidelity characters from Unreal Engine 5 through Blender into Unity, automating retargeting and preserving shader quality.",
+        "Established a standardized technical pipeline with scalable, event-driven architecture, reducing inter-departmental dependencies and boosting team productivity."
+      ]
+    },
+    {
+      "role": "3D Technical & Environment Artist",
+      "org": "Manada",
+      "kind": "Freelance",
+      "start": "Sep 2024",
+      "end": "Dec 2024",
+      "place": "Amsterdam, Netherlands · Remote",
+      "points": [
+        "Designed dynamic simulation systems for a WebGL project: fire propagation and procedural vegetation growth within web constraints.",
+        "Developed a spherical-billboard foliage shader, using camera-facing quads to simulate volumetric geometry inside strict performance budgets.",
+        "Implemented procedural mesh generation and modular workflows for scalable environments, cutting build size and loading times.",
+        "Defined the web-ready technical art pipeline: custom post-process techniques and parameter-exposed shaders for easy artistic adjustment."
+      ]
+    },
+    {
+      "role": "3D Artist & Texture Artist",
+      "org": "ICON Creative Studio",
+      "kind": "Contract",
+      "start": "Jun 2022",
+      "end": "Apr 2023",
+      "place": "Vancouver, Canada · Hybrid",
+      "summary": "Worked on the animated series Firebuds.",
+      "points": [
+        "Optimized asset performance by refining topology, creating proxies and simplifying shader networks for the rendering and animation pipeline.",
+        "Translated 2D concepts into production-ready 3D models (characters, vehicles, props) to strict art direction, client feedback and deadlines.",
+        "Collaborated on set dressing and layout, meeting the technical requirements for camera movement and lighting composition.",
+        "Prepared assets for rigging, with corrective blendshapes and clean edge flow for deformation."
+      ]
+    },
+    {
+      "role": "3D Artist & Unity Developer",
+      "org": "SandBloom Studio",
+      "kind": "Internship",
+      "start": "Feb 2021",
+      "end": "Jul 2021",
+      "place": "Sabadell, Spain · On-site",
+      "points": [
+        "Enhanced the game's visual identity with custom shaders and VFX, C# gameplay integration, LODs and lightmaps for optimization.",
+        "Executed the full 3D pipeline, from 2D concepts to game-ready models and environments, including texturing, shading and lighting.",
+        "Rigged characters and props for animation, with clean deformation and integration into Unity."
+      ]
+    },
+    {
+      "role": "Unity Developer, Concept & Technical Artist",
+      "org": "CEV, School of Communication, Image and Sound",
+      "kind": "DE-EXIT: Eternal Matters",
+      "start": "Sep 2020",
+      "end": "Jun 2021",
+      "place": "Barcelona, Spain · Hybrid",
+      "points": [
+        "Established the technical art pipeline: workflows, custom tools for asset integration and modularity, and ongoing support for the art team.",
+        "Developed custom shaders and VFX in Unity that defined the game's visual language, leading look development alongside lighting and shading.",
+        "Managed the full asset lifecycle: 2D concepts, 3D environments and props, and character rigging."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "role": "Certificate of Higher Education, 3D Animation, Games and Interactive Environments",
+      "org": "CEV, School of Communication, Image and Sound",
+      "start": "2019",
+      "end": "2021",
+      "place": "Barcelona, Spain"
+    },
+    {
+      "role": "Bachelor's Degree studies, Computer Engineering",
+      "org": "Universitat Autònoma de Barcelona",
+      "start": "2017",
+      "end": "2019",
+      "place": "Barcelona, Spain"
+    }
+  ]
+}
