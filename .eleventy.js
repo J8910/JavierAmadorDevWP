@@ -1,6 +1,8 @@
 const markdownItKatex = require('@traptitech/markdown-it-katex');
 const rssPlugin = require('@11ty/eleventy-plugin-rss').default;
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const { default: Image, generateHTML } = require('@11ty/eleventy-img');
+const path = require('path');
 
 // Prism, used directly by the {% shader %} shortcode to colour the GLSL it shows.
 // (Fenced ```glsl / ```hlsl blocks in Markdown are coloured by the plugin above.)
@@ -145,6 +147,43 @@ module.exports = function(eleventyConfig) {
             + cap
             + `</figure>`;
     });
+
+    // Optimised, responsive image (portfolio + anywhere else):
+    //   {% image "/assets/images/wind-house/wind-house-01.jpg", "What's in the frame" %}
+    //   {% image src, alt, "(min-width: 60rem) 50vw, 100vw", "class-name", "eager" %}
+    // Drop the original (big is fine) in src/assets/images/<project>/; the build makes
+    // WebP + JPEG copies at a few widths into /img/ and writes a <picture> with srcset,
+    // width/height (no layout shift) and lazy loading. `alt` is required: describe
+    // what's in the frame. Pass "" only for a purely decorative image.
+    eleventyConfig.addAsyncShortcode('image', async (src, alt, sizes = '100vw', cls = '', loading = 'lazy') => {
+        if (alt === undefined) throw new Error(`{% image %} needs alt text: ${src}`);
+        const metadata = await Image(path.join('src', src), {
+            widths: [480, 960, 1600, 'auto'],
+            formats: ['webp', 'jpeg'],
+            outputDir: path.join(eleventyConfig.directories.output, 'img'),
+            urlPath: '/img/',
+        });
+        const attrs = { alt, sizes, loading, decoding: 'async' };
+        if (cls) attrs.class = cls;
+        if (loading === 'eager') attrs.fetchpriority = 'high';
+        return generateHTML(metadata, attrs);
+    });
+
+    // Drafts: add `draft: true` to any post or project front matter to keep it off the
+    // site entirely (no page, not in lists, feed or sitemap). Delete the line to publish.
+    eleventyConfig.addPreprocessor('drafts', '*', (data) => {
+        if (data.draft) return false;
+    });
+
+    // Portfolio projects, in the order set by each project's `order:` front matter.
+    // Add a project = add one .md file in src/portfolio/ (see portfolio.json).
+    eleventyConfig.addCollection('projects', (api) =>
+        api.getFilteredByTag('project').sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)));
+
+    // Home page: the project marked `featured: true` leads (else the first by order),
+    // and the rest fill the rail.
+    eleventyConfig.addFilter('featured', (projects) => projects.find((p) => p.data.featured) || projects[0]);
+    eleventyConfig.addFilter('others', (projects, one) => projects.filter((p) => p !== one));
 
     // Human-friendly date, e.g. {{ page.date | readableDate }} -> "June 2, 2026"
     eleventyConfig.addFilter('readableDate', (value) => {

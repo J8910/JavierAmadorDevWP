@@ -5,7 +5,6 @@ description: Notes on environment art, technical art, and the tools in between.
 ---
 
 <div class="page-head">
-    <p class="eyebrow">Writing</p>
     <h1>My adventures in</h1>
 
     {% set cats = [] %}
@@ -31,7 +30,7 @@ description: Notes on environment art, technical art, and the tools in between.
     {% set postCats = post.data.categories or ([post.data.category] if post.data.category else ['misc']) %}
     <a class="card{% if post.data.image %} card--media{% endif %}" href="{{ post.url }}" data-category="{{ postCats | join(' ') }}">
         <div class="card__body">
-            <h2 class="card__title">{% if post.data.emoji %}<span class="card__emoji" aria-hidden="true">{{ post.data.emoji }}</span> {% endif %}{{ post.data.title }}</h2>
+            <h2 class="card__title">{{ post.data.title }}</h2>
             {% if post.data.description %}<p class="card__desc">{{ post.data.description }}</p>{% endif %}
             <p class="card__date">{{ post.date | readableDate }}</p>
         </div>
@@ -61,22 +60,10 @@ description: Notes on environment art, technical art, and the tools in between.
                 .map(function (b) { return b.getAttribute('data-category'); });
             var showAll = active.length === 0;
             press(allBtn, showAll);
-            // Re-run the entry animation for the cards that remain, staggered in *visible*
-            // order — otherwise the CSS nth-child delays fire in DOM order and look shuffled.
-            var visibleIndex = 0;
             cards.forEach(function (c) {
                 var cardCats = c.getAttribute('data-category').split(' ');
                 var show = showAll || active.some(function (cat) { return cardCats.indexOf(cat) !== -1; });
                 c.hidden = !show;
-                if (!show) return;
-                // Ensure the card is revealed (it may still be below the fold / unobserved),
-                // then restart the rise so the stagger follows *visible* order.
-                c.classList.add('is-in');
-                c.style.animation = 'none';
-                void c.offsetWidth;            // force reflow so the animation restarts
-                c.style.animation = '';
-                c.style.animationDelay = (visibleIndex * 0.045) + 's';
-                visibleIndex++;
             });
         }
 

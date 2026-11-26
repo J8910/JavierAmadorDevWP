@@ -5,7 +5,6 @@ description: A living library of real-time rendering and tech-art techniques —
 ---
 
 <div class="page-head">
-    <p class="eyebrow">Library</p>
     <h1>Tech-art resources</h1>
     <p class="page-head__lead">A growing reference of real-time rendering &amp; tech-art techniques.
         Where it helps, the shader runs right on the page — edit it and watch it recompile.</p>
@@ -34,7 +33,7 @@ description: A living library of real-time rendering and tech-art techniques —
                 {% if (r.data.family or "Misc") == family %}
                 <a class="card" href="{{ r.url }}">
                     <div class="card__body">
-                        <h4 class="card__title">{% if r.data.emoji %}<span class="card__emoji" aria-hidden="true">{{ r.data.emoji }}</span> {% endif %}{{ r.data.title }}</h4>
+                        <h4 class="card__title">{{ r.data.title }}</h4>
                         {% if r.data.description %}<p class="card__desc">{{ r.data.description }}</p>{% endif %}
                         {% if r.data.difficulty %}<p class="card__date">{{ r.data.difficulty }}</p>{% endif %}
                     </div>

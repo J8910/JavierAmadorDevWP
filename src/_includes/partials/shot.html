@@ -1,0 +1,19 @@
+{#- One project picture. If the project has a `slide:` (two shots), it becomes a survey
+    slide (js/slides.js); otherwise its cover image. Set before including:
+      shotProject  the project (collection item)
+      shotClass    extra classes, e.g. "slide--reveal" to develop the hero on load
+      shotSizes    the image's responsive "sizes" value
+      shotEager    true for the first thing on screen -#}
+{%- set s = shotProject.data.slide -%}
+{%- if s and s.shots and s.shots.length >= 2 -%}
+<div class="slide {{ shotClass }}" tabindex="0" role="group" aria-label="{{ shotProject.data.title }}, {{ s.label }}: move across the image to compare the two shots">
+    {% image s.shots[0].src, s.shots[0].alt, shotSizes, "", ("eager" if shotEager else "lazy") %}
+    {% image s.shots[1].src, s.shots[1].alt, shotSizes, "", "lazy" %}
+    <canvas aria-hidden="true"></canvas>
+    <span class="slide__tag" aria-hidden="true">{{ s.label }}</span>
+</div>
+{%- else -%}
+<div class="shot {{ shotClass }}">
+    {% image shotProject.data.cover, shotProject.data.coverAlt, shotSizes, "", ("eager" if shotEager else "lazy") %}
+</div>
+{%- endif -%}
