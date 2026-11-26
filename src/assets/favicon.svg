@@ -1,9 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Javier Amador">
-  <!-- Placeholder monogram favicon in the site palette (forest-green tile, cream JA).
-       Editable source of truth; favicon-32.png / apple-touch-icon.png are rasterized
-       from this. Swap for a real mark anytime. -->
-  <rect x="2" y="2" width="60" height="60" rx="13" fill="#4c7a52" stroke="#2b2925" stroke-width="3"/>
-  <text x="32" y="33" text-anchor="middle" dominant-baseline="central"
-        font-family="'Arial Black', Arial, sans-serif" font-weight="800" font-size="30"
-        letter-spacing="-1" fill="#f7f1e3">JA</text>
+  <!-- Site icon: a survey-sheet hill. Paper tile with an ink rule, the sienna index
+       contour, one ink contour inside it and the legend's summit triangle. Follows the
+       browser's dark mode with the night sheet colours. Editable source of truth;
+       favicon-32.png / apple-touch-icon.png are rasterized from this
+       (scripts/gen-brand-assets.js). -->
+  <style>
+    .paper { fill: #f4f5f0; stroke: #1b1d1a; }
+    .ink   { stroke: #1b1d1a; }
+    .mark  { fill: #1b1d1a; }
+    .index { stroke: #b0602a; }
+    @media (prefers-color-scheme: dark) {
+      .paper { fill: #151b22; stroke: #e9e6dd; }
+      .ink   { stroke: #e9e6dd; }
+      .mark  { fill: #e9e6dd; }
+      .index { stroke: #e3a63a; }
+    }
+  </style>
+  <rect class="paper" x="2" y="2" width="60" height="60" stroke-width="3"/>
+  <path class="index" fill="none" stroke-width="5" stroke-linejoin="round"
+        d="M9 37C7 24 17 11 31 11C44 11 52 19 55 30C58 41 54 51 44 53C36 55 32 49 24 52C15 55 10 46 9 37Z"/>
+  <path class="ink" fill="none" stroke-width="3.5" stroke-linejoin="round"
+        d="M19 34C18 26 24 20 31 20C39 20 44 26 44 32C44 39 38 41 32 40C26 39 20 41 19 34Z"/>
+  <path class="mark" d="M31.5 24.5 37.5 35H25.5Z"/>
 </svg>
