@@ -1,508 +1,566 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-26T14:56:54.454Z",
+  "generatedAt": "2026-11-26T19:43:42.422Z",
   "title": "Design System: javieramador.dev",
   "extensions": {
     "colorMeta": {
-      "field-paper": {
+      "day-paper": {
         "role": "neutral",
-        "displayName": "Field Paper",
-        "purpose": "Page ground (light).",
-        "canonical": "oklch(96.6% 0.011 95.2)",
+        "displayName": "Map Paper",
+        "purpose": "Day map ground and the fill of every surface, panel and card.",
+        "canonical": "oklch(96.8% 0.007 115.7)",
         "tonalRamp": [
           "#0b0b0a",
-          "#252422",
-          "#41403b",
-          "#5f5e57",
-          "#828079",
-          "#a6a59f",
-          "#cbcac7",
-          "#efeeec"
+          "#252523",
+          "#42423f",
+          "#61625e",
+          "#82837e",
+          "#a5a5a1",
+          "#c9cac5",
+          "#eeefec"
         ]
       },
-      "field-page": {
-        "role": "neutral",
-        "displayName": "Field Page",
-        "purpose": "Box, card and pill fill (light).",
-        "canonical": "oklch(94.2% 0.016 95.2)",
-        "tonalRamp": [
-          "#0c0b09",
-          "#252421",
-          "#414039",
-          "#605e54",
-          "#838076",
-          "#a7a59d",
-          "#cccac6",
-          "#efeeeb"
-        ]
-      },
-      "graphite-rule": {
-        "role": "neutral",
-        "displayName": "Graphite Rule",
-        "purpose": "Every border and divider (light).",
-        "canonical": "oklch(27.7% 0.011 91.7)",
-        "tonalRamp": [
-          "#0c0b0a",
-          "#252422",
-          "#41403b",
-          "#605d57",
-          "#828079",
-          "#a6a49f",
-          "#cbcac7",
-          "#efeeec"
-        ]
-      },
-      "graphite-ink": {
+      "day-ink": {
         "role": "neutral",
         "displayName": "Graphite Ink",
-        "purpose": "Body text and headings (light).",
-        "canonical": "oklch(23.4% 0.009 97.8)",
+        "purpose": "Day text, headings and every 1px rule.",
+        "canonical": "oklch(22.7% 0.006 135.0)",
         "tonalRamp": [
           "#0b0b0a",
-          "#242422",
-          "#40403c",
-          "#5f5e58",
-          "#82807a",
-          "#a5a5a0",
-          "#cbcac8",
-          "#efeeed"
+          "#242523",
+          "#414340",
+          "#60625e",
+          "#81837f",
+          "#a3a6a2",
+          "#c8cac6",
+          "#edefec"
         ]
       },
-      "pencil-grey": {
+      "day-index": {
+        "role": "primary",
+        "displayName": "Sienna Index",
+        "purpose": "Day index contours, current-page and link underlines, hover rules, focus outline.",
+        "canonical": "oklch(57.3% 0.123 51.5)",
+        "tonalRamp": [
+          "#1a0400",
+          "#421500",
+          "#6c2d00",
+          "#944a11",
+          "#bb6a35",
+          "#df8f5d",
+          "#ffb68b",
+          "#ffe1bf"
+        ]
+      },
+      "ink-soft": {
         "role": "neutral",
         "displayName": "Pencil Grey",
-        "purpose": "Meta text, descriptions, inactive nav (light).",
-        "canonical": "oklch(49.7% 0.013 84.6)",
+        "purpose": "Secondary text on the day sheet (6.6:1 on paper).",
+        "canonical": "oklch(45.7% 0.015 126.6)",
         "tonalRamp": [
-          "#0c0b0a",
-          "#252421",
-          "#423f3a",
-          "#615d56",
-          "#848077",
-          "#a7a49e",
-          "#cccac7",
-          "#efeeec"
+          "#0a0c09",
+          "#242621",
+          "#40433c",
+          "#5f635a",
+          "#80847a",
+          "#a2a79d",
+          "#c7cbc2",
+          "#edf0e9"
         ]
       },
-      "ochre": {
+      "accent-ink": {
         "role": "primary",
-        "displayName": "Ochre",
-        "purpose": "Link hover text and focus rings (light).",
-        "canonical": "oklch(57.9% 0.119 84.9)",
+        "displayName": "Burnt Sienna Ink",
+        "purpose": "Sienna as readable text: current nav item, text links, project context.",
+        "canonical": "oklch(48.2% 0.106 51.4)",
         "tonalRamp": [
-          "#110a00",
-          "#2f2205",
-          "#533b00",
-          "#7b5700",
-          "#a17911",
-          "#bda167",
-          "#d9c9a8",
-          "#f8edd9"
+          "#180500",
+          "#3f1900",
+          "#66310a",
+          "#8e4e24",
+          "#b46f43",
+          "#d89269",
+          "#f8b994",
+          "#ffe3c6"
         ]
       },
-      "ochre-ink": {
-        "role": "primary",
-        "displayName": "Ochre Ink",
-        "purpose": "Coloured link text; the text-safe member of the yellow family (light).",
-        "canonical": "oklch(40.4% 0.083 86.9)",
+      "accent-soft": {
+        "role": "secondary",
+        "displayName": "Sienna Wash",
+        "purpose": "Selected filter pills and text selection (day).",
+        "canonical": "oklch(90.4% 0.030 67.4)",
         "tonalRamp": [
-          "#0f0b03",
-          "#2b2310",
-          "#4c3e1a",
-          "#715a23",
-          "#967d43",
-          "#b4a37b",
-          "#d4cab3",
-          "#f4eedf"
+          "#0e0a06",
+          "#2c231b",
+          "#4b4034",
+          "#6c5e50",
+          "#8f7f70",
+          "#b1a293",
+          "#d4c7b9",
+          "#f7ece2"
         ]
       },
-      "highlighter": {
-        "role": "primary",
-        "displayName": "Highlighter",
-        "purpose": "You-are-here fill: active tab, active filter, inspector channel, selection (light).",
-        "canonical": "oklch(88.6% 0.144 96.5)",
-        "tonalRamp": [
-          "#100b00",
-          "#2c2300",
-          "#4f3e00",
-          "#745b00",
-          "#9a7e00",
-          "#b7a557",
-          "#d5cba1",
-          "#f5efd4"
-        ]
-      },
-      "highlighter-stroke": {
-        "role": "primary",
-        "displayName": "Highlighter Stroke",
-        "purpose": "3px link underline and blockquote rule (light).",
-        "canonical": "oklch(82.4% 0.160 93.6)",
-        "tonalRamp": [
-          "#110a00",
-          "#2e2300",
-          "#533c00",
-          "#7a5800",
-          "#a07b00",
-          "#bca34b",
-          "#d8ca9b",
-          "#f7efd1"
-        ]
-      },
-      "night-console": {
+      "paper-inset": {
         "role": "neutral",
-        "displayName": "Night Console",
-        "purpose": "Code block ground (light theme).",
-        "canonical": "oklch(25.1% 0.011 99.3)",
+        "displayName": "Paper Inset",
+        "purpose": "Inline code, blockquotes, image wells (day).",
+        "canonical": "oklch(94.0% 0.009 113.2)",
         "tonalRamp": [
           "#0b0b0a",
-          "#242422",
-          "#41403b",
-          "#5f5e57",
-          "#828079",
-          "#a6a59f",
-          "#cbcac7",
-          "#efeeec"
+          "#252522",
+          "#42423e",
+          "#61625c",
+          "#82837d",
+          "#a5a69f",
+          "#c9cac4",
+          "#eeefea"
         ]
       },
-      "console-text": {
+      "night-paper": {
         "role": "neutral",
-        "displayName": "Console Text",
-        "purpose": "Code block text, both themes.",
-        "canonical": "oklch(95.2% 0.012 91.5)",
+        "displayName": "Slate",
+        "purpose": "Night map ground and night surface fill.",
+        "canonical": "oklch(21.9% 0.016 252.5)",
         "tonalRamp": [
-          "#0c0b0a",
-          "#252421",
-          "#41403b",
-          "#605d56",
-          "#838078",
-          "#a6a49f",
-          "#cbcac7",
-          "#efeeec"
+          "#090b0e",
+          "#21252a",
+          "#3d4349",
+          "#5b626a",
+          "#7b838c",
+          "#9ea6af",
+          "#c3cad2",
+          "#eaeff5"
         ]
       },
-      "field-paper-dark": {
+      "night-ink": {
         "role": "neutral",
-        "displayName": "Field Paper (dark)",
-        "purpose": "Page ground (dark).",
-        "canonical": "oklch(19.5% 0.012 99.5)",
+        "displayName": "Depth Grey",
+        "purpose": "Night map depth contours (shader only, not text).",
+        "canonical": "oklch(62.9% 0.028 255.6)",
         "tonalRamp": [
-          "#0b0b0a",
-          "#242422",
-          "#41403b",
-          "#5f5e57",
-          "#828079",
-          "#a6a59f",
-          "#cbcac7",
-          "#efeeec"
+          "#080b10",
+          "#1f262e",
+          "#3a434f",
+          "#576271",
+          "#788393",
+          "#9aa6b6",
+          "#bfcad9",
+          "#e7effb"
         ]
       },
-      "field-page-dark": {
+      "night-index": {
+        "role": "primary",
+        "displayName": "Ochre Index",
+        "purpose": "Night index contours, flood shoreline, survey-slide waterline, night accent lines.",
+        "canonical": "oklch(76.5% 0.139 77.7)",
+        "tonalRamp": [
+          "#170700",
+          "#3c1c00",
+          "#633600",
+          "#8a5400",
+          "#af7500",
+          "#d39932",
+          "#f3c06e",
+          "#ffe8ab"
+        ]
+      },
+      "night-text": {
         "role": "neutral",
-        "displayName": "Field Page (dark)",
-        "purpose": "Box fill (dark).",
-        "canonical": "oklch(23.4% 0.015 95.6)",
+        "displayName": "Lamplight",
+        "purpose": "Night text and headings.",
+        "canonical": "oklch(92.5% 0.012 91.5)",
         "tonalRamp": [
           "#0c0b09",
-          "#252421",
-          "#41403a",
-          "#605e55",
-          "#838076",
-          "#a6a59d",
-          "#cbcac6",
-          "#efeeec"
-        ]
-      },
-      "tan-rule-dark": {
-        "role": "neutral",
-        "displayName": "Tan Rule (dark)",
-        "purpose": "Borders (dark), >=3:1 on the box.",
-        "canonical": "oklch(54.9% 0.034 92.5)",
-        "tonalRamp": [
-          "#0c0b07",
-          "#26241d",
-          "#444032",
-          "#645d49",
-          "#87806a",
-          "#aaa494",
-          "#cdcac1",
-          "#f0eee8"
-        ]
-      },
-      "lamp-ink-dark": {
-        "role": "neutral",
-        "displayName": "Lamp Ink (dark)",
-        "purpose": "Body text (dark).",
-        "canonical": "oklch(93.0% 0.025 94.1)",
-        "tonalRamp": [
-          "#0c0b08",
-          "#25241f",
-          "#424036",
-          "#625e4f",
-          "#858070",
-          "#a8a599",
-          "#cccac3",
-          "#f0eeea"
-        ]
-      },
-      "pencil-grey-dark": {
-        "role": "neutral",
-        "displayName": "Pencil Grey (dark)",
-        "purpose": "Meta text (dark).",
-        "canonical": "oklch(69.6% 0.028 92.5)",
-        "tonalRamp": [
-          "#0c0b08",
-          "#26241e",
-          "#434035",
-          "#635d4d",
-          "#86806e",
-          "#a9a597",
-          "#cdcac3",
+          "#262521",
+          "#44423c",
+          "#64615a",
+          "#85827a",
+          "#a8a59d",
+          "#cbc9c2",
           "#f0eee9"
         ]
       },
-      "highlighter-dark": {
-        "role": "primary",
-        "displayName": "Highlighter (dark)",
-        "purpose": "Underline, quote rule, hover, focus (dark).",
-        "canonical": "oklch(80.9% 0.148 92.5)",
-        "tonalRamp": [
-          "#110a00",
-          "#2e2300",
-          "#523d00",
-          "#7a5800",
-          "#9f7b00",
-          "#bba354",
-          "#d8ca9f",
-          "#f7eed3"
-        ]
-      },
-      "highlighter-ink-dark": {
-        "role": "primary",
-        "displayName": "Highlighter Ink (dark)",
-        "purpose": "Coloured link text (dark).",
-        "canonical": "oklch(87.3% 0.129 94.8)",
-        "tonalRamp": [
-          "#0f0b00",
-          "#2c2301",
-          "#4e3e00",
-          "#745b00",
-          "#997e00",
-          "#b6a460",
-          "#d5cba5",
-          "#f5efd7"
-        ]
-      },
-      "highlighter-wash-dark": {
-        "role": "primary",
-        "displayName": "Highlighter Wash (dark)",
-        "purpose": "You-are-here fill (dark).",
-        "canonical": "oklch(31.9% 0.047 92.9)",
-        "tonalRamp": [
-          "#0d0b06",
-          "#27241a",
-          "#45402c",
-          "#665d40",
-          "#8a8060",
-          "#aca58e",
-          "#cfcabd",
-          "#f1eee6"
-        ]
-      },
-      "night-console-dark": {
+      "night-ink-soft": {
         "role": "neutral",
-        "displayName": "Night Console (dark)",
-        "purpose": "Code block ground (dark theme).",
-        "canonical": "oklch(16.8% 0.010 98.0)",
+        "displayName": "Night Pencil",
+        "purpose": "Night secondary text.",
+        "canonical": "oklch(74.6% 0.016 260.7)",
         "tonalRamp": [
-          "#0b0b0a",
-          "#242422",
-          "#41403c",
-          "#5f5e58",
-          "#82807a",
-          "#a6a5a0",
-          "#cbcac8",
-          "#efeeec"
+          "#0a0b0e",
+          "#22252a",
+          "#3e4249",
+          "#5c616a",
+          "#7d838c",
+          "#a0a5af",
+          "#c4c9d2",
+          "#ebeff5"
+        ]
+      },
+      "night-rule": {
+        "role": "neutral",
+        "displayName": "Night Rule",
+        "purpose": "Night 1px rules.",
+        "canonical": "oklch(44.4% 0.032 262.2)",
+        "tonalRamp": [
+          "#080b11",
+          "#1f2530",
+          "#3a4251",
+          "#586273",
+          "#788396",
+          "#9ba6b9",
+          "#c0cadb",
+          "#e7effd"
+        ]
+      },
+      "night-accent-ink": {
+        "role": "primary",
+        "displayName": "Lamp Ochre",
+        "purpose": "Ochre as readable text on the night sheet.",
+        "canonical": "oklch(82.9% 0.116 82.7)",
+        "tonalRamp": [
+          "#140800",
+          "#372000",
+          "#5b3b00",
+          "#805900",
+          "#a47b1c",
+          "#c79e4c",
+          "#e8c47f",
+          "#ffebb7"
+        ]
+      },
+      "night-accent-soft": {
+        "role": "secondary",
+        "displayName": "Ochre Wash",
+        "purpose": "Selected filter pills and selection (night).",
+        "canonical": "oklch(31.4% 0.041 87.4)",
+        "tonalRamp": [
+          "#0e0b04",
+          "#2b2416",
+          "#4a412d",
+          "#6b6048",
+          "#8d8167",
+          "#afa48a",
+          "#d2c8b1",
+          "#f6eedc"
+        ]
+      },
+      "night-inset": {
+        "role": "neutral",
+        "displayName": "Night Inset",
+        "purpose": "Inline code, blockquotes, image wells (night).",
+        "canonical": "oklch(25.8% 0.020 254.8)",
+        "tonalRamp": [
+          "#090b0e",
+          "#21252b",
+          "#3c434b",
+          "#5a626c",
+          "#7b838e",
+          "#9da6b1",
+          "#c2cad4",
+          "#e9eff7"
+        ]
+      },
+      "console-bg": {
+        "role": "neutral",
+        "displayName": "Console",
+        "purpose": "Always-dark code block and ground.frag editor.",
+        "canonical": "oklch(20.8% 0.007 258.4)",
+        "tonalRamp": [
+          "#0a0b0c",
+          "#242527",
+          "#404245",
+          "#5f6165",
+          "#808286",
+          "#a3a5a9",
+          "#c7c9cd",
+          "#edeef1"
+        ]
+      },
+      "console-fg": {
+        "role": "neutral",
+        "displayName": "Console Text",
+        "purpose": "Code text on the console.",
+        "canonical": "oklch(93.1% 0.014 88.7)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#272520",
+          "#45423b",
+          "#646159",
+          "#868279",
+          "#a8a59c",
+          "#ccc9c1",
+          "#f1eee8"
+        ]
+      },
+      "console-soft": {
+        "role": "neutral",
+        "displayName": "Console Grey",
+        "purpose": "Console secondary text and file labels.",
+        "canonical": "oklch(71.4% 0.010 258.3)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232528",
+          "#3f4247",
+          "#5e6167",
+          "#7f8388",
+          "#a1a5ab",
+          "#c6c9cf",
+          "#eceff3"
+        ]
+      },
+      "console-rule": {
+        "role": "neutral",
+        "displayName": "Console Rule",
+        "purpose": "Console borders and dividers.",
+        "canonical": "oklch(36.6% 0.014 256.8)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#22252a",
+          "#3e4248",
+          "#5c6269",
+          "#7d838b",
+          "#a0a5ad",
+          "#c4cad1",
+          "#ebeff4"
         ]
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Article titles (with the post emoji inline)."
+        "purpose": "Project page titles. Mona Sans 700 at 112% width."
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Page titles: Blog, Resources, Contact."
+        "purpose": "Page heads, article titles, hero caption title."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Card titles, section labels, prose h3 (h2 steps to 1.5rem)."
+        "purpose": "Card titles, prose h3."
+      },
+      "brand": {
+        "displayName": "Brand",
+        "purpose": "The name chip only: 125% width, 0.22em tracked uppercase."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "All running text and UI; the article column is 82ch."
+        "purpose": "All reading and UI text in Schibsted Grotesk; prose capped at 70ch."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "Legend entries."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Uppercase dates, reading time, link sources."
+        "purpose": "Martian Mono for code, facts, dates, captions, pills and footer only."
       }
     },
-    "shadows": [
+    "shadows": [],
+    "outlines": [
       {
-        "name": "lift-card",
-        "value": "3px 3px 0 var(--border)",
-        "purpose": "Hover only, with translateY(-2px): cards, back-to-top."
+        "name": "plate-frame",
+        "value": "outline: 1px solid var(--border); outline-offset: 8px",
+        "purpose": "Detached frame on featured images (hero plate, project lead shot) in place of a shadow."
       },
       {
-        "name": "lift-pill",
-        "value": "2px 2px 0 var(--border)",
-        "purpose": "Hover only, with translateY(-2px): filter pills, tags."
+        "name": "focus",
+        "value": "outline: 2px solid var(--accent); outline-offset: 3px",
+        "purpose": "Focus-visible on links, buttons and slides."
       }
     ],
     "motion": [
       {
-        "name": "hover",
-        "value": ".12s ease",
-        "purpose": "Colour, background, lift on nav, pills, cards."
-      },
-      {
         "name": "rise",
-        "value": ".5s cubic-bezier(.2,.7,.2,1)",
-        "purpose": "One load-in for intro/page head/article; cards rise as they scroll into view."
+        "value": "rise .5s cubic-bezier(.2,.7,.2,1) both",
+        "purpose": "The one page-opening rise (opacity 0, translateY 8px to rest) on page heads, articles and the hero. Nothing reveals on scroll."
       },
       {
-        "name": "theme-crossfade",
-        "value": ".35s view-transition",
-        "purpose": "Whole-page cross-fade when switching theme."
+        "name": "night-flood",
+        "value": "2300ms from the night button",
+        "purpose": "Water pours from the button; each surface turns dark as the waterline reaches it, ochre shoreline. 0ms under reduced motion."
       },
       {
-        "name": "wave",
-        "value": "2.4s ease-in-out, 1s delay, 2 runs",
-        "purpose": "The friendly 👋 wave."
+        "name": "surface-flood",
+        "value": "background-color, color, border-color .35s ease",
+        "purpose": "Surfaces taking the night tokens as the flood reaches them."
+      },
+      {
+        "name": "hover-rule",
+        "value": "border-color .15s ease",
+        "purpose": "Rule turning to the index hue on card, pill and rail hover."
+      },
+      {
+        "name": "media-zoom",
+        "value": "transform .5s cubic-bezier(.2,.8,.2,1); scale(1.03)",
+        "purpose": "Card image on fine-pointer hover only, never under reduced motion."
+      },
+      {
+        "name": "hero-reveal",
+        "value": "1900ms eased",
+        "purpose": "Home hero first shot develops from its contour survey on load; skipped under reduced motion."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition-duration .01ms; map still frames only",
+        "purpose": "prefers-reduced-motion: no flood animation, clicks, ripples or reveal."
       }
     ],
     "breakpoints": [
       {
+        "name": "footer-tight",
+        "value": "30rem"
+      },
+      {
         "name": "card-stack",
-        "value": "34rem",
-        "purpose": "Below this, image cards stack the picture as a 150px top banner."
+        "value": "34rem"
+      },
+      {
+        "name": "phone",
+        "value": "36rem"
+      },
+      {
+        "name": "editor-link",
+        "value": "40rem"
+      },
+      {
+        "name": "single-column",
+        "value": "60rem"
       }
     ]
   },
   "components": [
     {
-      "name": "Nav Tabs",
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Opaque paper surface with a 1px ink rule over the live map; the base unit of the page.",
+      "html": "<div class=\"ds-panel\"><h3 class=\"ds-panel__t\">Mossy Cliff</h3><p class=\"ds-panel__ctx\">Personal · 2025</p><p class=\"ds-panel__b\">A cliff-face material study.</p><a class=\"ds-link\" href=\"#\">See the project</a></div>",
+      "css": ".ds-panel{background:var(--bg,#f4f5f0);color:var(--ink,#1b1d1a);border:1px solid var(--border,#1b1d1a);border-radius:0;padding:clamp(1rem,2.4vw,1.5rem);display:grid;gap:.75rem;max-width:22rem;font-family:'Schibsted Grotesk',system-ui,sans-serif;line-height:1.6}.ds-panel__t{margin:0;font:700 1.7rem/1.05 'Mona Sans','Schibsted Grotesk',sans-serif;font-stretch:112%}.ds-panel__ctx{margin:0;font-weight:500;color:var(--accent-ink,#8c4a1d)}.ds-panel__b{margin:0;color:var(--ink-soft,#555950)}.ds-link{color:var(--accent-ink,#8c4a1d);text-decoration:underline;text-decoration-color:var(--accent,#b0602a);text-decoration-thickness:2px;text-underline-offset:4px}.ds-link:hover{color:var(--ink,#1b1d1a)}.ds-link:focus-visible{outline:2px solid var(--accent,#b0602a);outline-offset:3px}"
+    },
+    {
+      "name": "Legend Nav",
       "kind": "nav",
-      "refersTo": "nav-pill",
-      "description": "Top pill nav; the current page wears the highlighter.",
-      "html": "<nav class=\"ds-nav\"><a href=\"#\">Home</a><a href=\"#\" aria-current=\"page\">Blog</a><a href=\"#\">Resources</a><a href=\"#\">Contact</a></nav>",
-      "css": ".ds-nav { display: flex; gap: .35rem; flex-wrap: wrap; font-family: var(--font-mono, 'IBM Plex Mono', monospace); } .ds-nav a { font-size: .8rem; color: var(--ink-soft, #66625a); text-decoration: none; padding: .3em .75em; border-radius: 999px; transition: background .12s ease, color .12s ease; } .ds-nav a:hover { color: var(--ink, #1f1e19); background: var(--box, #efece0); } .ds-nav a[aria-current=\"page\"] { background: var(--accent-soft, #f5d95e); color: var(--ink, #1f1e19); font-weight: 500; } .ds-nav a:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
+      "refersTo": "legend-link",
+      "description": "The nav as a map legend: symbol + name; current page in sienna ink with a 2px sienna underline.",
+      "html": "<nav class=\"ds-legend\"><a href=\"#\" aria-current=\"page\"><svg class=\"ds-sym\" width=\"13\" height=\"12\" viewBox=\"0 0 14 12\"><path class=\"f\" d=\"M7 1 13 11H1Z\"/></svg><span>Work</span></a><a href=\"#\"><svg class=\"ds-sym\" width=\"13\" height=\"12\" viewBox=\"0 0 14 12\"><path d=\"M1 4q3-3 6 0t6 0M1 9q3-3 6 0t6 0\"/></svg><span>Writing</span></a><a href=\"#\"><svg class=\"ds-sym\" width=\"13\" height=\"12\" viewBox=\"0 0 14 12\"><circle cx=\"7\" cy=\"6\" r=\"4.6\"/><circle class=\"f\" cx=\"7\" cy=\"6\" r=\"1.4\"/></svg><span>Resources</span></a><a href=\"#\"><svg class=\"ds-sym\" width=\"13\" height=\"12\" viewBox=\"0 0 14 12\"><rect x=\"2.5\" y=\"1.5\" width=\"9\" height=\"9\"/></svg><span>Contact</span></a></nav>",
+      "css": ".ds-legend{display:inline-flex;align-items:center;gap:.1rem;padding:.25rem .35rem;background:var(--bg,#f4f5f0)}.ds-legend a{display:flex;align-items:center;gap:.5rem;padding:.45rem .75rem;font:500 1rem 'Schibsted Grotesk',system-ui,sans-serif;color:var(--ink,#1b1d1a);text-decoration:none}.ds-legend a:hover span,.ds-legend a[aria-current] span{text-decoration:underline;text-decoration-color:var(--accent,#b0602a);text-decoration-thickness:2px;text-underline-offset:5px}.ds-legend a[aria-current]{color:var(--accent-ink,#8c4a1d)}.ds-legend a:focus-visible{outline:2px solid var(--accent,#b0602a);outline-offset:3px}.ds-sym *{fill:none;stroke:currentColor;stroke-width:1.5}.ds-sym .f{fill:currentColor;stroke:none}"
+    },
+    {
+      "name": "Name Chip",
+      "kind": "custom",
+      "refersTo": "name-chip",
+      "description": "The site name as a paper surface in wide, spaced caps; the only tracked-caps text.",
+      "html": "<a class=\"ds-brand\" href=\"#\">Javier Amador</a>",
+      "css": ".ds-brand{display:inline-block;background:var(--bg,#f4f5f0);color:var(--ink,#1b1d1a);font:700 1.05rem/1 'Mona Sans','Schibsted Grotesk',sans-serif;font-stretch:125%;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;padding:.6rem .8rem .6rem .75rem}.ds-brand:focus-visible{outline:2px solid var(--accent,#b0602a);outline-offset:3px}"
     },
     {
       "name": "Filter Pill",
       "kind": "chip",
       "refersTo": "filter-pill",
-      "description": "Multi-select category toggle on /blog/; also the tag form in post footers.",
-      "html": "<div class=\"ds-pills\"><button type=\"button\" class=\"ds-pill\" aria-pressed=\"true\">all</button><button type=\"button\" class=\"ds-pill\" aria-pressed=\"false\">#environment</button><button type=\"button\" class=\"ds-pill\" aria-pressed=\"false\">#shaders</button></div>",
-      "css": ".ds-pills { display: flex; gap: .5rem; flex-wrap: wrap; } .ds-pill { font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: .78rem; padding: .45em 1em; background: var(--box, #efece0); border: 2px solid var(--border, #2a2822); border-radius: 999px; color: var(--ink-soft, #66625a); cursor: pointer; transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease; } .ds-pill:hover { color: var(--ink, #1f1e19); transform: translateY(-2px); box-shadow: 2px 2px 0 var(--border, #2a2822); } .ds-pill[aria-pressed=\"true\"] { background: var(--accent-soft, #f5d95e); color: var(--ink, #1f1e19); font-weight: 500; } .ds-pill:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
+      "description": "Square mono filter chip; hover turns the rule sienna; selected takes the sienna wash.",
+      "html": "<div class=\"ds-pills\"><button class=\"ds-pill\" aria-pressed=\"true\">all</button><button class=\"ds-pill\" aria-pressed=\"false\">environment</button><button class=\"ds-pill\" aria-pressed=\"false\">shaders</button></div>",
+      "css": ".ds-pills{display:flex;flex-wrap:wrap;gap:.4rem}.ds-pill{font:400 .78rem 'Martian Mono',ui-monospace,monospace;padding:.4em .85em;background:var(--bg,#f4f5f0);border:1px solid var(--border,#1b1d1a);border-radius:0;color:var(--ink,#1b1d1a);cursor:pointer;transition:background-color .15s ease,color .15s ease,border-color .15s ease}.ds-pill:hover{border-color:var(--accent,#b0602a);color:var(--accent-ink,#8c4a1d)}.ds-pill[aria-pressed=true]{background:var(--accent-soft,#eddccb);border-color:var(--accent,#b0602a);color:var(--ink,#1b1d1a)}.ds-pill:focus-visible{outline:2px solid var(--accent,#b0602a);outline-offset:3px}"
     },
     {
       "name": "Post Card",
       "kind": "card",
       "refersTo": "card",
-      "description": "Clickable post/resource card; the image bleeds off the right edge on a diagonal cut.",
-      "html": "<a class=\"ds-card\" href=\"#\"><div class=\"ds-card__body\"><h3 class=\"ds-card__title\"><span aria-hidden=\"true\">🌲</span> Building a stylised forest floor</h3><p class=\"ds-card__desc\">Layered materials and a scatter workflow for a believable, stylised forest floor.</p><p class=\"ds-card__date\">June 2, 2026</p></div><div class=\"ds-card__media\"></div></a>",
-      "css": ".ds-card { display: grid; grid-template-columns: 1fr minmax(110px, 32%); border: 2px solid var(--border, #2a2822); border-radius: 10px; background: var(--box, #efece0); overflow: hidden; text-decoration: none; color: var(--ink, #1f1e19); transition: transform .12s ease, box-shadow .12s ease; } .ds-card:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 var(--border, #2a2822); } .ds-card:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; } .ds-card__body { padding: 1.05rem 1.2rem; } .ds-card__title { font-family: var(--font-head, 'Bricolage Grotesque', sans-serif); font-weight: 700; font-size: 1.15rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0; } .ds-card__desc { font-family: var(--font-mono, 'IBM Plex Mono', monospace); color: var(--ink-soft, #66625a); font-size: .88rem; margin: .35rem 0 0; } .ds-card__date { font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft, #66625a); margin: .7rem 0 0; } .ds-card__media { min-height: 120px; background: linear-gradient(160deg, #6d7f4e, #2f3a26); clip-path: polygon(2.75rem 0, 100% 0, 100% 100%, 0 100%); }"
+      "description": "Ruled paper card; hover turns the rule sienna and underlines the title.",
+      "html": "<a class=\"ds-card\" href=\"#\"><span class=\"ds-card__t\">Painting moss with world-space masks</span><span class=\"ds-card__d\">A shader trick for cliffs that never tile.</span><span class=\"ds-card__date\">June 2, 2026</span></a>",
+      "css": ".ds-card{display:grid;gap:.35rem;max-width:30rem;padding:1.1rem 1.25rem;border:1px solid var(--border,#1b1d1a);border-radius:0;background:var(--bg,#f4f5f0);color:var(--ink,#1b1d1a);text-decoration:none;font-family:'Schibsted Grotesk',system-ui,sans-serif;transition:border-color .15s ease}.ds-card:hover{border-color:var(--accent,#b0602a)}.ds-card:hover .ds-card__t{text-decoration:underline;text-decoration-color:var(--accent,#b0602a);text-decoration-thickness:2px;text-underline-offset:5px}.ds-card:focus-visible{outline:2px solid var(--accent,#b0602a);outline-offset:3px}.ds-card__t{font:700 1.25rem/1.2 'Mona Sans','Schibsted Grotesk',sans-serif;font-stretch:108%}.ds-card__d{color:var(--ink-soft,#555950);font-size:.95rem}.ds-card__date{font:400 .72rem 'Martian Mono',ui-monospace,monospace;color:var(--ink-soft,#555950);margin-top:.25rem}"
     },
     {
-      "name": "Framed Panel",
-      "kind": "custom",
-      "refersTo": "panel",
-      "description": "Squared (static) intro panel with highlighter-underlined links.",
-      "html": "<section class=\"ds-panel\"><p>Hey! I'm <strong>Javier Amador</strong>, a software and game developer specialized in technical &amp; environment art.</p><p><a href=\"#\">showcase</a> / <a href=\"#\">blog</a> / <a href=\"#\">contact</a></p></section>",
-      "css": ".ds-panel { font-family: var(--font-mono, 'IBM Plex Mono', monospace); line-height: 1.7; color: var(--ink, #1f1e19); background: var(--box, #efece0); border: 1px solid var(--border, #2a2822); border-radius: 3px; padding: 1.1rem 1.25rem; } .ds-panel p { margin: 0; } .ds-panel p + p { margin-top: .55rem; } .ds-panel strong { font-weight: 600; } .ds-panel a { color: var(--accent-ink, #5c4500); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 3px; text-decoration-color: var(--highlight, #e8c228); } .ds-panel a:hover { color: var(--accent, #9a7300); } .ds-panel a:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
-    },
-    {
-      "name": "Code Block",
-      "kind": "custom",
-      "refersTo": "code-block",
-      "description": "Always-dark console with the fixed warm syntax palette.",
-      "html": "<pre class=\"ds-code\"><code><span class=\"c\">// bend foliage toward the wind</span>\n<span class=\"b\">vec3</span> <span class=\"f\">sway</span>(<span class=\"b\">vec3</span> p, <span class=\"b\">float</span> t) {\n  <span class=\"k\">return</span> p + <span class=\"f\">sin</span>(t * <span class=\"n\">1.7</span> + p.<span class=\"p\">x</span>) * <span class=\"n\">0.05</span>;\n}</code></pre>",
-      "css": ".ds-code { margin: 0; background: var(--code-bg, #23221c); color: var(--code-fg, #f2efe6); border: 1px solid var(--border, #2a2822); border-radius: 10px; padding: 1.1em 1.25em; font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: .85rem; line-height: 1.6; overflow-x: auto; } .ds-code .c { color: #8a9577; font-style: italic; } .ds-code .k { color: #e6b673; } .ds-code .b { color: #8fcf8a; } .ds-code .f { color: #9cd0e0; } .ds-code .n { color: #e39a70; } .ds-code .p { color: #d7c7f0; }"
-    },
-    {
-      "name": "Inline Code & Prose Link",
-      "kind": "custom",
-      "refersTo": "inline-code",
-      "description": "Half-strength highlighter wash for inline code; ink prose links with a 3px yellow stroke.",
-      "html": "<p class=\"ds-prose\">Pack the sway mask into <code>uv.y</code> and the <a href=\"#\">wind shader</a> stays one texture fetch.</p>",
-      "css": ".ds-prose { font-family: var(--font-mono, 'IBM Plex Mono', monospace); line-height: 1.7; color: var(--ink, #1f1e19); margin: 0; } .ds-prose code { font-size: .88em; background: color-mix(in srgb, var(--accent-soft, #f5d95e) 50%, var(--box, #efece0)); padding: .12em .4em; border-radius: 5px; } .ds-prose a { color: var(--ink, #1f1e19); text-decoration: underline; text-decoration-color: var(--highlight, #e8c228); text-decoration-thickness: 3px; text-underline-offset: 3px; } .ds-prose a:hover { color: var(--accent, #9a7300); } .ds-prose a:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
-    },
-    {
-      "name": "Back to Top",
+      "name": "Night Button",
       "kind": "button",
-      "refersTo": "card",
-      "description": "Square-ish 10px icon button; same touched lift as cards.",
-      "html": "<button type=\"button\" class=\"ds-totop\" aria-label=\"Back to top\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 19V5\"/><path d=\"M5 12l7-7 7 7\"/></svg></button>",
-      "css": ".ds-totop { display: grid; place-items: center; width: 3.1rem; height: 3.1rem; border: 1px solid var(--border, #2a2822); border-radius: 10px; background: var(--box, #efece0); color: var(--ink, #1f1e19); cursor: pointer; transition: transform .12s ease, box-shadow .12s ease; } .ds-totop:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 var(--border, #2a2822); } .ds-totop:focus-visible { outline: 2px solid var(--accent, #9a7300); outline-offset: 2px; }"
+      "refersTo": "night-button",
+      "description": "Icon button (moon over waves) where the night flood starts.",
+      "html": "<button class=\"ds-night\" aria-label=\"Switch to the night sheet\"><svg viewBox=\"0 0 20 20\" width=\"20\" height=\"20\"><path d=\"M2 12.5q2.7-2.6 5.3 0t5.4 0t5.3 0M2 16.5q2.7-2.6 5.3 0t5.4 0t5.3 0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><path d=\"M13.5 2.5a4.5 4.5 0 1 0 4 6.6 3.6 3.6 0 0 1-4-6.6z\" fill=\"currentColor\"/></svg></button>",
+      "css": ".ds-night{display:grid;place-items:center;width:2.4rem;height:2.4rem;padding:0;border:0;background:var(--bg,#f4f5f0);color:var(--ink,#1b1d1a);cursor:pointer}.ds-night:hover{color:var(--accent-ink,#8c4a1d)}.ds-night:focus-visible{outline:2px solid var(--accent,#b0602a);outline-offset:3px}"
+    },
+    {
+      "name": "Survey Slide",
+      "kind": "custom",
+      "description": "Two-shot image: rests on the first shot; an ochre waterline follows the cursor and reveals the second. Static stand-in for the WebGL piece.",
+      "html": "<div class=\"ds-slide\" tabindex=\"0\"><div class=\"ds-slide__a\"></div><div class=\"ds-slide__b\"></div><span class=\"ds-slide__tag\">render / clay</span></div>",
+      "css": ".ds-slide{position:relative;aspect-ratio:16/9;width:min(100%,32rem);overflow:hidden;outline:1px solid var(--border,#1b1d1a);outline-offset:8px;background:var(--box,#ebece5);cursor:ew-resize}.ds-slide__a{position:absolute;inset:0;background:linear-gradient(160deg,#5c6b4a,#2f3a2a 60%,#1e2419)}.ds-slide__b{position:absolute;inset:0 62% 0 0;background:linear-gradient(160deg,#c9c9c2,#8f908a);border-right:2px solid #e3a63a;transition:inset .4s ease}.ds-slide:hover .ds-slide__b{inset:0 30% 0 0}.ds-slide__tag{position:absolute;right:.6rem;bottom:.6rem;font:400 .72rem 'Martian Mono',ui-monospace,monospace;color:#1b1d1a;background:rgba(244,245,240,.9);padding:.2rem .55rem;opacity:0;transition:opacity .2s ease}.ds-slide:hover .ds-slide__tag,.ds-slide:focus-visible .ds-slide__tag{opacity:1}.ds-slide:focus-visible{outline:2px solid var(--accent,#b0602a);outline-offset:3px}"
+    },
+    {
+      "name": "Code Console",
+      "kind": "custom",
+      "refersTo": "code-console",
+      "description": "Always-dark code block with the warm Prism palette, in both sheets.",
+      "html": "<pre class=\"ds-console\"><code><span class=\"c\">// rim light</span>\n<span class=\"k\">float</span> <span class=\"fn\">rim</span>(vec3 n, vec3 v) {\n  <span class=\"k\">return</span> pow(<span class=\"n\">1.0</span> - dot(n, v), <span class=\"n\">3.0</span>);\n}</code></pre>",
+      "css": ".ds-console{margin:0;background:#16181b;color:#ece8de;border:1px solid #3a3f46;border-radius:0;padding:1.1em 1.25em;font:400 .82rem/1.6 'Martian Mono',ui-monospace,monospace;overflow-x:auto;max-width:30rem}.ds-console .c{color:#8a9577;font-style:italic}.ds-console .k{color:#e6b673}.ds-console .fn{color:#9cd0e0}.ds-console .n{color:#e39a70}"
     }
   ],
   "narrative": {
-    "northStar": "The Field Notebook",
-    "overview": "The site is a technical and environment artist's working notebook: notes typed in graphite on survey-book paper, framed panels pinned into the pages, and a single highlighter used to mark where you are. It's monospace for reading and interface, with chunky grotesque headings for titles. The site should feel like a code editor that someone has been taking field notes in, technical but hand-kept.\n\nThe UI deliberately stays close to monochrome. Colour comes from the artwork (renders, photos, live shader canvases), and the interface only frames it. The one accent is **highlighter yellow**, which behaves like a real highlighter: it fills or underlines, and is never ink. Content sits in crisp graphite-ruled boxes on warm paper. Things you can click have rounded corners and lift when touched. Static panels are squared off. There's a full dark theme (\"the same field book after dark\"), and code blocks are always dark.\n\nConfirmed rejections: generic web defaults (\"AI slop\": serif and sans with a terracotta accent, conventional template layouts) and commercial density (monetization callouts, promo blocks). Javier chose the look from his own reference sites, ameye.dev (primary) and charlesboury.fr for the coming portfolio, and it must not drift back toward conventional defaults.",
+    "northStar": "The Survey Sheet",
+    "overview": "The page is a live survey map. A GLSL contour field (`ground.frag`) is drawn full-screen behind everything and slides with the scroll; Javier's renders and writing are pinned on it as opaque paper panels with a single ink rule. The map is not decoration on top of a layout, it is the ground the layout sits on: the cursor raises a soft hill, a click on open map raises a peak, a fast cursor leaves small ripples, and the map's own source opens from a quiet `ground.frag` link and can be edited live. The site reads as one surveyed sheet, not a gallery of thumbnails.\n\nThere are two sheets. The day sheet is pale map paper with graphite ink and sienna index contours; the night sheet is slate with grey depth contours and ochre index contours. Switching is a flood: water pours out of the night button, and each paper surface turns dark as the waterline reaches it, with an ochre shoreline on the moving edge. Density is calm. Artwork leads, chrome stays thin, and colour beyond ink and the one index hue comes from the art itself.\n\nConfirmed rejections: the dark ArtStation thumbnail grid, and the earlier cream terminal-zine and \"Field Notebook\" looks (all-monospace body, rounded cream boxes, pill tab nav, emoji icons, highlighter yellow). None of their tokens carry over.",
     "keyCharacteristics": [
-      "IBM Plex Mono for body and UI; Bricolage Grotesque (700–800) for headings, card titles and the brand.",
-      "One accent, highlighter yellow, used as a fill or underline and never as text.",
-      "Graphite-ruled boxes on warm paper. Squared means static, rounded means clickable, pill means a toggle.",
-      "Flat at rest; a hard, unblurred offset shadow appears only on hover.",
-      "Emoji as inline icons on post cards and titles.",
-      "Code blocks are always dark, in a warm syntax palette.",
-      "A narrow centred column (82ch) with a top pill nav."
+      "A live contour map is the page background; content sits on opaque paper surfaces over it.",
+      "Square corners everywhere; one 1px ink rule defines every panel, card, image and field.",
+      "One index hue per sheet (sienna by day, ochre by night) for current state, underlines and contours.",
+      "Four legend symbols are the only icons.",
+      "Night is a flood, not a toggle swap.",
+      "Images can carry two shots, compared by a waterline that follows the cursor."
     ],
     "rules": [
       {
-        "name": "The Highlighter Rule",
-        "section": "colors",
-        "body": "Yellow is a fill or a stroke, never text. Full strength is reserved for \"you are here\" marks (active tab, active filter, inspector channel, selection). Inline code gets a half-strength wash (50% highlighter mixed into the box fill), and links get a 3px stroke. If yellow ever needs to carry words, use Ochre Ink."
+        "name": "The One Index Rule",
+        "body": "Each sheet has exactly one accent hue, and it behaves like an index contour: a line, an underline, an outline. Fills of it are limited to the pale wash on selected pills and text selection.",
+        "section": "colors"
       },
       {
-        "name": "The One Ink Rule",
-        "section": "colors",
-        "body": "The interface has exactly one accent family. Every other colour on the page comes from artwork, shader canvases or syntax highlighting. Don't add a second UI hue."
+        "name": "The Six Hexes Rule",
+        "body": "The two sheets are defined by six 6-digit hexes (`--day-paper`, `--day-ink`, `--day-index`, `--night-paper`, `--night-ink`, `--night-index`) that the CSS and both shaders (ground.js, slides.js) read. Change the sheet there, nowhere else, and keep them 6-digit.",
+        "section": "colors"
       },
       {
-        "name": "The Mono Voice Rule",
-        "section": "typography",
-        "body": "Plex Mono is the voice of the site: body, nav, pills, captions and code. Bricolage is reserved for headings, card titles and the brand, and never sets a paragraph."
+        "name": "The Art Brings Colour Rule",
+        "body": "No decorative colour beyond ink and the index hue. Saturation on the page comes from Javier's renders.",
+        "section": "colors"
       },
       {
-        "name": "The Touched-Lift Rule",
-        "section": "elevation",
-        "body": "Surfaces are flat until the pointer reaches them. Then they rise 2px and cast a hard shadow in the rule colour, with no blur. Never use soft, blurred or coloured ambient shadows. Under prefers-reduced-motion the lift is dropped."
+        "name": "The Wide Name Rule",
+        "body": "The site name is the only text in wide, spaced capitals (Mona Sans at 125% width, 0.22em tracking; 0.16em on phones). No other label is set in tracked caps.",
+        "section": "typography"
       },
       {
-        "name": "The Square-Means-Static Rule",
-        "section": "shapes",
-        "body": "If it doesn't do anything when clicked, its corners are 3px. If it does, they're 10px or a pill."
+        "name": "The Mono Margin Rule",
+        "body": "Martian Mono is for code, data and small labels only. Running text, headings and nav are never monospace.",
+        "section": "typography"
+      },
+      {
+        "name": "The Nothing Above The Title Rule",
+        "body": "No label, kicker or metadata line sits above a heading. Page metadata (date, reading time, family, difficulty) goes below the title and lead.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Over Terrain Rule",
+        "body": "Anything carrying text is an opaque surface on the map. Never put text directly on the live map, and never make a surface translucent.",
+        "section": "elevation"
       }
     ],
     "dos": [
-      "Do keep every colour as a token in `src/css/global.css` `:root` and `:root[data-theme=\"dark\"]`. Components read tokens only.",
-      "Do use the Highlighter at full strength only for \"you are here\" marks, with ink text on top.",
-      "Do put any coloured text in Ochre Ink (`#5c4500` light, `#f0d46a` dark), which is AA-safe on paper and box.",
-      "Do use 3px corners for static panels and 10px or pills for anything clickable or embedded.",
-      "Do keep surfaces flat and lift them only on hover, with a 3px 3px 0 graphite shadow (2px for pills) and −2px translate.",
-      "Do set titles in Bricolage Grotesque 700–800 and everything else in IBM Plex Mono.",
-      "Do let artwork carry the colour. Image cards bleed the picture off the right edge on a diagonal cut.",
-      "Do respect `prefers-reduced-motion`: no load-in, no lift, no wave, shaders paused."
+      "Do put every piece of text on an opaque paper surface with a 1px ink rule, leaving map visible between surfaces.",
+      "Do keep corners square (0px) and rules at 1px; signal hover by turning the rule to the index hue.",
+      "Do use Burnt Sienna Ink (#8c4a1d) or Lamp Ochre (#ecc06a) when the accent is text, and keep secondary text on Pencil Grey or Night Pencil so contrast stays at AA or better.",
+      "Do use a legend symbol, drawn as a 1.5px stroke SVG, when a nav entry or link needs an icon.",
+      "Do skip any thumbnail the survey slide already shows, in work rows and project galleries.",
+      "Do keep motion to the one 0.5s page-opening rise on page heads, articles and the hero; nothing reveals on scroll.",
+      "Do honour `prefers-reduced-motion`: the map draws still frames only, the theme changes without a flood, clicks and ripples are off, the hero shows without its reveal, and transitions collapse.",
+      "Do keep a visible 2px index-hue focus outline (offset 3px) on links, buttons and focusable slides.",
+      "Do make WebGL an enhancement: the first image shows without it, the page reads without the map."
     ],
     "donts": [
-      "Don't set text in highlighter yellow (`#f5d95e` / `#e8c228`). It fails contrast on paper and stops reading as a highlighter.",
-      "Don't add a second accent hue to the UI, or bring back the old forest green.",
-      "Don't use soft, blurred or coloured drop shadows.",
-      "Don't drift toward generic defaults: no serif and sans with a terracotta accent, no gradient heroes, no grids of same-size icon cards, no promo or monetization blocks.",
-      "Don't put long-form text in Bricolage, or headings in a system sans.",
-      "Don't make code blocks follow the light theme. The console stays dark."
+      "Don't use emoji, Unicode arrows or any icon set; the four legend symbols plus the drawn night, back-to-top and down-arrow SVGs are the whole icon vocabulary. Legacy `emoji` front matter is not rendered.",
+      "Don't put a label, kicker or metadata line above a heading; metadata goes below the title.",
+      "Don't number projects or add counters to the work list or rail.",
+      "Don't round corners, add drop shadows, or use translucent glass panels.",
+      "Don't set body text, headings or nav in Martian Mono, or track any text in caps except the name chip.",
+      "Don't add a second accent hue or decorative colour; colour comes from the artwork.",
+      "Don't bring back the cream terminal-zine, Field Notebook highlighter, or dark ArtStation-grid looks.",
+      "Don't blank the map or an editor on a shader error; keep the last good program running."
     ]
   }
 }

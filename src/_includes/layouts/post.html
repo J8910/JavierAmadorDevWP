@@ -3,9 +3,9 @@
 {% block content %}
 <article class="article">
     <header class="article__head">
-        <p class="eyebrow">{{ page.date | readableDate }} · {{ content | readingTime }}</p>
-        <h1 class="article__title">{% if emoji %}<span class="card__emoji" aria-hidden="true">{{ emoji }}</span> {% endif %}{{ title }}</h1>
+        <h1 class="article__title">{{ title }}</h1>
         {% if description %}<p class="article__lead">{{ description }}</p>{% endif %}
+        <p class="article__meta"><time datetime="{{ page.date.toISOString().slice(0, 10) }}">{{ page.date | readableDate }}</time> · {{ content | readingTime }}</p>
     </header>
 
     <div class="prose">

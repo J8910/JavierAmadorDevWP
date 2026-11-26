@@ -1,0 +1,102 @@
+/* Portfolio: the home page (hero + work + writing), /portfolio/ and project pages.
+   The artwork leads; chrome is paper panels with 1px rules over the live map.
+   Survey slides (js/slides.js + js/slide.frag) live in `.slide`. */
+
+/* ---------------------------------------------------------------- shots & slides */
+.slide, .shot { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--box); }
+.slide picture, .shot picture, .slide img, .shot img {
+    position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover;
+}
+.slide picture + picture { opacity: 0; }          /* the second shot: drawn by the shader */
+.slide canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+.slide.is-live canvas { opacity: 1; }
+.slide { cursor: ew-resize; touch-action: pan-y; }
+.slide:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.slide__tag {
+    position: absolute; right: .6rem; bottom: .6rem; z-index: 1;
+    font: 400 .72rem var(--font-mono); color: var(--day-ink); background: rgba(244, 245, 240, .9);
+    padding: .2rem .55rem; opacity: 0; transition: opacity .2s ease; pointer-events: none;
+}
+.slide:hover .slide__tag, .slide:focus-visible .slide__tag { opacity: 1; }
+@media (hover: none) { .slide__tag { opacity: 1; } }
+
+/* ---------------------------------------------------------------- home */
+main.home { display: grid; gap: var(--step); }
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(12rem, 19vw, 15.5rem);
+    gap: 1.75rem clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+}
+.hero__plate { margin: 0; outline: 1px solid var(--border); outline-offset: 8px; }
+.hero__cap { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.75rem; padding: .9rem 1.1rem; }
+.hero__cap h2 { font: 700 clamp(1.9rem, 1.4rem + 1.8vw, 2.75rem)/1 var(--font-head); font-stretch: 112%; }
+.hero__cap h2 a { color: inherit; text-decoration: none; }
+.hero__cap h2 a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 6px; }
+.hero__cap p { color: var(--ink-soft); max-width: 56ch; }
+.hero__rail { grid-column: 2; grid-row: 1 / span 2; display: grid; gap: 1.1rem; align-content: start; }
+.rail-item {
+    display: grid; gap: .5rem; padding: .5rem; border: 1px solid var(--border);
+    color: var(--ink); text-decoration: none; transition: border-color .15s ease, background-color .35s ease, color .35s ease;
+}
+.rail-item:hover { border-color: var(--accent); }
+.rail-item .shot { aspect-ratio: 16 / 9.5; }
+.rail-item span { font: 600 .98rem var(--font-text); }
+.rail-item:hover span { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.rail-all { justify-self: start; display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .75rem; font: 400 .8rem var(--font-mono); color: var(--ink); text-decoration: none; }
+.rail-all:hover { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+/* Narrow screens: the work list follows right below, so the rail becomes a row of names. */
+@media (max-width: 60rem) {
+    .hero { grid-template-columns: 1fr; }
+    .hero__rail { grid-column: 1; grid-row: auto; display: flex; flex-wrap: wrap; gap: .4rem; }
+    .rail-item { padding: .4rem .7rem; }
+    .rail-item .shot { display: none; }
+    .rail-item span { font-size: .92rem; }
+    .rail-all { border: 0; }
+}
+
+/* ---------------------------------------------------------------- work list */
+.works { display: grid; gap: clamp(3rem, 6vw, 5.5rem); }
+.works__head { justify-self: start; display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1.5rem; padding: .8rem 1.1rem; max-width: 100%; }
+.works__head h2 { font: 700 clamp(1.6rem, 1.3rem + 1vw, 2.1rem)/1.1 var(--font-head); font-stretch: 112%; }
+.works__head p { color: var(--ink-soft); max-width: 62ch; }
+.work { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 1.5rem clamp(1.5rem, 3vw, 2.5rem); align-items: start; }
+.work--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+.work--flip .work__media { order: 2; }
+.work__media { display: grid; gap: .75rem; }
+.work__media > .slide, .work__media > .shot { outline: 1px solid var(--border); }
+.work__row { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+.work__row--2 { grid-template-columns: repeat(2, 1fr); }
+.work__row--1 { grid-template-columns: 1fr; }
+.work__row--1 .shot { aspect-ratio: 21 / 8; }   /* one leftover shot: a wide strip under the slide */
+.work__row .shot { outline: 1px solid var(--border); }
+.work__text { display: grid; gap: .75rem; align-content: start; }
+.work__text h3 { font: 700 clamp(1.7rem, 1.4rem + 1vw, 2.4rem)/1.05 var(--font-head); font-stretch: 112%; }
+.work__text h3 a { color: inherit; text-decoration: none; }
+.work__text h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 6px; }
+.work__ctx { font-weight: 500; color: var(--accent-ink); }
+.work__body { color: var(--ink-soft); }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: .35rem 1rem; font: 400 .78rem/1.55 var(--font-mono); }
+.facts dt { color: var(--ink-soft); }
+.facts dd { margin: 0; }
+@media (max-width: 60rem) {
+    .work, .work--flip { grid-template-columns: 1fr; }
+    .work--flip .work__media { order: 0; }
+}
+
+/* ---------------------------------------------------------------- writing on home */
+.writing { display: grid; gap: 1.25rem; }
+
+/* ---------------------------------------------------------------- project page */
+.project { display: grid; gap: clamp(1.5rem, 3vw, 2.25rem); }
+.project__head { display: grid; gap: .75rem; }
+.project__title { font: 700 clamp(2.2rem, 1.5rem + 3vw, 3.6rem)/1 var(--font-head); font-stretch: 112%; letter-spacing: -0.01em; }
+.project__summary { color: var(--ink-soft); font-size: 1.1em; max-width: 58ch; }
+.project__head .facts { margin-block-start: .5rem; padding-block-start: .9rem; border-top: 1px solid var(--border); }
+.project__shot { outline: 1px solid var(--border); outline-offset: 8px; margin: 8px; }
+.project__body { justify-self: start; max-width: 100%; }
+.project__gallery { display: grid; gap: 1rem; }
+.project__gallery .shot { outline: 1px solid var(--border); }
+.project__foot { display: flex; flex-wrap: wrap; gap: .6rem 1.75rem; align-items: center; justify-content: space-between; }
+.project__credit { color: var(--ink-soft); }
+.project__links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }

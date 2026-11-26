@@ -1,0 +1,16 @@
+---
+layout: layouts/portfolio.html
+title: Work
+description: Environments, materials, look development and shaders by Javier Amador.
+permalink: /portfolio/
+---
+{# The list builds itself from collections.projects (src/portfolio/*.md, ordered by
+   `order:`). To add a project, add a file there; no edits here. #}
+<div class="works">
+    <div class="page-head surface">
+        <h1>Work</h1>
+        <p class="page-head__lead">Environments, materials, look development and shaders, made in
+            Unreal Engine, Substance and Maya. Move across an image to compare its two shots.</p>
+    </div>
+    {% include "partials/work-list.html" %}
+</div>

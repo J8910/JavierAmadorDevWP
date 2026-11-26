@@ -57,8 +57,9 @@ claim.
   HLSL is shown as code only; browsers can't run it.
 - **Sections:** Home, Showcase (`/showcase/`, a Three.js/GSAP interactive splash, in
   progress), Blog, Resources, Contact, Colophon (`/colophon/`).
-- **Working toolset the site may claim:** Unity, Unreal Engine, Houdini, Substance, Blender,
-  Maya.
+- **Working toolset the site may claim:** Unity, Unreal Engine (5), Houdini, Substance Painter
+  and Designer, Blender, Maya. ArtStation projects also show Arnold and Marmoset Toolbag
+  (rendering).
 - **Roadmap:** a data-driven portfolio ("projects" collection) built on `@11ty/eleventy-img`.
   Also draft support and optional JSON-LD.
 - **Terminology:** "post" (blog entry), "resource" (live technique explainer), "showcase"
@@ -78,12 +79,39 @@ claim.
 
 - **Real work:** some finished pieces plus work in progress and breakdowns. Most of it is not
   in the repo yet. The only project image committed is `src/assets/images/WoodPigeon.jpg`.
+- **ArtStation:** https://www.artstation.com/j8910 is Javier's own portfolio. Everything on it
+  is his and may be used on this site (confirmed 2026-11-26). ArtStation blocks automated
+  fetching (HTTP 403), so files come from Javier's originals or a manual download, not a
+  scraper. The project listing Javier exported is saved locally (gitignored) at
+  `references/artstation-projects.json`. Its 10 projects, newest first:
+  - **Cloudlines: Lookdev & Shaders** (2026 post). Freelance for **Manada** (2024): the game's
+    look, shaders and their optimization, plus an asset workflow for fast iteration.
+  - **Dark Moon Greatsword** (2026). Elden Ring **fan art** in Unreal Engine 5, VFX included.
+  - **DE-EXIT: Eternal Matters** (2021). At **Sandbloom Studio**: environment and prop modeling,
+    rigging and animating props and creatures, VFX, some hero-asset concepts. Includes video.
+  - **Firebuds Season 2** (2022). At **ICON Creative Studio**, 2022–2023.
+  - **The Club's ROCKing New Year 2024**: rock sculpts from a community challenge.
+  - **Wind House** (2024). Stylized environment in Unreal Engine; wind is the main element.
+    Based on another artist's concept. 123 likes, his most liked piece.
+  - **Overwatch Submarine** (2022). Maya, Substance Painter and Designer, Arnold. Based on a
+    concept by Andrew Menjivar.
+  - **Versailles Parquet Floor Tiles** (2022). Substance Designer, rendered in Marmoset.
+  - **Mossy Cliff Layered Material** (2022). Substance Designer, rendered in Marmoset.
+  - **Pirate Cabin Environment** (2022). Maya and Arnold.
+- **Images in the repo (2026-11-26):** the first 4 images (ArtStation "large", ~1920px) of
+  Cloudlines, Wind House, Mossy Cliff and Pirate Cabin, in `src/assets/images/<project>/`.
+  DE-EXIT and Dark Moon Greatsword images could not be pulled and still need Javier's files.
+  DE-EXIT's video is a YouTube embed on ArtStation (link it rather than host it).
+- **Credit rule:** fan art and pieces built from someone else's concept must say so and credit
+  the original (concept artist or IP holder), as Javier does on ArtStation.
 - **Posts:** most of `src/posts/` are **mockups** used to test features (post-3 to post-7 and
   post-9 are marked "safe to delete"). Posts 1–2 are short starter content. Don't present
   mockup posts as real work.
 - **Live demos:** the `/resources/` pages are real, working examples of the shader runtime.
-- **None on hand:** no testimonials, clients, employers, shipped titles, awards, or press. Never
-  invent any of these.
+- **Studios and productions (from ArtStation):** Sandbloom Studio (DE-EXIT: Eternal Matters,
+  2021), ICON Creative Studio (Firebuds Season 2, 2022–2023), Manada (Cloudlines, freelance
+  2024). Name them only as worded there; add nothing about scope or outcomes beyond it.
+- **None on hand:** no testimonials, awards, or press. Never invent any of these.
 
 ## Product Principles
 

@@ -1,30 +1,55 @@
 ---
 layout: layouts/home.html
 ---
+{#- Home: the featured project as a survey slide, the other projects in a rail, then
+    all work and the latest writing. Everything comes from src/portfolio/*.md (set
+    `featured: true` on the project to lead with) and src/posts/. -#}
+{%- set hero = collections.projects | featured %}
+<h1 class="visually-hidden">{{ site.name }}, technical and environment artist</h1>
 
-<section class="intro box">
-    <p> Hey! I'm <strong>{{ site.name }}</strong>, a software and game developer specialized in technical
-        &amp; environment art.</p>
-    <p class="intro__links"><a href="/blog/">blog</a> / <a href="/contact/">contact</a></p>
-    <p class="intro__note">You will find here writings about personal projects, environment art, shaders, and the tools
-        behind real-time worlds.</p>
+<section class="hero" aria-label="Featured project">
+    <figure class="hero__plate">
+        {%- set shotProject = hero %}{% set shotClass = "slide--reveal" %}{% set shotEager = true %}{% set shotSizes = "(min-width: 82rem) 1040px, (min-width: 60rem) 76vw, 100vw" %}
+        {% include "partials/shot.html" %}
+    </figure>
+    <div class="hero__cap surface">
+        <h2><a href="{{ hero.url }}">{{ hero.data.title }}</a></h2>
+        <p>{{ hero.data.summary }} {{ hero.data.tools | join(", ") }}, {{ hero.data.year }}.</p>
+    </div>
+    <nav class="hero__rail" aria-label="More projects">
+        {%- for p in collections.projects | others(hero) %}
+        <a class="rail-item surface" href="{{ p.url }}">
+            <div class="shot">{% image p.data.cover, "", "(min-width: 60rem) 248px, 45vw" %}</div>
+            <span>{{ p.data.title }}</span>
+        </a>
+        {%- endfor %}
+        <a class="rail-all surface" href="#work">All work <svg class="sym" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v8.5M2.5 6.5 6 10l3.5-3.5"/></svg></a>
+    </nav>
 </section>
 
-<section class="latest">
-    <h2 class="section-label">Latest writing</h2>
-    <div class="cards">
-        {% for post in collections.post | reverse %}
-            {% if loop.index <= 3 %}
-            <a class="card{% if post.data.image %} card--media{% endif %}" href="{{ post.url }}">
-                <div class="card__body">
-                    <h3 class="card__title">{% if post.data.emoji %}<span class="card__emoji" aria-hidden="true">{{ post.data.emoji }}</span> {% endif %}{{ post.data.title }}</h3>
-                    {% if post.data.description %}<p class="card__desc">{{ post.data.description }}</p>{% endif %}
-                    <p class="card__date">{{ post.date | readableDate }}</p>
-                </div>
-                {% if post.data.image %}<div class="card__media"><img src="{{ post.data.image }}" alt=""></div>{% endif %}
-            </a>
-            {% endif %}
-        {% endfor %}
+<section class="works" id="work" aria-labelledby="work-h">
+    <div class="works__head surface">
+        <h2 id="work-h">Work</h2>
+        <p>Software and game developer specialized in technical and environment art: environments, materials, look development and shaders.</p>
     </div>
-    <p class="latest__more"><a class="text-link" href="/blog/">View all posts →</a></p>
+    {% include "partials/work-list.html" %}
+</section>
+
+<section class="writing" aria-labelledby="writing-h">
+    <div class="works__head surface">
+        <h2 id="writing-h">Writing</h2>
+        <p><a class="text-link" href="/blog/">All posts</a></p>
+    </div>
+    <div class="cards">
+        {%- for post in collections.post | reverse %}{% if loop.index <= 3 %}
+        <a class="card{% if post.data.image %} card--media{% endif %}" href="{{ post.url }}">
+            <div class="card__body">
+                <h3 class="card__title">{{ post.data.title }}</h3>
+                {% if post.data.description %}<p class="card__desc">{{ post.data.description }}</p>{% endif %}
+                <p class="card__date">{{ post.date | readableDate }}</p>
+            </div>
+            {% if post.data.image %}<div class="card__media"><img src="{{ post.data.image }}" alt="" loading="lazy" decoding="async"></div>{% endif %}
+        </a>
+        {%- endif %}{% endfor %}
+    </div>
 </section>

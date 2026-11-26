@@ -2,11 +2,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 {# Set the theme before the page paints so there's no flash on load. Honours the
-   visitor's saved choice; otherwise defaults to light. Toggle lives in base.html. #}
+   visitor's saved choice; otherwise defaults to the day sheet. The night button (the
+   flood) lives in base.html and is driven by js/ground.js. #}
 <script>
     (function () {
-        // Mark JS as available so CSS can hide cards up front for the scroll-in reveal
-        // (base.html) — without this class they stay visible for no-JS visitors.
         document.documentElement.classList.add('js');
         try {
             var t = localStorage.getItem('theme');
@@ -47,7 +46,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+{# Type: Mona Sans (titles, the wide spaced name), Schibsted Grotesk (reading text),
+   Martian Mono (code, labels, the shader editor). #}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,300..500&family=Mona+Sans:ital,wdth,wght@0,75..125,400..800;1,75..125,400..800&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..700&display=swap">
 
 {% if math %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -60,6 +61,24 @@
 {% if shaders %}
 <link rel="stylesheet" href="/css/shaders.css">
 <script defer src="/js/shaders.js"></script>
+{% endif %}
+
+{# Immersive Three.js/GSAP brand landing — only on pages that set `landing: true`
+   (currently just /showcase/). Kept off every other page so the blog stays light.
+   Three + GSAP are pinned ESM builds loaded via an import map, matching the site's
+   existing CDN usage (fonts, KaTeX). To self-host later: npm i three gsap, copy their
+   ESM builds into src/js/vendor/ (already passthrough-copied) and repoint the map. #}
+{% if landing %}
+<link rel="stylesheet" href="/css/landing.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm"
+  }
+}
+</script>
+<script type="module" src="/js/landing.js"></script>
 {% endif %}
 
 {# Warm up the giscus connection early so comments load quicker. #}

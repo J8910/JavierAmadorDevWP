@@ -1,6 +1,6 @@
 [
-  { "text": "Home", "url": "/" },
-  { "text": "Blog", "url": "/blog/" },
-  { "text": "Resources", "url": "/resources/" },
-  { "text": "Contact", "url": "/contact/" }
+  { "text": "Work", "url": "/portfolio/", "icon": "work" },
+  { "text": "Writing", "url": "/blog/", "match": "/posts/", "icon": "writing" },
+  { "text": "Resources", "url": "/resources/", "icon": "resources" },
+  { "text": "Contact", "url": "/contact/", "icon": "contact" }
 ]

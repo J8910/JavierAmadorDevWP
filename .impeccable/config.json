@@ -11,6 +11,12 @@
         ],
         "createdAt": "2026-11-26T14:58:34.734Z",
         "reason": "user confirmed: chose the Survey Book palette (field-paper #f6f4ec) from a 4-palette study on 2026-11-26"
+      },
+      {
+        "rule": "overused-font",
+        "value": "mona sans",
+        "createdAt": "2026-11-26T19:40:32.223Z",
+        "reason": "Design decision: Mona Sans (wide cut for survey-sheet title lettering) is the face of the Survey Sheet prototypes Javier approved (V6-V9); finish reviewer judged it fits and said keep"
       }
     ]
   }

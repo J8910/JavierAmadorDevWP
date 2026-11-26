@@ -1,0 +1,54 @@
+{% extends "layouts/base.html" %}
+
+{# One portfolio project. All content comes from the project's .md front matter + body
+   (src/portfolio/*.md); this file only arranges it. The lead picture is the project's
+   survey slide (two shots) when it has a `slide:`, otherwise its cover. #}
+{% block head %}
+    <link rel="stylesheet" href="/css/portfolio.css">
+{% endblock %}
+{% block scripts %}<script defer src="/js/slides.js"></script>{% endblock %}
+
+{% block content %}
+<article class="project">
+    <header class="project__head surface panel">
+        <h1 class="project__title">{{ title }}</h1>
+        <p class="project__summary">{{ summary }}</p>
+        <dl class="facts">
+            <dt>Year</dt><dd>{{ year }}</dd>
+            <dt>For</dt><dd>{{ context }}</dd>
+            <dt>Role</dt><dd>{{ role }}</dd>
+            <dt>Tools</dt><dd>{{ tools | join(" · ") }}</dd>
+        </dl>
+    </header>
+
+    <div class="project__shot">
+        {%- set shotProject = { data: { slide: slide, title: title, cover: cover, coverAlt: coverAlt } } %}
+        {%- set shotClass = "" %}{% set shotEager = true %}{% set shotSizes = "(min-width: 82rem) 1312px, 100vw" %}
+        {% include "partials/shot.html" %}
+    </div>
+
+    <div class="project__body surface panel prose">
+        {{ content | safe }}
+    </div>
+
+    {#- The gallery skips any picture the slide above already shows. #}
+    {% set used = [] %}{% if slide and slide.shots %}{% for sh in slide.shots %}{% set used = (used.push(sh.src), used) %}{% endfor %}{% endif %}
+    {% if gallery and gallery.length %}
+    <div class="project__gallery">
+        {% for g in gallery %}{% if g.src not in used %}
+        <div class="shot">{% image g.src, g.alt, "(min-width: 82rem) 1312px, 100vw" %}</div>
+        {% endif %}{% endfor %}
+    </div>
+    {% endif %}
+
+    <footer class="project__foot surface panel">
+        {% if creditText %}
+        <p class="project__credit">{% if creditUrl %}<a class="text-link" href="{{ creditUrl }}">{{ creditText }}</a>{% else %}{{ creditText }}{% endif %}</p>
+        {% endif %}
+        <p class="project__links">
+            <a class="text-link" href="{{ artstation }}">See the full project on ArtStation</a>
+            <a class="text-link" href="/portfolio/">All work</a>
+        </p>
+    </footer>
+</article>
+{% endblock %}

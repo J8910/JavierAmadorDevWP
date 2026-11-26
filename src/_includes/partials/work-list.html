@@ -1,0 +1,27 @@
+{#- Every published project, in `order:`. Built from src/portfolio/*.md; nothing to edit
+    here when a project is added. Used by the home page and /portfolio/. -#}
+{%- for p in collections.projects %}
+<article class="work{% if loop.index0 % 2 %} work--flip{% endif %}">
+    <div class="work__media">
+        {%- set shotProject = p %}{% set shotClass = "" %}{% set shotEager = false %}{% set shotSizes = "(min-width: 82rem) 880px, (min-width: 60rem) 64vw, 100vw" %}
+        {% include "partials/shot.html" %}
+        {#- Thumbnails skip the shots the slide above already shows. #}
+        {%- set used = [] %}{% if p.data.slide and p.data.slide.shots %}{% for sh in p.data.slide.shots %}{% set used = (used.push(sh.src), used) %}{% endfor %}{% endif %}
+        {%- set thumbs = [] %}{% for g in p.data.gallery or [] %}{% if g.src not in used and thumbs.length < 3 %}{% set thumbs = (thumbs.push(g), thumbs) %}{% endif %}{% endfor %}
+        {%- if thumbs.length %}
+        <div class="work__row work__row--{{ thumbs.length }}">
+            {%- for g in thumbs %}
+            <div class="shot">{% image g.src, g.alt, "(min-width: 82rem) 285px, 30vw" %}</div>
+            {%- endfor %}
+        </div>
+        {%- endif %}
+    </div>
+    <div class="work__text surface panel">
+        <h3><a href="{{ p.url }}">{{ p.data.title }}</a></h3>
+        <p class="work__ctx">{{ p.data.context }} · {{ p.data.year }}</p>
+        <p class="work__body">{{ p.data.summary }}</p>
+        <dl class="facts"><dt>Role</dt><dd>{{ p.data.role }}</dd><dt>Tools</dt><dd>{{ p.data.tools | join(" · ") }}</dd></dl>
+        <a class="text-link" href="{{ p.url }}">See the project</a>
+    </div>
+</article>
+{%- endfor %}
